@@ -239,7 +239,7 @@
 };
 
 
-        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-portfolio-chat';
+        const appId = firebaseConfig.projectId;
 
         // --- Inicialización de Firebase ---
         const app = initializeApp(firebaseConfig);
