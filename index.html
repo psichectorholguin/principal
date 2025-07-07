@@ -228,9 +228,16 @@
         import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Configuración de Firebase ---
-        const firebaseConfig = typeof __firebase_config !== 'undefined' 
-            ? JSON.parse(__firebase_config) 
-            : { apiKey: "YOUR_API_KEY", authDomain: "YOUR_AUTH_DOMAIN", projectId: "YOUR_PROJECT_ID", storageBucket: "YOUR_STORAGE_BUCKET", messagingSenderId: "YOUR_MESSAGING_SENDER_ID", appId: "YOUR_APP_ID" };
+        const firebaseConfig = {
+  apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
+  authDomain: "pap-chat-14552.firebaseapp.com",
+  projectId: "pap-chat-14552",
+  storageBucket: "pap-chat-14552.firebasestorage.app",
+  messagingSenderId: "939187274099",
+  appId: "1:939187274099:web:b021f995b9771122db0506",
+  measurementId: "G-PDH53KMFR3"
+};
+
 
         const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-portfolio-chat';
 
