@@ -239,7 +239,7 @@
 };
 
 
-       const appId = firebaseConfig.projectId; // O tu string fijo si lo preferiste
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-portfolio-chat';
 
         // --- Inicialización de Firebase ---
         const app = initializeApp(firebaseConfig);
@@ -401,6 +401,14 @@
                     senderId: currentUserId,
                     senderRole: 'user',
                 });
+
+                // Actualizar el último mensaje en el documento del chat principal
+const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
+await updateDoc(chatDocRef, {
+    lastMessageText: text,
+    lastMessageTimestamp: serverTimestamp(),
+    status: 'active' // Asegurarse de que el chat esté marcado como activo
+});
                 messageInput.value = '';
             } catch (error) {
                 console.error("Error al enviar el mensaje:", error);
