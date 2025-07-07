@@ -32,6 +32,52 @@
             background-color: #d1d5db;
             border-left: 4px solid #8b5cf6;
         }
+        /* Estilos para los indicadores de prioridad */
+        .priority-low { background-color: #a7f3d0; } /* Verde claro */
+        .priority-medium { background-color: #fcd34d; } /* Amarillo */
+        .priority-high { background-color: #fca5a5; } /* Rojo claro */
+        .priority-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 8px;
+        }
+
+        /* Estilos para el modal de confirmación */
+        .custom-modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .custom-modal-overlay.show {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .custom-modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 0.75rem; /* rounded-lg */
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* shadow-lg */
+            max-width: 400px;
+            width: 90%;
+            text-align: center;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+        }
+        .custom-modal-overlay.show .custom-modal-content {
+            transform: translateY(0);
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -86,10 +132,18 @@
                     <p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>
                 </div>
                 
-                <!-- Botón para finalizar chat -->
-                <button id="end-chat-btn" class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600 transition-colors mb-4" disabled>
-                    Finalizar Chat
-                </button>
+                <!-- Controles de Prioridad y Eliminación -->
+                <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4 p-3 bg-gray-100 rounded-lg shadow-sm">
+                    <div class="flex items-center space-x-2">
+                        <span class="font-semibold text-gray-700">Prioridad:</span>
+                        <button id="priority-low-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-green-800 hover:bg-green-300 transition-colors" disabled>Baja</button>
+                        <button id="priority-medium-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-200 text-yellow-800 hover:bg-yellow-300 transition-colors" disabled>Media</button>
+                        <button id="priority-high-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-red-200 text-red-800 hover:bg-red-300 transition-colors" disabled>Alta</button>
+                    </div>
+                    <button id="delete-chat-btn" class="bg-red-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors transform hover:scale-105" disabled>
+                        <i class="fas fa-trash-alt mr-2"></i> Eliminar Chat
+                    </button>
+                </div>
 
                 <!-- Input para enviar mensajes -->
                 <form id="psicologo-message-form" class="flex items-center space-x-2">
@@ -102,25 +156,41 @@
         </div>
     </main>
 
+    <!-- Modal de Confirmación Personalizado -->
+    <div id="delete-confirm-modal" class="custom-modal-overlay">
+        <div class="custom-modal-content">
+            <h3 class="text-xl font-bold text-gray-800 mb-4">Confirmar Eliminación</h3>
+            <p class="text-gray-700 mb-6">¿Estás seguro de que quieres ELIMINAR este chat? Esta acción es irreversible y el chat no aparecerá más.</p>
+            <div class="flex justify-center space-x-4">
+                <button id="confirm-delete-btn" class="bg-red-600 text-white px-6 py-2 rounded-md font-semibold hover:bg-red-700 transition-colors">
+                    Confirmar
+                </button>
+                <button id="cancel-delete-btn" class="bg-gray-300 text-gray-800 px-6 py-2 rounded-md font-semibold hover:bg-gray-400 transition-colors">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <!-- Firebase SDK -->
     <script type="module">
         // Importaciones de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, where, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, where, getDoc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Configuración de Firebase ---
-        // Reemplaza con tu configuración real de Firebase
+        // ¡¡¡CRÍTICO!!! ESTOS SON TUS VALORES REALES DE TU PROYECTO FIREBASE
         const firebaseConfig = {
-  apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-  authDomain: "pap-chat-14552.firebaseapp.com",
-  projectId: "pap-chat-14552",
-  storageBucket: "pap-chat-14552.firebasestorage.app",
-  messagingSenderId: "939187274099",
-  appId: "1:939187274099:web:b021f995b9771122db0506",
-  measurementId: "G-PDH53KMFR3"
-};
-        
+            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
+            authDomain: "pap-chat-14552.firebaseapp.com",
+            projectId: "pap-chat-14552",
+            storageBucket: "pap-chat-14552.firebasestorage.app",
+            messagingSenderId: "939187274099",
+            appId: "1:939187274099:web:b021f995b9771122db0506",
+            measurementId: "G-PDH53KMFR3"
+        };
+
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -143,12 +213,31 @@
         const psicologoMessageForm = document.getElementById('psicologo-message-form');
         const psicologoMessageInput = document.getElementById('psicologo-message-input');
         const sendPsicologoMessageBtn = document.getElementById('send-psicologo-message-btn');
-        const endChatBtn = document.getElementById('end-chat-btn'); // Nuevo botón
+        const deleteChatBtn = document.getElementById('delete-chat-btn'); // Botón de eliminar
+        const priorityLowBtn = document.getElementById('priority-low-btn');
+        const priorityMediumBtn = document.getElementById('priority-medium-btn');
+        const priorityHighBtn = document.getElementById('priority-high-btn');
+
+        // Elementos del modal de confirmación
+        const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
         let currentSelectedChatId = null;
         let unsubscribeChatList = null;
         let unsubscribeMessages = null;
         let authorizedEmails = []; // Lista de correos autorizados
+        // Mapa para mantener una referencia a los elementos DOM de los chats por su ID
+        const chatDomElements = new Map();
+
+        // --- Lógica del Modal de Confirmación ---
+        const showConfirmModal = () => {
+            deleteConfirmModal.classList.add('show');
+        };
+
+        const hideConfirmModal = () => {
+            deleteConfirmModal.classList.remove('show');
+        };
 
         // --- Lógica de Autenticación ---
         onAuthStateChanged(auth, async (user) => {
@@ -179,7 +268,10 @@
                 conversationArea.innerHTML = '<p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>';
                 psicologoMessageInput.disabled = true;
                 sendPsicologoMessageBtn.disabled = true;
-                endChatBtn.disabled = true;
+                deleteChatBtn.disabled = true; // Deshabilitar botón de eliminar
+                priorityLowBtn.disabled = true; // Deshabilitar botones de prioridad
+                priorityMediumBtn.disabled = true;
+                priorityHighBtn.disabled = true;
             }
         });
 
@@ -193,7 +285,14 @@
                 // onAuthStateChanged manejará el cambio de vista y la autorización
             } catch (error) {
                 console.error("Error al iniciar sesión:", error.message);
-                loginError.textContent = "Error al iniciar sesión: " + error.message;
+                // Muestra un mensaje de error más específico para el usuario
+                if (error.code === 'auth/user-not-found' || error.code === 'auth/wrong-password') {
+                    loginError.textContent = "Correo o contraseña incorrectos.";
+                } else if (error.code === 'auth/invalid-email') {
+                    loginError.textContent = "Formato de correo electrónico inválido.";
+                } else {
+                    loginError.textContent = "Error al iniciar sesión. Inténtalo de nuevo.";
+                }
                 loginError.classList.remove('hidden');
             }
         });
@@ -210,13 +309,13 @@
         // --- Lógica de Autorización ---
         const loadAuthorizedEmails = async () => {
             try {
-                // La ruta debe ser consistente con la de tus reglas de seguridad y el appId
-                const docRef = doc(db, `artifacts/${appId}/public/adminConfig`, 'authorizedPsychologists');
+                // RUTA DE CORREOS AUTORIZADOS: artifacts/{appId}/adminConfig/authorizedPsychologists
+                const docRef = doc(db, `artifacts/${appId}/adminConfig`, 'authorizedPsychologists');
                 const docSnap = await getDoc(docRef);
                 if (docSnap.exists()) {
                     authorizedEmails = docSnap.data().emails || [];
                 } else {
-                    console.warn("Documento 'authorizedPsychologists' no encontrado en Firestore. Asegúrate de crearlo.");
+                    console.warn("Documento 'authorizedPsychologists' no encontrado en Firestore. Asegúrate de crearlo en la ruta: artifacts/TU_PROJECT_ID/adminConfig/authorizedPsychologists con un campo 'emails' tipo array.");
                     authorizedEmails = [];
                 }
             } catch (error) {
@@ -227,33 +326,97 @@
 
         // --- Lógica de Gestión de Chats ---
 
+        // Función para crear o actualizar un elemento de chat en el DOM
+        const createOrUpdateChatItem = (chat) => {
+            let chatItem = chatDomElements.get(chat.id);
+            if (!chatItem) {
+                chatItem = document.createElement('div');
+                chatItem.className = `chat-list-item p-3 border-b border-gray-200 rounded-md`;
+                chatItem.dataset.chatId = chat.id;
+                chatItem.addEventListener('click', () => selectChat(chat.id));
+                chatDomElements.set(chat.id, chatItem);
+            }
+
+            // Actualizar clases de activo y prioridad
+            chatItem.classList.remove('active', 'priority-low', 'priority-medium', 'priority-high');
+            if (chat.id === currentSelectedChatId) {
+                chatItem.classList.add('active');
+            }
+            if (chat.priority) {
+                chatItem.classList.add(`priority-${chat.priority}`);
+            }
+
+            let dotColorClass = 'bg-gray-400'; // Default
+            if (chat.priority === 'low') dotColorClass = 'bg-green-500';
+            else if (chat.priority === 'medium') dotColorClass = 'bg-yellow-500';
+            else if (chat.priority === 'high') dotColorClass = 'bg-red-500';
+
+            chatItem.innerHTML = `
+                <div class="flex items-center mb-1">
+                    <span class="priority-dot ${dotColorClass}"></span>
+                    <p class="font-semibold text-gray-800">${chat.userName || 'Usuario Anónimo'}</p>
+                </div>
+                <p class="text-sm text-gray-600 truncate">${chat.lastMessageText || 'No hay mensajes aún.'}</p>
+                <p class="text-xs text-gray-400 mt-1">${chat.lastMessageTimestamp ? new Date(chat.lastMessageTimestamp.seconds * 1000).toLocaleTimeString() : (chat.createdAt ? new Date(chat.createdAt.seconds * 1000).toLocaleTimeString() : 'Fecha desconocida')}</p>
+            `;
+            return chatItem;
+        };
+
         // Cargar lista de chats activos
         const loadChatList = () => {
             if (unsubscribeChatList) unsubscribeChatList(); // Limpiar listener anterior
+            
+            // RUTA DE CHATS: artifacts/{appId}/public/data/chats
             const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
-            // Solo cargar chats con status 'active' y ordenar por el timestamp del último mensaje
-            const q = query(chatsRef, where('status', '==', 'active'), orderBy('lastMessageTimestamp', 'desc')); 
+            // Solo cargar chats con status 'active'
+            const q = query(chatsRef, where('status', '==', 'active')); 
 
-            unsubscribeChatList = onSnapshot(q, (querySnapshot) => {
-                chatList.innerHTML = ''; // Limpiar lista actual
-                if (querySnapshot.empty) {
+            unsubscribeChatList = onSnapshot(q, (snapshot) => {
+                // Limpiar el mapa de elementos DOM existentes para reconstruir por completo
+                // Esto es importante para manejar los encabezados de día correctamente
+                chatDomElements.clear();
+                chatList.innerHTML = ''; // Limpiar toda la lista visualmente
+
+                const chats = [];
+                snapshot.forEach(docSnap => {
+                    chats.push({ id: docSnap.id, ...docSnap.data() });
+                });
+
+                // Ordenar los chats por lastMessageTimestamp (descendente) en JavaScript
+                chats.sort((a, b) => {
+                    const timestampA = a.lastMessageTimestamp ? a.lastMessageTimestamp.seconds : 0;
+                    const timestampB = b.lastMessageTimestamp ? b.lastMessageTimestamp.seconds : 0;
+                    return timestampB - timestampA; // Orden descendente
+                });
+
+                // Agrupar chats por día para la visualización
+                const chatsByDay = chats.reduce((acc, chat) => {
+                    const date = chat.lastMessageTimestamp ? new Date(chat.lastMessageTimestamp.seconds * 1000) : (chat.createdAt ? new Date(chat.createdAt.seconds * 1000) : new Date());
+                    const dateString = date.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+                    if (!acc[dateString]) {
+                        acc[dateString] = [];
+                    }
+                    acc[dateString].push(chat);
+                    return acc;
+                }, {});
+
+                if (chats.length === 0) {
                     chatList.innerHTML = '<p class="text-gray-500 text-center">No hay chats activos.</p>';
                     return;
                 }
-                querySnapshot.forEach(docSnap => {
-                    const chat = { id: docSnap.id, ...docSnap.data() };
-                    const chatItem = document.createElement('div');
-                    chatItem.className = `chat-list-item p-3 border-b border-gray-200 rounded-md ${chat.id === currentSelectedChatId ? 'active' : ''}`;
-                    chatItem.dataset.chatId = chat.id; // Añadir dataset para fácil identificación
-                    
-                    chatItem.innerHTML = `
-                        <p class="font-semibold text-gray-800">${chat.userName || 'Usuario Anónimo'}</p>
-                        <p class="text-sm text-gray-600 truncate">${chat.lastMessageText || 'No hay mensajes aún.'}</p>
-                        <p class="text-xs text-gray-400 mt-1">${chat.lastMessageTimestamp ? new Date(chat.lastMessageTimestamp.seconds * 1000).toLocaleString() : (chat.createdAt ? new Date(chat.createdAt.seconds * 1000).toLocaleString() : 'Fecha desconocida')}</p>
-                    `;
-                    chatItem.addEventListener('click', () => selectChat(chat.id));
-                    chatList.appendChild(chatItem);
-                });
+
+                // Renderizar los chats agrupados por día
+                for (const dateString in chatsByDay) {
+                    const dayHeader = document.createElement('h3');
+                    dayHeader.className = 'text-sm font-bold text-gray-600 mt-4 mb-2 sticky top-0 bg-white p-2 rounded-md shadow-sm z-10';
+                    dayHeader.textContent = dateString;
+                    chatList.appendChild(dayHeader);
+
+                    chatsByDay[dateString].forEach(chat => {
+                        const chatItem = createOrUpdateChatItem(chat);
+                        chatList.appendChild(chatItem);
+                    });
+                }
             }, (error) => {
                 console.error("Error al cargar la lista de chats:", error);
                 chatList.innerHTML = '<p class="text-red-500 text-center">Error al cargar chats.</p>';
@@ -265,53 +428,57 @@
             if (currentSelectedChatId === chatId) return; // Ya seleccionado
             currentSelectedChatId = chatId;
 
+            // Limpiar el área de conversación al seleccionar un nuevo chat
+            conversationArea.innerHTML = '<p class="text-gray-500 text-center">Cargando mensajes...</p>';
+
             // Actualizar el estilo del chat seleccionado en la lista
-            Array.from(chatList.children).forEach(item => {
+            // Recorre todos los elementos DOM de los chats y actualiza la clase 'active'
+            chatDomElements.forEach((item, id) => {
                 item.classList.remove('active');
-                if (item.dataset.chatId === chatId) { 
+                if (id === chatId) { 
                     item.classList.add('active');
                 }
             });
 
-            // Habilitar input de mensaje y botón de finalizar chat
+            // Habilitar input de mensaje y botones de control
             psicologoMessageInput.disabled = false;
             sendPsicologoMessageBtn.disabled = false;
-            endChatBtn.disabled = false; // Habilitar botón de finalizar chat
+            deleteChatBtn.disabled = false; // Habilitar botón de eliminar
+            priorityLowBtn.disabled = false; // Habilitar botones de prioridad
+            priorityMediumBtn.disabled = false;
+            priorityHighBtn.disabled = false;
             psicologoMessageInput.focus();
 
             loadMessages(chatId);
         };
 
-        // Cargar mensajes de un chat seleccionado
+        // Cargar mensajes de un chat seleccionado y añadirlos incrementalmente
         const loadMessages = (chatId) => {
-            if (unsubscribeMessages) unsubscribeMessages(); // Limpiar listener anterior
+            if (unsubscribeMessages) {
+                unsubscribeMessages(); // Limpiar listener anterior
+            }
 
+            // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
             const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
             // Ordenar por timestamp para asegurar el orden correcto
             const q = query(messagesRef, orderBy('timestamp')); 
 
-            unsubscribeMessages = onSnapshot(q, (querySnapshot) => {
-                conversationArea.innerHTML = ''; // Limpiar área de conversación
-                if (querySnapshot.empty) {
-                    conversationArea.innerHTML = '<p class="text-gray-500 text-center">Este chat no tiene mensajes aún.</p>';
-                    return;
+            unsubscribeMessages = onSnapshot(q, (snapshot) => {
+                // Para la carga inicial, o si la conversación se limpia, vaciamos el contenedor
+                // y luego añadimos todos los mensajes.
+                // Para actualizaciones posteriores, solo añadimos los nuevos.
+                if (snapshot.docChanges().length === snapshot.docs.length && snapshot.docChanges().every(change => change.type === "added")) {
+                     conversationArea.innerHTML = ''; // Limpiar solo si es la carga inicial completa
                 }
-                querySnapshot.forEach(docSnap => {
-                    const message = docSnap.data();
-                    const messageElement = document.createElement('div');
-                    const isPsicologo = message.senderRole === 'psicologo';
-                    
-                    messageElement.className = `flex flex-col ${isPsicologo ? 'items-end' : 'items-start'}`;
-                    const bubbleClass = isPsicologo ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-800';
-                    
-                    messageElement.innerHTML = `
-                        <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
-                            <p class="text-xs font-semibold mb-1">${isPsicologo ? 'Tú' : (message.senderName || 'Usuario')}</p>
-                            <p>${message.text}</p>
-                            <p class="text-right text-xs mt-1 opacity-75">${message.timestamp ? new Date(message.timestamp.seconds * 1000).toLocaleTimeString() : ''}</p>
-                        </div>
-                    `;
-                    conversationArea.appendChild(messageElement);
+                
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === "added") {
+                        const message = { id: change.doc.id, ...change.doc.data() };
+                        appendMessageToPanelDOM(message);
+                    }
+                    // Si necesitas manejar modificaciones o eliminaciones, puedes añadir lógica aquí
+                    // else if (change.type === "modified") { ... }
+                    // else if (change.type === "removed") { ... }
                 });
                 conversationArea.scrollTop = conversationArea.scrollHeight; // Scroll al final
             }, (error) => {
@@ -320,12 +487,31 @@
             });
         };
 
+        // Nueva función para añadir un mensaje al DOM del panel
+        const appendMessageToPanelDOM = (message) => {
+            const messageElement = document.createElement('div');
+            const isPsicologo = message.senderRole === 'psicologo';
+            
+            messageElement.className = `flex flex-col ${isPsicologo ? 'items-end' : 'items-start'}`;
+            const bubbleClass = isPsicologo ? 'bg-purple-600 text-white' : 'bg-gray-200 text-gray-800';
+            
+            messageElement.innerHTML = `
+                <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
+                    <p class="text-xs font-semibold mb-1">${isPsicologo ? 'Tú' : (message.senderName || 'Usuario')}</p>
+                    <p>${message.text}</p>
+                    <p class="text-right text-xs mt-1 opacity-75">${message.timestamp ? new Date(message.timestamp.seconds * 1000).toLocaleTimeString() : ''}</p>
+                </div>
+            `;
+            conversationArea.appendChild(messageElement);
+        };
+
         // Enviar mensaje como psicólogo
         psicologoMessageForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = psicologoMessageInput.value.trim();
             if (text === '' || !currentSelectedChatId) return;
 
+            // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
             const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentSelectedChatId}/messages`);
             try {
                 await addDoc(messagesRef, {
@@ -337,7 +523,7 @@
                 });
                 psicologoMessageInput.value = ''; // Limpiar input
                 
-                // Actualizar el último mensaje en el documento del chat principal
+                // RUTA DE CHATS: Documento del chat principal en la colección 'chats'
                 const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
                 await updateDoc(chatDocRef, {
                     lastMessageText: text,
@@ -350,28 +536,65 @@
             }
         });
 
-        // Finalizar chat
-        endChatBtn.addEventListener('click', async () => {
+        // --- Función para actualizar la prioridad del chat ---
+        const updateChatPriority = async (priority) => {
+            if (!currentSelectedChatId) return;
+            try {
+                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
+                await updateDoc(chatDocRef, {
+                    priority: priority // 'low', 'medium', 'high'
+                });
+                console.log(`Prioridad del chat ${currentSelectedChatId} actualizada a: ${priority}`);
+                // La lista de chats se recargará automáticamente debido al onSnapshot
+            } catch (error) {
+                console.error("Error al actualizar la prioridad del chat:", error);
+            }
+        };
+
+        // Eventos para los botones de prioridad
+        priorityLowBtn.addEventListener('click', () => updateChatPriority('low'));
+        priorityMediumBtn.addEventListener('click', () => updateChatPriority('medium'));
+        priorityHighBtn.addEventListener('click', () => updateChatPriority('high'));
+
+
+        // --- Eliminar chat ---
+        deleteChatBtn.addEventListener('click', () => {
+            if (!currentSelectedChatId) return;
+            showConfirmModal(); // Mostrar el modal de confirmación personalizado
+        });
+
+        confirmDeleteBtn.addEventListener('click', async () => {
+            hideConfirmModal(); // Ocultar el modal
             if (!currentSelectedChatId) return;
 
-            if (confirm("¿Estás seguro de que quieres finalizar este chat? No aparecerá en la lista de chats activos.")) {
-                try {
-                    const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
-                    await updateDoc(chatDocRef, {
-                        status: 'closed',
-                        closedAt: serverTimestamp()
-                    });
-                    currentSelectedChatId = null; // Deseleccionar chat
-                    conversationArea.innerHTML = '<p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>';
-                    psicologoMessageInput.disabled = true;
-                    sendPsicologoMessageBtn.disabled = true;
-                    endChatBtn.disabled = true;
-                    // loadChatList() se activará automáticamente por el onSnapshot
-                } catch (error) {
-                    console.error("Error al finalizar el chat:", error);
-                    // No usar alert() en producción, usar un modal o mensaje en pantalla
-                }
+            try {
+                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
+                // Cambiar el estado a 'deleted' en lugar de eliminar el documento por completo
+                await updateDoc(chatDocRef, {
+                    status: 'deleted', 
+                    deletedAt: serverTimestamp() 
+                });
+                
+                // Deseleccionar el chat y resetear la UI
+                currentSelectedChatId = null; 
+                conversationArea.innerHTML = '<p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>';
+                psicologoMessageInput.disabled = true;
+                sendPsicologoMessageBtn.disabled = true;
+                deleteChatBtn.disabled = true;
+                priorityLowBtn.disabled = true; 
+                priorityMediumBtn.disabled = true;
+                priorityHighBtn.disabled = true;
+                
+                console.log(`Chat ${chatDocRef.id} marcado como eliminado.`);
+                // El onSnapshot en loadChatList se encargará de removerlo de la lista visualmente
+            } catch (error) {
+                console.error("Error al eliminar el chat:", error);
+                // Manejo de errores en la UI
             }
+        });
+
+        cancelDeleteBtn.addEventListener('click', () => {
+            hideConfirmModal(); // Ocultar el modal si se cancela
         });
 
         // Asegúrate de que el chat-list-item tenga un dataset para la ID del chat
