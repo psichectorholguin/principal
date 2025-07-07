@@ -156,10 +156,10 @@
             <p class="text-sm text-gray-400 mt-2">Diseñado para ofrecer un espacio seguro de apoyo.</p>
             <!-- Social Media Links -->
             <div class="flex justify-center space-x-6 mt-4">
-                <a href="https://www.instagram.com/psic.hectorholguin" target="_blank" aria-label="Instagram" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.instagram.com/tu_instagram" target="_blank" aria-label="Instagram" class="text-gray-400 hover:text-white transition-colors">
                     <i class="fab fa-instagram text-3xl"></i>
                 </a>
-                <a href="https://www.tiktok.com/@psic.hectorholguin" target="_blank" aria-label="TikTok" class="text-gray-400 hover:text-white transition-colors">
+                <a href="https://www.tiktok.com/@tu_tiktok" target="_blank" aria-label="TikTok" class="text-gray-400 hover:text-white transition-colors">
                     <i class="fab fa-tiktok text-3xl"></i>
                 </a>
             </div>
@@ -225,9 +225,10 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Configuración de Firebase ---
+        // Reemplaza con tu configuración real de Firebase
         const firebaseConfig = {
   apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
   authDomain: "pap-chat-14552.firebaseapp.com",
@@ -237,9 +238,10 @@
   appId: "1:939187274099:web:b021f995b9771122db0506",
   measurementId: "G-PDH53KMFR3"
 };
-
-
-        const appId = firebaseConfig.projectId;
+    
+        // Usamos el projectId como appId para la ruta de la base de datos
+        // Esto es CRUCIAL para la consistencia con el panel del psicólogo
+        const appId = firebaseConfig.projectId; 
 
         // --- Inicialización de Firebase ---
         const app = initializeApp(firebaseConfig);
@@ -292,6 +294,7 @@
             }
             currentChatId = null;
             preChatForm.reset();
+            messagesContainer.innerHTML = ''; // Limpiar mensajes al cerrar
         };
 
         // Asignar eventos a los botones
@@ -330,10 +333,23 @@
                     userName: userName,
                     userEmail: userEmail,
                     createdAt: serverTimestamp(),
-                    status: 'active',
+                    status: 'active', // Nuevo chat siempre activo
+                    lastMessageText: '¡Hola! Necesito ayuda.', // Mensaje inicial
+                    lastMessageTimestamp: serverTimestamp(),
                     supervisorId: null,
                 });
                 currentChatId = newChatDoc.id;
+
+                // Añadir el primer mensaje del usuario al iniciar el chat
+                const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
+                await addDoc(messagesRef, {
+                    text: '¡Hola! Necesito ayuda.',
+                    timestamp: serverTimestamp(),
+                    senderId: currentUserId,
+                    senderRole: 'user',
+                    senderName: userName,
+                });
+
 
                 listenForMessages(currentChatId);
                 loadingView.style.display = 'none';
@@ -374,12 +390,15 @@
                 let senderName = '';
                 if (msg.senderRole === 'psicologo') {
                     senderName = '<p class="text-sm font-bold mb-1 text-purple-700">Apoyo Psicológico</p>';
+                } else if (msg.senderRole === 'user' && !isSent) { // Mostrar nombre de usuario si no es el mensaje propio
+                    senderName = `<p class="text-xs font-semibold mb-1">${msg.senderName || 'Usuario'}</p>`;
                 }
 
                 messageElement.innerHTML = `
                     <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
                         ${senderName}
                         <p>${msg.text}</p>
+                        <p class="text-right text-xs mt-1 opacity-75">${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString() : ''}</p>
                     </div>
                 `;
                 messagesContainer.appendChild(messageElement);
@@ -400,16 +419,18 @@
                     timestamp: serverTimestamp(),
                     senderId: currentUserId,
                     senderRole: 'user',
+                    senderName: userNameInput.value.trim(), // Usar el nombre del usuario del formulario
+                });
+                messageInput.value = ''; // <-- ¡Esto vacía el input!
+
+                // Actualizar el último mensaje y estado en el documento del chat principal
+                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
+                await updateDoc(chatDocRef, {
+                    lastMessageText: text,
+                    lastMessageTimestamp: serverTimestamp(),
+                    status: 'active' // Asegurarse de que el chat esté marcado como activo
                 });
 
-                // Actualizar el último mensaje en el documento del chat principal
-const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
-await updateDoc(chatDocRef, {
-    lastMessageText: text,
-    lastMessageTimestamp: serverTimestamp(),
-    status: 'active' // Asegurarse de que el chat esté marcado como activo
-});
-                messageInput.value = '';
             } catch (error) {
                 console.error("Error al enviar el mensaje:", error);
             }
