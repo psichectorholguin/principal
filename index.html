@@ -337,6 +337,7 @@
                     lastMessageText: '¡Hola! Necesito ayuda.', // Mensaje inicial
                     lastMessageTimestamp: serverTimestamp(),
                     supervisorId: null,
+                    priority: 'low' // <--- ¡Línea agregada para asignar prioridad por defecto!
                 });
                 currentChatId = newChatDoc.id;
 
