@@ -225,22 +225,21 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Configuración de Firebase ---
-        // Reemplaza con tu configuración real de Firebase
+        // ¡¡¡CRÍTICO!!! ESTOS SON TUS VALORES REALES DE TU PROYECTO FIREBASE
         const firebaseConfig = {
-  apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-  authDomain: "pap-chat-14552.firebaseapp.com",
-  projectId: "pap-chat-14552",
-  storageBucket: "pap-chat-14552.firebasestorage.app",
-  messagingSenderId: "939187274099",
-  appId: "1:939187274099:web:b021f995b9771122db0506",
-  measurementId: "G-PDH53KMFR3"
-};
-    
+            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
+            authDomain: "pap-chat-14552.firebaseapp.com",
+            projectId: "pap-chat-14552",
+            storageBucket: "pap-chat-14552.firebasestorage.app",
+            messagingSenderId: "939187274099",
+            appId: "1:939187274099:web:b021f995b9771122db0506",
+            measurementId: "G-PDH53KMFR3"
+        };
+
         // Usamos el projectId como appId para la ruta de la base de datos
-        // Esto es CRUCIAL para la consistencia con el panel del psicólogo
         const appId = firebaseConfig.projectId; 
 
         // --- Inicialización de Firebase ---
@@ -321,12 +320,13 @@
             preChatView.style.display = 'none';
             loadingView.style.display = 'flex';
             chatView.style.display = 'none';
-            messagesContainer.innerHTML = '';
+            messagesContainer.innerHTML = ''; // Limpiar el contenedor de mensajes al iniciar una nueva sesión
 
             try {
                 const userCredential = await signInAnonymously(auth);
                 currentUserId = userCredential.user.uid;
 
+                // RUTA DE CHATS: artifacts/{appId}/public/data/chats
                 const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
                 const newChatDoc = await addDoc(chatsRef, {
                     userId: currentUserId,
@@ -340,7 +340,7 @@
                 });
                 currentChatId = newChatDoc.id;
 
-                // Añadir el primer mensaje del usuario al iniciar el chat
+                // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
                 const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
                 await addDoc(messagesRef, {
                     text: '¡Hola! Necesito ayuda.',
@@ -349,7 +349,6 @@
                     senderRole: 'user',
                     senderName: userName,
                 });
-
 
                 listenForMessages(currentChatId);
                 loadingView.style.display = 'none';
@@ -361,49 +360,54 @@
             }
         };
 
-        // Escuchar mensajes en tiempo real
+        // Escuchar mensajes en tiempo real y añadirlos incrementalmente
         const listenForMessages = (chatId) => {
+            if (unsubscribeMessages) {
+                unsubscribeMessages(); // Limpiar el listener anterior si existe
+            }
+            // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
             const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
-            const q = query(messagesRef);
+            const q = query(messagesRef, orderBy('timestamp')); // Asegurar orden por timestamp
 
-            unsubscribeMessages = onSnapshot(q, (querySnapshot) => {
-                const msgs = querySnapshot.docs
-                    .map(doc => ({ id: doc.id, ...doc.data() }))
-                    .sort((a, b) => (a.timestamp?.seconds || 0) - (b.timestamp?.seconds || 0));
-                
-                renderMessages(msgs);
+            unsubscribeMessages = onSnapshot(q, (snapshot) => {
+                snapshot.docChanges().forEach(change => {
+                    if (change.type === "added") {
+                        const msg = { id: change.doc.id, ...change.doc.data() };
+                        appendMessageToDOM(msg);
+                    }
+                    // Si necesitas manejar modificaciones o eliminaciones, puedes añadir lógica aquí
+                    // else if (change.type === "modified") { ... }
+                    // else if (change.type === "removed") { ... }
+                });
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll al final después de añadir
             });
         };
 
-        // Renderizar mensajes en el DOM
-        const renderMessages = (messages) => {
-            messagesContainer.innerHTML = '';
-            messages.forEach(msg => {
-                const isSent = msg.senderId === currentUserId;
-                const messageElement = document.createElement('div');
-                messageElement.className = `flex flex-col ${isSent ? 'items-end' : 'items-start'}`;
-                
-                const bubbleClass = msg.senderRole === 'psicologo'
-                    ? 'bg-yellow-200 text-gray-900'
-                    : (isSent ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm');
-                
-                let senderName = '';
-                if (msg.senderRole === 'psicologo') {
-                    senderName = '<p class="text-sm font-bold mb-1 text-purple-700">Apoyo Psicológico</p>';
-                } else if (msg.senderRole === 'user' && !isSent) { // Mostrar nombre de usuario si no es el mensaje propio
-                    senderName = `<p class="text-xs font-semibold mb-1">${msg.senderName || 'Usuario'}</p>`;
-                }
+        // Nueva función para añadir un mensaje al DOM
+        const appendMessageToDOM = (msg) => {
+            const messageElement = document.createElement('div');
+            const isSent = msg.senderId === currentUserId;
+            messageElement.className = `flex flex-col ${isSent ? 'items-end' : 'items-start'}`;
+            
+            const bubbleClass = msg.senderRole === 'psicologo'
+                ? 'bg-yellow-200 text-gray-900'
+                : (isSent ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm');
+            
+            let senderName = '';
+            if (msg.senderRole === 'psicologo') {
+                senderName = '<p class="text-sm font-bold mb-1 text-purple-700">Apoyo Psicológico</p>';
+            } else if (msg.senderRole === 'user' && !isSent) { // Mostrar nombre de usuario si no es el mensaje propio
+                senderName = `<p class="text-xs font-semibold mb-1">${msg.senderName || 'Usuario'}</p>`;
+            }
 
-                messageElement.innerHTML = `
-                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
-                        ${senderName}
-                        <p>${msg.text}</p>
-                        <p class="text-right text-xs mt-1 opacity-75">${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString() : ''}</p>
-                    </div>
-                `;
-                messagesContainer.appendChild(messageElement);
-            });
-            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+            messageElement.innerHTML = `
+                <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
+                    ${senderName}
+                    <p>${msg.text}</p>
+                    <p class="text-right text-xs mt-1 opacity-75">${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString() : ''}</p>
+                </div>
+            `;
+            messagesContainer.appendChild(messageElement);
         };
 
         // Enviar un mensaje
@@ -412,6 +416,7 @@
             const text = messageInput.value.trim();
             if (text === '' || !currentChatId) return;
 
+            // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
             const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
             try {
                 await addDoc(messagesRef, {
@@ -424,6 +429,7 @@
                 messageInput.value = ''; // <-- ¡Esto vacía el input!
 
                 // Actualizar el último mensaje y estado en el documento del chat principal
+                // RUTA DE CHATS: artifacts/{appId}/public/data/chats
                 const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
                 await updateDoc(chatDocRef, {
                     lastMessageText: text,
