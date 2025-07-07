@@ -86,6 +86,11 @@
                     <p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>
                 </div>
                 
+                <!-- Botón para finalizar chat -->
+                <button id="end-chat-btn" class="bg-red-500 text-white px-4 py-2 rounded-md font-semibold hover:bg-red-600 transition-colors mb-4" disabled>
+                    Finalizar Chat
+                </button>
+
                 <!-- Input para enviar mensajes -->
                 <form id="psicologo-message-form" class="flex items-center space-x-2">
                     <input type="text" id="psicologo-message-input" placeholder="Escribe tu respuesta..." class="flex-1 p-3 border rounded-full focus:ring-2 focus:ring-purple-500 focus:outline-none" autocomplete="off" disabled>
@@ -102,7 +107,7 @@
         // Importaciones de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, where, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Configuración de Firebase ---
         // Reemplaza con tu configuración real de Firebase
@@ -114,9 +119,8 @@
   messagingSenderId: "939187274099",
   appId: "1:939187274099:web:b021f995b9771122db0506",
   measurementId: "G-PDH53KMFR3"
-        };
-
-
+};
+        
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -139,19 +143,31 @@
         const psicologoMessageForm = document.getElementById('psicologo-message-form');
         const psicologoMessageInput = document.getElementById('psicologo-message-input');
         const sendPsicologoMessageBtn = document.getElementById('send-psicologo-message-btn');
+        const endChatBtn = document.getElementById('end-chat-btn'); // Nuevo botón
 
         let currentSelectedChatId = null;
         let unsubscribeChatList = null;
         let unsubscribeMessages = null;
+        let authorizedEmails = []; // Lista de correos autorizados
 
         // --- Lógica de Autenticación ---
-        onAuthStateChanged(auth, (user) => {
+        onAuthStateChanged(auth, async (user) => {
             if (user) {
-                // Usuario logueado
-                authView.classList.add('hidden');
-                panelView.classList.remove('hidden');
-                userDisplay.textContent = `Bienvenido, ${user.email}`;
-                loadChatList(); // Cargar la lista de chats
+                // Usuario logueado, verificar autorización
+                await loadAuthorizedEmails(); // Cargar la lista de emails autorizados
+                if (authorizedEmails.includes(user.email)) {
+                    authView.classList.add('hidden');
+                    panelView.classList.remove('hidden');
+                    userDisplay.textContent = `Bienvenido, ${user.email}`;
+                    loadChatList(); // Cargar la lista de chats
+                } else {
+                    // No autorizado, cerrar sesión
+                    await signOut(auth);
+                    loginError.textContent = "Acceso denegado. Tu correo no está autorizado.";
+                    loginError.classList.remove('hidden');
+                    authView.classList.remove('hidden');
+                    panelView.classList.add('hidden');
+                }
             } else {
                 // Usuario no logueado
                 authView.classList.remove('hidden');
@@ -163,6 +179,7 @@
                 conversationArea.innerHTML = '<p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>';
                 psicologoMessageInput.disabled = true;
                 sendPsicologoMessageBtn.disabled = true;
+                endChatBtn.disabled = true;
             }
         });
 
@@ -173,7 +190,7 @@
             loginError.classList.add('hidden');
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // La función onAuthStateChanged manejará el cambio de vista
+                // onAuthStateChanged manejará el cambio de vista y la autorización
             } catch (error) {
                 console.error("Error al iniciar sesión:", error.message);
                 loginError.textContent = "Error al iniciar sesión: " + error.message;
@@ -184,11 +201,29 @@
         logoutBtn.addEventListener('click', async () => {
             try {
                 await signOut(auth);
-                // La función onAuthStateChanged manejará el cambio de vista
+                // onAuthStateChanged manejará el cambio de vista
             } catch (error) {
                 console.error("Error al cerrar sesión:", error.message);
             }
         });
+
+        // --- Lógica de Autorización ---
+        const loadAuthorizedEmails = async () => {
+            try {
+                // La ruta debe ser consistente con la de tus reglas de seguridad y el appId
+                const docRef = doc(db, `artifacts/${appId}/public/adminConfig`, 'authorizedPsychologists');
+                const docSnap = await getDoc(docRef);
+                if (docSnap.exists()) {
+                    authorizedEmails = docSnap.data().emails || [];
+                } else {
+                    console.warn("Documento 'authorizedPsychologists' no encontrado en Firestore. Asegúrate de crearlo.");
+                    authorizedEmails = [];
+                }
+            } catch (error) {
+                console.error("Error al cargar correos autorizados:", error);
+                authorizedEmails = [];
+            }
+        };
 
         // --- Lógica de Gestión de Chats ---
 
@@ -196,7 +231,8 @@
         const loadChatList = () => {
             if (unsubscribeChatList) unsubscribeChatList(); // Limpiar listener anterior
             const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
-            const q = query(chatsRef, orderBy('createdAt', 'desc')); // Ordenar por fecha de creación
+            // Solo cargar chats con status 'active' y ordenar por el timestamp del último mensaje
+            const q = query(chatsRef, where('status', '==', 'active'), orderBy('lastMessageTimestamp', 'desc')); 
 
             unsubscribeChatList = onSnapshot(q, (querySnapshot) => {
                 chatList.innerHTML = ''; // Limpiar lista actual
@@ -208,10 +244,12 @@
                     const chat = { id: docSnap.id, ...docSnap.data() };
                     const chatItem = document.createElement('div');
                     chatItem.className = `chat-list-item p-3 border-b border-gray-200 rounded-md ${chat.id === currentSelectedChatId ? 'active' : ''}`;
+                    chatItem.dataset.chatId = chat.id; // Añadir dataset para fácil identificación
+                    
                     chatItem.innerHTML = `
                         <p class="font-semibold text-gray-800">${chat.userName || 'Usuario Anónimo'}</p>
                         <p class="text-sm text-gray-600 truncate">${chat.lastMessageText || 'No hay mensajes aún.'}</p>
-                        <p class="text-xs text-gray-400 mt-1">${chat.createdAt ? new Date(chat.createdAt.seconds * 1000).toLocaleString() : 'Fecha desconocida'}</p>
+                        <p class="text-xs text-gray-400 mt-1">${chat.lastMessageTimestamp ? new Date(chat.lastMessageTimestamp.seconds * 1000).toLocaleString() : (chat.createdAt ? new Date(chat.createdAt.seconds * 1000).toLocaleString() : 'Fecha desconocida')}</p>
                     `;
                     chatItem.addEventListener('click', () => selectChat(chat.id));
                     chatList.appendChild(chatItem);
@@ -230,14 +268,15 @@
             // Actualizar el estilo del chat seleccionado en la lista
             Array.from(chatList.children).forEach(item => {
                 item.classList.remove('active');
-                if (item.dataset.chatId === chatId) { // Añadir dataset para fácil identificación
+                if (item.dataset.chatId === chatId) { 
                     item.classList.add('active');
                 }
             });
 
-            // Habilitar input de mensaje
+            // Habilitar input de mensaje y botón de finalizar chat
             psicologoMessageInput.disabled = false;
             sendPsicologoMessageBtn.disabled = false;
+            endChatBtn.disabled = false; // Habilitar botón de finalizar chat
             psicologoMessageInput.focus();
 
             loadMessages(chatId);
@@ -248,7 +287,8 @@
             if (unsubscribeMessages) unsubscribeMessages(); // Limpiar listener anterior
 
             const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
-            const q = query(messagesRef, orderBy('timestamp')); // Ordenar por timestamp
+            // Ordenar por timestamp para asegurar el orden correcto
+            const q = query(messagesRef, orderBy('timestamp')); 
 
             unsubscribeMessages = onSnapshot(q, (querySnapshot) => {
                 conversationArea.innerHTML = ''; // Limpiar área de conversación
@@ -296,7 +336,8 @@
                     senderName: 'Psic. Héctor Holguin' // Tu nombre para mostrar
                 });
                 psicologoMessageInput.value = ''; // Limpiar input
-                // Opcional: Actualizar el último mensaje en el documento del chat principal
+                
+                // Actualizar el último mensaje en el documento del chat principal
                 const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
                 await updateDoc(chatDocRef, {
                     lastMessageText: text,
@@ -305,13 +346,38 @@
 
             } catch (error) {
                 console.error("Error al enviar el mensaje del psicólogo:", error);
-                alert("Error al enviar mensaje. Revisa la consola."); // Usar alert solo para depuración en este contexto
+                // No usar alert() en producción, usar un modal o mensaje en pantalla
+            }
+        });
+
+        // Finalizar chat
+        endChatBtn.addEventListener('click', async () => {
+            if (!currentSelectedChatId) return;
+
+            if (confirm("¿Estás seguro de que quieres finalizar este chat? No aparecerá en la lista de chats activos.")) {
+                try {
+                    const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
+                    await updateDoc(chatDocRef, {
+                        status: 'closed',
+                        closedAt: serverTimestamp()
+                    });
+                    currentSelectedChatId = null; // Deseleccionar chat
+                    conversationArea.innerHTML = '<p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>';
+                    psicologoMessageInput.disabled = true;
+                    sendPsicologoMessageBtn.disabled = true;
+                    endChatBtn.disabled = true;
+                    // loadChatList() se activará automáticamente por el onSnapshot
+                } catch (error) {
+                    console.error("Error al finalizar el chat:", error);
+                    // No usar alert() en producción, usar un modal o mensaje en pantalla
+                }
             }
         });
 
         // Asegúrate de que el chat-list-item tenga un dataset para la ID del chat
         chatList.addEventListener('click', (e) => {
             let target = e.target;
+            // Navegar hacia arriba hasta encontrar el elemento con la clase 'chat-list-item'
             while (target && !target.classList.contains('chat-list-item')) {
                 target = target.parentElement;
             }
@@ -319,9 +385,6 @@
                 selectChat(target.dataset.chatId);
             }
         });
-
-        // Añadir dataset.chatId a los elementos de la lista de chats cuando se cargan
-        // Esto se hará dentro de la función loadChatList
     </script>
 </body>
 </html>
