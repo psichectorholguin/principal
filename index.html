@@ -273,14 +273,61 @@
         let currentChatId = null;
         let unsubscribeMessages = null;
 
+        // --- Claves para localStorage ---
+        const CHAT_ID_KEY = 'currentChatId';
+        const USER_ID_KEY = 'currentUserId';
+        const USER_NAME_KEY = 'userName';
+        const USER_EMAIL_KEY = 'userEmail';
+
         // Función para abrir el modal
         const openModal = () => {
             chatModal.classList.remove('opacity-0', 'pointer-events-none');
             chatModalContent.classList.remove('scale-95');
-            // Mostrar primero el formulario de pre-chat
-            preChatView.style.display = 'flex';
-            loadingView.style.display = 'none';
-            chatView.style.display = 'none';
+
+            const savedChatId = localStorage.getItem(CHAT_ID_KEY);
+            const savedUserName = localStorage.getItem(USER_NAME_KEY);
+            const savedUserEmail = localStorage.getItem(USER_EMAIL_KEY);
+
+            if (savedChatId && savedUserName) {
+                // Si una sesión existe, intentar reanudarla
+                userNameInput.value = savedUserName;
+                userEmailInput.value = savedUserEmail;
+                currentChatId = savedChatId;
+                
+                preChatView.style.display = 'none';
+                loadingView.style.display = 'flex';
+                chatView.style.display = 'none';
+                messagesContainer.innerHTML = ''; // Limpiar mensajes para cargar frescos
+
+                // Intentar re-autenticar anónimamente si no está ya autenticado
+                if (!auth.currentUser) {
+                    signInAnonymously(auth).then(userCredential => {
+                        currentUserId = userCredential.user.uid;
+                        listenForMessages(currentChatId);
+                        loadingView.style.display = 'none';
+                        chatView.style.display = 'flex';
+                    }).catch(error => {
+                        console.error("Error re-autenticando anónimamente:", error);
+                        loadingView.innerHTML = '<p class="text-red-500">Error al reconectar. Por favor, actualiza la página.</p>';
+                        // Volver al formulario de pre-chat si la re-autenticación falla
+                        preChatView.style.display = 'flex';
+                        loadingView.style.display = 'none';
+                        chatView.style.display = 'none';
+                    });
+                } else {
+                    currentUserId = auth.currentUser.uid; // Ya autenticado
+                    listenForMessages(currentChatId);
+                    loadingView.style.display = 'none';
+                    chatView.style.display = 'flex';
+                }
+
+            } else {
+                // No hay sesión guardada, mostrar el formulario de pre-chat
+                preChatView.style.display = 'flex';
+                loadingView.style.display = 'none';
+                chatView.style.display = 'none';
+                preChatForm.reset(); // Asegurar que el formulario esté limpio para un nuevo usuario
+            }
         };
 
         // Función para cerrar el modal
@@ -291,9 +338,9 @@
                 unsubscribeMessages();
                 unsubscribeMessages = null;
             }
-            currentChatId = null;
-            preChatForm.reset();
-            messagesContainer.innerHTML = ''; // Limpiar mensajes al cerrar
+            // NO reiniciar currentChatId, currentUserId, ni el formulario aquí.
+            // Solo limpiar los mensajes visualmente.
+            messagesContainer.innerHTML = ''; 
         };
 
         // Asignar eventos a los botones
@@ -326,6 +373,11 @@
                 const userCredential = await signInAnonymously(auth);
                 currentUserId = userCredential.user.uid;
 
+                // Guardar la información del usuario y del chat en localStorage
+                localStorage.setItem(USER_ID_KEY, currentUserId);
+                localStorage.setItem(USER_NAME_KEY, userName);
+                localStorage.setItem(USER_EMAIL_KEY, userEmail);
+
                 // RUTA DE CHATS: artifacts/{appId}/public/data/chats
                 const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
                 const newChatDoc = await addDoc(chatsRef, {
@@ -337,9 +389,10 @@
                     lastMessageText: '¡Hola! Necesito ayuda.', // Mensaje inicial
                     lastMessageTimestamp: serverTimestamp(),
                     supervisorId: null,
-                    priority: 'low' // <--- ¡Línea agregada para asignar prioridad por defecto!
+                    priority: 'low' 
                 });
                 currentChatId = newChatDoc.id;
+                localStorage.setItem(CHAT_ID_KEY, currentChatId); // Guardar el ID del chat
 
                 // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
                 const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
@@ -358,6 +411,10 @@
             } catch (error) {
                 console.error("Error al iniciar el chat:", error);
                 loadingView.innerHTML = '<p class="text-red-500">No se pudo conectar. Inténtalo de nuevo.</p>';
+                // Si hay un error, volver a mostrar el formulario de pre-chat
+                preChatView.style.display = 'flex';
+                loadingView.style.display = 'none';
+                chatView.style.display = 'none';
             }
         };
 
