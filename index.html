@@ -31,6 +31,18 @@
         .modal-content {
             transition: transform 0.25s ease;
         }
+        /* Estilos para los ticks de mensaje */
+        .message-ticks {
+            font-size: 0.75rem; /* text-xs */
+            margin-left: 0.5rem; /* ml-2 */
+            color: rgba(255, 255, 255, 0.75); /* Para mensajes enviados */
+        }
+        .message-ticks.received {
+            color: rgba(0, 0, 0, 0.5); /* Para mensajes recibidos */
+        }
+        .message-ticks.read {
+            color: #3b82f6; /* blue-500 para leido */
+        }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
@@ -44,6 +56,7 @@
                 <a href="#servicios" class="text-gray-600 hover:text-purple-700 transition-colors">Servicios</a>
                 <a href="#contacto" class="text-gray-600 hover:text-purple-700 transition-colors">Contacto</a>
             </div>
+            <!-- Botón de chat en la navegación sin indicador de disponibilidad -->
             <button id="open-chat-btn-nav" class="hidden md:block bg-purple-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-purple-700 transition-transform transform hover:scale-105">
                 Necesito Ayuda
             </button>
@@ -56,6 +69,7 @@
             <a href="#sobre-mi" class="block text-gray-600 hover:text-purple-700">Sobre Mí</a>
             <a href="#servicios" class="block text-gray-600 hover:text-purple-700">Servicios</a>
             <a href="#contacto" class="block text-gray-600 hover:text-purple-700">Contacto</a>
+            <!-- Botón de chat móvil sin indicador de disponibilidad -->
             <button id="open-chat-btn-mobile" class="w-full mt-4 bg-purple-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-purple-700">
                 Necesito Ayuda
             </button>
@@ -69,6 +83,7 @@
                 <img src="https://placehold.co/150x150/E9D5FF/4C1D95?text=Psic." alt="Foto de perfil del psicólogo" class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-white shadow-lg">
                 <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-4">Apoyo Psicológico a tu Alcance</h1>
                 <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Un espacio seguro y confidencial para encontrar orientación y bienestar emocional. Estoy aquí para escucharte.</p>
+                <!-- Botón de chat en Hero Section sin indicador de disponibilidad -->
                 <button id="open-chat-btn-hero" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition-transform transform hover:scale-105 shadow-lg">
                     <i class="fas fa-comments mr-2"></i> Iniciar Chat de Primeros Auxilios
                 </button>
@@ -81,18 +96,18 @@
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-4">Mi Recorrido Profesional</h2>
                     <p class="text-gray-600 mb-4">
-                        ¡Hola! Soy Héctor Holguin psicólogo/a clínico/a con 1 años de experiencia en [Tu Especialidad]. Mi pasión es acompañar a las personas en sus procesos de autoconocimiento y superación de dificultades emocionales.
+                        ¡Hola! Soy Héctor Holguin psicólogo/a clínico/a con 1 años de experiencia en **terapia cognitivo-conductual**. Mi pasión es acompañar a las personas en sus procesos de autoconocimiento y superación de dificultades emocionales.
                     </p>
                     <p class="text-gray-600 mb-6">
-                        Mi enfoque terapéutico se basa en [Menciona tu enfoque, ej: la Terapia Cognitivo-Conductual, el Humanismo, etc.], creando un ambiente de confianza y empatía donde te sentirás seguro/a para explorar tus pensamientos y emociones.
+                        Mi enfoque terapéutico se basa en **la Terapia Cognitivo-Conductual**, creando un ambiente de confianza y empatía donde te sentirás seguro/a para explorar tus pensamientos y emociones.
                     </p>
                     <div class="flex space-x-4">
                         <div class="bg-purple-100 p-4 rounded-lg text-center">
-                            <p class="text-3xl font-bold text-purple-700">[X]+</p>
+                            <p class="text-3xl font-bold text-purple-700">1+</p>
                             <p class="text-sm text-purple-600">Años de Experiencia</p>
                         </div>
                         <div class="bg-purple-100 p-4 rounded-lg text-center">
-                            <p class="text-3xl font-bold text-purple-700">[Y]+</p>
+                            <p class="text-3xl font-bold text-purple-700">50+</p>
                             <p class="text-sm text-purple-600">Pacientes Atendidos</p>
                         </div>
                     </div>
@@ -116,7 +131,10 @@
                         <i class="fas fa-heart-pulse text-4xl text-purple-500 mb-4"></i>
                         <h3 class="text-xl font-bold mb-2">Primeros Auxilios Psicológicos</h3>
                         <p class="text-gray-600 mb-4">Atención inmediata vía chat para momentos de crisis, ansiedad o cuando necesites ser escuchado/a sin demora.</p>
-                        <button id="open-chat-btn-service" class="mt-4 bg-purple-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-purple-700">Iniciar Chat</button>
+                        <!-- Botón de chat en Servicios sin indicador de disponibilidad -->
+                        <button id="open-chat-btn-service" class="mt-4 bg-purple-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-purple-700">
+                            Iniciar Chat
+                        </button>
                     </div>
                     <!-- Servicio 2: Terapia Individual -->
                     <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-green-500 text-center">
@@ -178,8 +196,8 @@
 
             <!-- Pre-Chat Form View -->
             <div id="pre-chat-view" class="p-6 flex flex-col justify-center text-center h-full">
-                <h3 class="text-xl font-bold text-gray-800 mb-2">Antes de comenzar...</h3>
-                <p class="text-gray-600 mb-6">Por favor, indícanos tu nombre para personalizar la conversación.</p>
+                <h3 id="pre-chat-title" class="text-xl font-bold text-gray-800 mb-2">Antes de comenzar...</h3>
+                <p id="pre-chat-description" class="text-gray-600 mb-6">Por favor, indícanos tu nombre para personalizar la conversación.</p>
                 <form id="pre-chat-form" class="space-y-4">
                     <div>
                         <label for="user-name" class="sr-only">Nombre</label>
@@ -189,7 +207,7 @@
                         <label for="user-email" class="sr-only">Correo electrónico</label>
                         <input type="email" id="user-email" placeholder="Tu correo (opcional)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
                     </div>
-                    <button type="submit" class="w-full bg-green-600 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg">
+                    <button type="submit" id="pre-chat-submit-btn" class="w-full bg-green-600 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg">
                         Iniciar Chat
                     </button>
                 </form>
@@ -205,7 +223,7 @@
                 <!-- Message Input -->
                 <form id="message-form" class="flex items-center space-x-2">
                     <input type="text" id="message-input" placeholder="Escribe tu mensaje..." class="flex-1 p-3 border rounded-full focus:ring-2 focus:ring-purple-500 focus:outline-none" autocomplete="off">
-                    <button type="submit" class="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl hover:bg-purple-700 transition-colors">
+                    <button type="submit" id="send-message-btn" class="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl hover:bg-purple-700 transition-colors">
                         <i class="fas fa-paper-plane"></i>
                     </button>
                 </form>
@@ -225,7 +243,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
         // --- Configuración de Firebase ---
         // ¡¡¡CRÍTICO!!! ESTOS SON TUS VALORES REALES DE TU PROYECTO FIREBASE
@@ -247,7 +265,7 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // --- Lógica del Chat ---
+        // --- Elementos del DOM del Chat ---
         const chatModal = document.getElementById('chat-modal');
         const chatModalContent = document.getElementById('chat-modal-content');
         const openChatButtons = [
@@ -262,16 +280,21 @@
         const preChatForm = document.getElementById('pre-chat-form');
         const userNameInput = document.getElementById('user-name');
         const userEmailInput = document.getElementById('user-email');
+        const preChatTitle = document.getElementById('pre-chat-title');
+        const preChatDescription = document.getElementById('pre-chat-description');
+        const preChatSubmitBtn = document.getElementById('pre-chat-submit-btn');
 
         const loadingView = document.getElementById('loading-view');
         const chatView = document.getElementById('chat-view');
         const messagesContainer = document.getElementById('messages-container');
         const messageForm = document.getElementById('message-form');
         const messageInput = document.getElementById('message-input');
+        const sendMessageBtn = document.getElementById('send-message-btn'); // Nuevo ID para el botón de enviar
 
         let currentUserId = null;
         let currentChatId = null;
         let unsubscribeMessages = null;
+        let unsubscribeChatStatus = null; // Nuevo listener para el estado del chat
 
         // --- Claves para localStorage ---
         const CHAT_ID_KEY = 'currentChatId';
@@ -279,8 +302,15 @@
         const USER_NAME_KEY = 'userName';
         const USER_EMAIL_KEY = 'userEmail';
 
+        // --- Funciones de Utilidad ---
+        function formatTimestampToTime(timestamp) {
+            if (!timestamp) return '';
+            const date = timestamp.toDate();
+            return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        }
+
         // Función para abrir el modal
-        const openModal = () => {
+        const openModal = async () => { // Hacerla async para await getDoc
             chatModal.classList.remove('opacity-0', 'pointer-events-none');
             chatModalContent.classList.remove('scale-95');
 
@@ -289,7 +319,18 @@
             const savedUserEmail = localStorage.getItem(USER_EMAIL_KEY);
 
             if (savedChatId && savedUserName) {
-                // Si una sesión existe, intentar reanudarla
+                // Verificar el estado del chat guardado
+                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, savedChatId);
+                const chatSnap = await getDoc(chatDocRef);
+
+                if (chatSnap.exists() && chatSnap.data().status === 'closed') {
+                    // Si el chat guardado está cerrado, revocar acceso y forzar nuevo registro
+                    clearSavedChatAccess();
+                    displayClosedChatInfo(); // Mostrar mensaje de chat cerrado
+                    return; // Salir de la función para no intentar reanudar
+                }
+
+                // Si el chat no está cerrado, intentar reanudar
                 userNameInput.value = savedUserName;
                 userEmailInput.value = savedUserEmail;
                 currentChatId = savedChatId;
@@ -297,13 +338,14 @@
                 preChatView.style.display = 'none';
                 loadingView.style.display = 'flex';
                 chatView.style.display = 'none';
-                messagesContainer.innerHTML = ''; // Limpiar mensajes para cargar frescos
+                messagesContainer.innerHTML = ''; // Limpiar mensajes
 
                 // Intentar re-autenticar anónimamente si no está ya autenticado
                 if (!auth.currentUser) {
                     signInAnonymously(auth).then(userCredential => {
                         currentUserId = userCredential.user.uid;
                         listenForMessages(currentChatId);
+                        listenForChatStatus(currentChatId); // Iniciar escucha del estado
                         loadingView.style.display = 'none';
                         chatView.style.display = 'flex';
                     }).catch(error => {
@@ -317,6 +359,7 @@
                 } else {
                     currentUserId = auth.currentUser.uid; // Ya autenticado
                     listenForMessages(currentChatId);
+                    listenForChatStatus(currentChatId); // Iniciar escucha del estado
                     loadingView.style.display = 'none';
                     chatView.style.display = 'flex';
                 }
@@ -327,20 +370,62 @@
                 loadingView.style.display = 'none';
                 chatView.style.display = 'none';
                 preChatForm.reset(); // Asegurar que el formulario esté limpio para un nuevo usuario
+                // Restaurar el texto original del formulario
+                preChatTitle.textContent = 'Antes de comenzar...';
+                preChatDescription.textContent = 'Por favor, indícanos tu nombre para personalizar la conversación.';
+                preChatSubmitBtn.textContent = 'Iniciar Chat';
+                preChatSubmitBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+                preChatSubmitBtn.classList.add('bg-green-600', 'hover:bg-green-700');
             }
         };
+
+        // Función para mostrar mensaje de chat cerrado y forzar nuevo registro
+        const displayClosedChatInfo = () => {
+            preChatView.style.display = 'flex';
+            loadingView.style.display = 'none';
+            chatView.style.display = 'none';
+            preChatForm.reset(); // Limpiar el formulario para un nuevo registro
+            preChatTitle.textContent = 'Chat Cerrado';
+            preChatDescription.textContent = 'Esta conversación ha sido cerrada. Por favor, introduce tus datos para iniciar un nuevo chat.';
+            preChatSubmitBtn.textContent = 'Iniciar Nuevo Chat';
+            preChatSubmitBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
+            preChatSubmitBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+        };
+
+        // Función para limpiar el acceso guardado del chat
+        const clearSavedChatAccess = () => {
+            localStorage.removeItem(CHAT_ID_KEY);
+            localStorage.removeItem(USER_ID_KEY);
+            localStorage.removeItem(USER_NAME_KEY);
+            localStorage.removeItem(USER_EMAIL_KEY);
+            currentChatId = null;
+            currentUserId = null;
+            if (unsubscribeMessages) {
+                unsubscribeMessages();
+                unsubscribeMessages = null;
+            }
+            if (unsubscribeChatStatus) {
+                unsubscribeChatStatus();
+                unsubscribeChatStatus = null;
+            }
+            messagesContainer.innerHTML = ''; // Limpiar mensajes visualmente
+        };
+
 
         // Función para cerrar el modal
         const closeModal = () => {
             chatModal.classList.add('opacity-0', 'pointer-events-none');
             chatModalContent.classList.add('scale-95');
+            // No limpiar localStorage aquí, solo al detectar chat cerrado desde Firebase
             if (unsubscribeMessages) {
                 unsubscribeMessages();
                 unsubscribeMessages = null;
             }
-            // NO reiniciar currentChatId, currentUserId, ni el formulario aquí.
-            // Solo limpiar los mensajes visualmente.
-            messagesContainer.innerHTML = ''; 
+            if (unsubscribeChatStatus) {
+                unsubscribeChatStatus();
+                unsubscribeChatStatus = null;
+            }
+            messagesContainer.innerHTML = ''; // Limpiar el contenedor de mensajes
         };
 
         // Asignar eventos a los botones
@@ -357,9 +442,12 @@
             e.preventDefault();
             const userName = userNameInput.value.trim();
             const userEmail = userEmailInput.value.trim();
-            if (userName) {
-                startChatSession(userName, userEmail);
+            if (!userName) {
+                alert("Por favor, introduce tu nombre para continuar."); // Usar un modal personalizado en producción
+                return;
             }
+
+            startChatSession(userName, userEmail);
         });
 
         // Iniciar sesión y crear chat
@@ -367,7 +455,7 @@
             preChatView.style.display = 'none';
             loadingView.style.display = 'flex';
             chatView.style.display = 'none';
-            messagesContainer.innerHTML = ''; // Limpiar el contenedor de mensajes al iniciar una nueva sesión
+            messagesContainer.innerHTML = ''; // Limpiar el contenedor de mensajes
 
             try {
                 const userCredential = await signInAnonymously(auth);
@@ -386,9 +474,9 @@
                     userEmail: userEmail,
                     createdAt: serverTimestamp(),
                     status: 'active', // Nuevo chat siempre activo
-                    lastMessageText: '¡Hola! Necesito ayuda.', // Mensaje inicial
+                    lastMessageText: '¡Hola! Necesito ayuda.', // Mensaje inicial del usuario
                     lastMessageTimestamp: serverTimestamp(),
-                    supervisorId: null,
+                    supervisorId: null, // Asignar a null inicialmente
                     priority: 'low' 
                 });
                 currentChatId = newChatDoc.id;
@@ -396,15 +484,32 @@
 
                 // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
                 const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
+                
+                // Primero el mensaje del usuario
                 await addDoc(messagesRef, {
                     text: '¡Hola! Necesito ayuda.',
                     timestamp: serverTimestamp(),
                     senderId: currentUserId,
                     senderRole: 'user',
                     senderName: userName,
+                    readByPsicologo: false, 
+                    readByUser: true 
                 });
 
+                // Luego el mensaje de bienvenida del psicólogo
+                await addDoc(messagesRef, {
+                    text: 'Soy el Psicólogo Héctor Holguin. Este chat es un espacio confidencial para ofrecerte un primer apoyo en lo que necesites. ¿Cómo puedo ayudarte hoy?',
+                    timestamp: serverTimestamp(), // Esto le dará un timestamp ligeramente posterior al del usuario
+                    senderId: 'psicologo_hector_uid', // ID de ejemplo para el psicólogo
+                    senderRole: 'psicologo',
+                    senderName: 'Psicólogo Héctor Holguin', // Nombre del psicólogo
+                    readByPsicologo: true, // El psicólogo lo "escribió"
+                    readByUser: false // El usuario aún no lo ha leído
+                });
+
+
                 listenForMessages(currentChatId);
+                listenForChatStatus(currentChatId); // Iniciar escucha del estado del chat
                 loadingView.style.display = 'none';
                 chatView.style.display = 'flex';
 
@@ -428,44 +533,158 @@
             const q = query(messagesRef, orderBy('timestamp')); // Asegurar orden por timestamp
 
             unsubscribeMessages = onSnapshot(q, (snapshot) => {
+                // Solo limpiar y añadir si es la carga inicial completa
+                if (snapshot.docChanges().length === snapshot.docs.length && snapshot.docChanges().every(change => change.type === "added")) {
+                     messagesContainer.innerHTML = ''; // Limpiar el contenedor solo en la carga inicial
+                }
+
                 snapshot.docChanges().forEach(change => {
+                    const msg = { id: change.doc.id, ...change.doc.data() };
                     if (change.type === "added") {
-                        const msg = { id: change.doc.id, ...change.doc.data() };
                         appendMessageToDOM(msg);
+                        // Si el mensaje es del psicólogo y no ha sido leído por el usuario, marcarlo como leído
+                        if (msg.senderRole === 'psicologo' && !msg.readByUser) {
+                            markMessageAsRead(chatId, msg.id, 'user');
+                        }
+                    } else if (change.type === "modified") {
+                        // Actualizar el estado de los ticks si el mensaje es modificado (ej. leído)
+                        const modifiedMsg = { id: change.doc.id, ...change.doc.data() };
+                        const existingMsgElement = messagesContainer.querySelector(`[data-message-id="${modifiedMsg.id}"]`);
+                        if (existingMsgElement) {
+                            // Re-renderizar solo los ticks o la burbuja si es necesario
+                            const ticksElement = existingMsgElement.querySelector('.message-ticks');
+                            if (ticksElement) {
+                                updateMessageTicks(ticksElement, modifiedMsg.readByPsicologo, modifiedMsg.readByUser, modifiedMsg.senderRole === 'user');
+                            }
+                        }
                     }
-                    // Si necesitas manejar modificaciones o eliminaciones, puedes añadir lógica aquí
-                    // else if (change.type === "modified") { ... }
-                    // else if (change.type === "removed") { ... }
                 });
                 messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll al final después de añadir
             });
         };
 
+        // Nuevo listener para el estado del chat
+        const listenForChatStatus = (chatId) => {
+            if (unsubscribeChatStatus) {
+                unsubscribeChatStatus();
+            }
+            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, chatId);
+            unsubscribeChatStatus = onSnapshot(chatDocRef, (docSnap) => {
+                if (docSnap.exists()) {
+                    const chatData = docSnap.data();
+                    if (chatData.status === 'closed') {
+                        // Deshabilitar input y botón de envío
+                        messageInput.disabled = true;
+                        sendMessageBtn.disabled = true;
+                        messageInput.placeholder = 'Este chat ha sido cerrado.';
+                        
+                        // Añadir mensaje al final de la conversación
+                        const closedMessageElement = document.createElement('div');
+                        closedMessageElement.className = 'text-center text-gray-500 mt-4';
+                        closedMessageElement.textContent = 'El psicólogo ha cerrado esta conversación. No se pueden enviar más mensajes.';
+                        messagesContainer.appendChild(closedMessageElement);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
+                        // Revocar acceso guardado
+                        clearSavedChatAccess();
+                    }
+                }
+            }, (error) => {
+                console.error("Error al escuchar el estado del chat:", error);
+            });
+        };
+
+
+        // Función para marcar un mensaje como leído
+        const markMessageAsRead = async (chatId, messageId, readerRole) => {
+            try {
+                const messageDocRef = doc(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`, messageId);
+                if (readerRole === 'user') {
+                    await updateDoc(messageDocRef, { readByUser: true });
+                } else if (readerRole === 'psicologo') {
+                    await updateDoc(messageDocRef, { readByPsicologo: true });
+                }
+            } catch (error) {
+                console.error(`Error al marcar mensaje ${messageId} como leído por ${readerRole}:`, error);
+            }
+        };
+
+        // Función para actualizar los ticks del mensaje
+        const updateMessageTicks = (ticksElement, readByPsicologo, readByUser, isUserSender) => {
+            if (!ticksElement) return;
+
+            ticksElement.innerHTML = ''; // Limpiar ticks existentes
+
+            if (isUserSender) {
+                // Mensaje enviado por el usuario
+                if (readByPsicologo) {
+                    // Doble tick azul (leído por psicólogo)
+                    ticksElement.classList.add('read');
+                    ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
+                } else {
+                    // Doble tick gris (recibido por psicólogo, no leído)
+                    ticksElement.classList.remove('read');
+                    ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
+                }
+            } else {
+                // Mensaje enviado por el psicólogo
+                if (readByUser) {
+                    // Doble tick azul (leído por usuario)
+                    ticksElement.classList.add('read');
+                    ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
+                } else {
+                    // Doble tick gris (recibido por usuario, no leído)
+                    ticksElement.classList.remove('read');
+                    ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
+                }
+            }
+        };
+
+
         // Nueva función para añadir un mensaje al DOM
         const appendMessageToDOM = (msg) => {
             const messageElement = document.createElement('div');
+            messageElement.dataset.messageId = msg.id; // Añadir ID para futuras actualizaciones
             const isSent = msg.senderId === currentUserId;
-            messageElement.className = `flex flex-col ${isSent ? 'items-end' : 'items-start'}`;
             
-            const bubbleClass = msg.senderRole === 'psicologo'
+            messageElement.className = `flex flex-col ${isSent ? 'items-end' : 'items-start'}`;
+            const bubbleClass = msg.senderRole === 'psicologo' || msg.senderRole === 'system'
                 ? 'bg-yellow-200 text-gray-900'
                 : (isSent ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm');
             
             let senderName = '';
             if (msg.senderRole === 'psicologo') {
                 senderName = '<p class="text-sm font-bold mb-1 text-purple-700">Apoyo Psicológico</p>';
-            } else if (msg.senderRole === 'user' && !isSent) { // Mostrar nombre de usuario si no es el mensaje propio
+            } else if (msg.senderRole === 'system') {
+                 senderName = '<p class="text-sm font-bold mb-1 text-gray-600">Sistema</p>';
+            }
+            else if (msg.senderRole === 'user' && !isSent) { // Mostrar nombre de usuario si no es el mensaje propio
                 senderName = `<p class="text-xs font-semibold mb-1">${msg.senderName || 'Usuario'}</p>`;
             }
 
             messageElement.innerHTML = `
-                <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
-                    ${senderName}
-                    <p>${msg.text}</p>
-                    <p class="text-right text-xs mt-1 opacity-75">${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString() : ''}</p>
+                <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
+                    <div>
+                        ${senderName}
+                        <p>${msg.text}</p>
+                        <p class="text-right text-xs mt-1 opacity-75">${formatTimestampToTime(msg.timestamp)}</p>
+                    </div>
+                    <!-- Ticks de mensaje -->
+                    <span class="message-ticks">
+                        <!-- Se actualizarán dinámicamente -->
+                    </span>
                 </div>
             `;
             messagesContainer.appendChild(messageElement);
+
+            // Inicializar los ticks
+            const ticksElement = messageElement.querySelector('.message-ticks');
+            // Solo mostrar ticks para mensajes de usuario o psicólogo, no para el sistema
+            if (msg.senderRole === 'user' || msg.senderRole === 'psicologo') {
+                updateMessageTicks(ticksElement, msg.readByPsicologo, msg.readByUser, msg.senderRole === 'user');
+            } else {
+                ticksElement.style.display = 'none'; // Ocultar ticks para mensajes del sistema
+            }
         };
 
         // Enviar un mensaje
@@ -483,6 +702,8 @@
                     senderId: currentUserId,
                     senderRole: 'user',
                     senderName: userNameInput.value.trim(), // Usar el nombre del usuario del formulario
+                    readByPsicologo: false, // Marcado como no leído por el psicólogo
+                    readByUser: true // El usuario lo acaba de escribir, ya lo leyó
                 });
                 messageInput.value = ''; // <-- ¡Esto vacía el input!
 
