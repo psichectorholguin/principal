@@ -316,7 +316,7 @@
         let currentChatId = null;
         let unsubscribeMessages = null;
         let unsubscribeChatStatus = null; // Nuevo listener para el estado del chat
-        let currentPsicologoDisplayName = 'Psicólogo'; // Default name, moved to global scope
+        let currentPsicologoDisplayName = 'Psic. Héctor'; // Default name, now fixed to "Psic. Héctor"
 
         // --- Claves para localStorage ---
         const CHAT_ID_KEY = 'currentChatId';
@@ -386,6 +386,7 @@
                 currentChatId = savedChatId;
                 
                 // Obtener el nombre del psicólogo del documento del chat si existe
+                // Aunque ahora es fijo, se mantiene la lógica para compatibilidad si el campo existe.
                 if (chatSnap.exists() && chatSnap.data().psicologoDisplayName) {
                     currentPsicologoDisplayName = chatSnap.data().psicologoDisplayName;
                 }
@@ -631,6 +632,7 @@
                 if (docSnap.exists()) {
                     const chatData = docSnap.data();
                     // Actualizar el nombre del psicólogo si cambia en el documento del chat
+                    // Aunque ahora es fijo, se mantiene la lógica para compatibilidad si el campo existe.
                     if (chatData.psicologoDisplayName) {
                         currentPsicologoDisplayName = chatData.psicologoDisplayName;
                     }
@@ -739,7 +741,7 @@
             // Color fijo para el avatar del psicólogo, color dinámico para el usuario
             const avatarColor = isPsicologo ? 'rgb(139, 92, 246)' : stringToColor(displayName); // Púrpura para psicólogo
 
-            messageElement.className = `flex items-start ${isUser ? 'justify-end' : ''} mb-4`; // Alineación general y margen inferior
+            messageElement.className = `flex mb-4 ${isUser ? 'justify-end' : 'justify-start'}`; // Alineación general y margen inferior
 
             const bubbleClass = isUser 
                 ? 'bg-purple-600 text-white' 
