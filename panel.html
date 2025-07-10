@@ -425,9 +425,6 @@
         const viewChatsBtn = document.getElementById('view-chats-btn'); 
         const viewProfileBtn = document.getElementById('view-profile-btn'); 
         const viewAdminBtn = document.getElementById('view-admin-btn');
-        // Eliminado: const toggleOnlineStatusBtn = document.getElementById('toggle-online-status-btn');
-        // Eliminado: const statusDot = document.getElementById('status-dot');
-        // Eliminado: const statusText = document.getElementById('status-text');
 
         const chatList = document.getElementById('chat-list');
         const chatFilter = document.getElementById('chat-filter'); 
@@ -1252,7 +1249,7 @@
 
             } catch (error) {
                 console.error("Error al enviar el mensaje del psicólogo:", error);
-                displayPanelMessage("Error al enviar el mensaje.", "error");
+                displayPanelMessage("Error al enviar el mensaje: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         });
 
@@ -1281,7 +1278,7 @@
                 displayPanelMessage(`Prioridad actualizada a: ${priority}.`, "success");
             } catch (error) {
                 console.error("Error al actualizar la prioridad del chat:", error);
-                displayPanelMessage("Error al actualizar la prioridad.", "error");
+                displayPanelMessage("Error al actualizar la prioridad: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         };
 
@@ -1318,7 +1315,7 @@
                     });
                 }, (error) => {
                     console.error("Error al cargar historial de prioridad:", error);
-                    priorityHistoryList.innerHTML = '<li class="text-red-500">Error al cargar historial.</li>';
+                    priorityHistoryList.innerHTML = `<li class="text-red-500">Error al cargar historial: ${error.message}.</li>`; // Mensaje de error más descriptivo
                 });
             }
         };
@@ -1354,7 +1351,7 @@
                 displayPanelMessage(`Etiqueta "${newTag}" añadida.`, "success");
             } catch (error) {
                 console.error("Error al añadir etiqueta:", error);
-                displayPanelMessage("Error al añadir etiqueta.", "error");
+                displayPanelMessage("Error al añadir etiqueta: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         });
 
@@ -1363,15 +1360,17 @@
                 const tagToRemove = e.target.dataset.tag;
                 if (!currentSelectedChatId || !tagToRemove) return;
 
-                try {
-                    const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
-                    await updateDoc(chatDocRef, {
-                        tags: arrayRemove(tagToRemove)
-                    });
-                    displayPanelMessage(`Etiqueta "${tagToRemove}" eliminada.`, "success");
-                } catch (error) {
-                    console.error("Error al eliminar etiqueta:", error);
-                    displayPanelMessage("Error al eliminar etiqueta.", "error");
+                if (confirm("¿Estás seguro de que quieres eliminar esta etiqueta?")) { // Usar confirm temporalmente aquí
+                    try {
+                        const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
+                        await updateDoc(chatDocRef, {
+                            tags: arrayRemove(tagToRemove)
+                        });
+                        displayPanelMessage(`Etiqueta "${tagToRemove}" eliminada.`, "success");
+                    } catch (error) {
+                        console.error("Error al eliminar etiqueta:", error);
+                        displayPanelMessage("Error al eliminar etiqueta: " + error.message, "error"); // Mensaje de error más descriptivo
+                    }
                 }
             }
         });
@@ -1409,7 +1408,7 @@
 
             } catch (error) {
                 console.error("Error al exportar el chat:", error);
-                displayPanelMessage("Error al exportar el chat.", "error");
+                displayPanelMessage("Error al exportar el chat: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         });
 
@@ -1445,7 +1444,7 @@
                 displayPanelMessage(`Chat marcado como eliminado.`, "success");
             } catch (error) {
                 console.error("Error al eliminar el chat:", error);
-                displayPanelMessage("Error al eliminar el chat.", "error");
+                displayPanelMessage("Error al eliminar el chat: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         });
 
@@ -1494,7 +1493,7 @@
 
             } catch (error) {
                 console.error("Error al cerrar el chat:", error);
-                displayPanelMessage("Error al cerrar el chat.", "error");
+                displayPanelMessage("Error al cerrar el chat: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         });
 
@@ -1516,7 +1515,13 @@
         // --- Lógica de Respuestas Rápidas ---
         const loadQuickReplies = () => {
             if (unsubscribeQuickReplies) unsubscribeQuickReplies();
-            if (!auth.currentUser) return;
+            if (!auth.currentUser) {
+                // Si no hay usuario autenticado, no podemos cargar respuestas rápidas.
+                // Asegurarse de que los elementos de UI muestren el estado correcto.
+                quickRepliesList.innerHTML = '<p class="text-gray-500 text-center">Inicia sesión para gestionar respuestas rápidas.</p>';
+                modalQuickRepliesList.innerHTML = '<p class="text-gray-500 text-center">Inicia sesión para ver respuestas rápidas.</p>';
+                return;
+            }
 
             const quickRepliesRef = collection(db, `artifacts/${appId}/psychologistProfiles/${auth.currentUser.uid}/quickReplies`);
             const q = query(quickRepliesRef, orderBy('createdAt', 'asc'));
@@ -1556,14 +1561,17 @@
                 });
             }, (error) => {
                 console.error("Error al cargar respuestas rápidas:", error);
-                displayPanelMessage("Error al cargar respuestas rápidas.", "error");
+                displayPanelMessage("Error al cargar respuestas rápidas: " + error.message, "error"); // Mensaje de error más descriptivo
             });
         };
 
         addQuickReplyForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const replyText = newQuickReplyTextInput.value.trim();
-            if (!replyText || !auth.currentUser) return;
+            if (!replyText || !auth.currentUser) {
+                displayPanelMessage("Debes iniciar sesión para añadir respuestas rápidas.", "error");
+                return;
+            }
 
             try {
                 const quickRepliesRef = collection(db, `artifacts/${appId}/psychologistProfiles/${auth.currentUser.uid}/quickReplies`);
@@ -1575,15 +1583,20 @@
                 displayPanelMessage("Respuesta rápida añadida.", "success");
             } catch (error) {
                 console.error("Error al añadir respuesta rápida:", error);
-                displayPanelMessage("Error al añadir respuesta rápida.", "error");
+                displayPanelMessage("Error al añadir respuesta rápida: " + error.message, "error"); // Mensaje de error más descriptivo
             }
         });
 
         quickRepliesList.addEventListener('click', async (e) => {
             if (e.target.classList.contains('remove-quick-reply-btn')) {
                 const replyId = e.target.dataset.id;
-                if (!replyId || !auth.currentUser) return;
+                if (!replyId || !auth.currentUser) {
+                    displayPanelMessage("Debes iniciar sesión para eliminar respuestas rápidas.", "error");
+                    return;
+                }
 
+                // Usar un modal personalizado en lugar de confirm() para una mejor UX
+                // Por ahora, mantendremos confirm() para la depuración
                 if (confirm("¿Estás seguro de que quieres eliminar esta respuesta rápida?")) {
                     try {
                         const replyDocRef = doc(db, `artifacts/${appId}/psychologistProfiles/${auth.currentUser.uid}/quickReplies`, replyId);
@@ -1591,7 +1604,7 @@
                         displayPanelMessage("Respuesta rápida eliminada.", "success");
                     } catch (error) {
                         console.error("Error al eliminar respuesta rápida:", error);
-                        displayPanelMessage("Error al eliminar respuesta rápida.", "error");
+                        displayPanelMessage("Error al eliminar respuesta rápida: " + error.message, "error"); // Mensaje de error más descriptivo
                     }
                 }
             }
