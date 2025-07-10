@@ -712,7 +712,6 @@
                     ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
                 } else {
                     // Doble tick gris (recibido por usuario, no leído)
-                    ticksElement.classList.remove('read');
                     ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
                 }
             }
@@ -741,7 +740,10 @@
             // Color fijo para el avatar del psicólogo, color dinámico para el usuario
             const avatarColor = isPsicologo ? 'rgb(139, 92, 246)' : stringToColor(displayName); // Púrpura para psicólogo
 
-            messageElement.className = `flex mb-4 ${isUser ? 'justify-end' : 'justify-start'}`; // Alineación general y margen inferior
+            // Ajustar la clase principal del mensaje para la alineación y dirección
+            // flex-row para psicólogo (avatar a la izquierda, burbuja a la derecha)
+            // flex-row-reverse para usuario (avatar a la derecha, burbuja a la izquierda)
+            messageElement.className = `flex mb-4 items-start ${isUser ? 'flex-row-reverse' : 'flex-row'}`; 
 
             const bubbleClass = isUser 
                 ? 'bg-purple-600 text-white' 
@@ -753,7 +755,7 @@
             let avatarHTML = '';
             if (!isSystem) {
                 avatarHTML = `
-                    <div class="initials-avatar ${isUser ? 'order-2 ml-2' : 'order-1 mr-2'}" style="background-color: ${avatarColor};">
+                    <div class="initials-avatar ${isUser ? 'ml-2' : 'mr-2'}" style="background-color: ${avatarColor};">
                         ${initials}
                     </div>
                 `;
@@ -761,7 +763,7 @@
 
             messageElement.innerHTML = `
                 ${avatarHTML}
-                <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'} ${isUser ? 'order-1' : 'order-2'}">
+                <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 ${isUser ? 'text-right' : 'text-left'}">${displayName}</span>
                     <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
                         <p>${msg.text}</p>
