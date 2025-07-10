@@ -154,6 +154,12 @@
         #quick-replies-modal.show #quick-replies-modal-content {
             transform: translateY(0);
         }
+
+        /* Estilos para el área de conversación del chat */
+        #conversation-area {
+            max-height: 400px; /* Altura máxima fija */
+            overflow-y: auto; /* Habilitar scroll vertical */
+        }
     </style>
 </head>
 <body class="flex flex-col min-h-screen">
@@ -222,12 +228,15 @@
                     <!-- Los chats se cargarán aquí -->
                     <p class="text-gray-500 text-center">Cargando chats...</p>
                 </div>
+                <button id="load-more-chats-btn" class="w-full bg-gray-200 text-gray-700 px-4 py-2 rounded-md font-semibold hover:bg-gray-300 transition-colors mt-4 hidden">
+                    Cargar más chats
+                </button>
             </div>
 
             <!-- Área de Conversación -->
             <div class="w-full md:w-2/3 bg-white rounded-lg shadow-lg p-4 flex flex-col">
                 <h2 class="text-xl font-bold text-gray-800 mb-4">Conversación</h2>
-                <div id="conversation-area" class="flex-1 flex flex-col border border-gray-200 rounded-lg p-4 overflow-y-auto space-y-4 mb-4">
+                <div id="conversation-area" class="border border-gray-200 rounded-lg p-4 space-y-4 mb-4">
                     <!-- Mensajes se cargarán aquí -->
                     <p class="text-gray-500 text-center">Selecciona un chat para ver la conversación.</p>
                 </div>
@@ -257,7 +266,7 @@
                         <span class="font-semibold text-gray-700">Prioridad:</span>
                         <button id="priority-low-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-green-800 hover:bg-green-300 transition-colors" disabled>Baja</button>
                         <button id="priority-medium-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-200 text-yellow-800 hover:bg-yellow-300 transition-colors" disabled>Media</button>
-                        <button id="priority-high-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-red-200 text-red-800 hover:bg-red-300 transition-colors" disabled>Alta</button>
+                    <button id="priority-high-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-red-200 text-red-800 hover:bg-red-300 transition-colors" disabled>Alta</button>
                     </div>
                     <button id="export-chat-btn" class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105" disabled>
                         <i class="fas fa-file-export mr-2"></i> Exportar Chat
@@ -389,7 +398,7 @@
         // Importaciones de Firebase
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, setDoc, where, getDoc, getDocs, arrayUnion, arrayRemove } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, setDoc, where, getDoc, getDocs, arrayUnion, arrayRemove, writeBatch, limit, startAfter } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; // Added writeBatch, limit, startAfter
 
         // --- Configuración de Firebase ---
         // ¡¡¡CRÍTICO!!! ESTOS SON TUS VALORES REALES DE TU PROYECTO FIREBASE
@@ -439,6 +448,7 @@
         const priorityMediumBtn = document.getElementById('priority-medium-btn');
         const priorityHighBtn = document.getElementById('priority-high-btn');
         const closeChatSessionBtn = document.getElementById('close-chat-session-btn'); // Nuevo botón
+        const loadMoreChatsBtn = document.getElementById('load-more-chats-btn'); // New button for pagination
 
         // Elementos del modal de confirmación (eliminar)
         const deleteConfirmModal = document.getElementById('delete-confirm-modal');
@@ -496,6 +506,11 @@
 
         // Objeto para almacenar los listeners de mensajes por chat
         const messageListeners = new Map();
+
+        // Variables de paginación
+        const chatsPerPage = 10;
+        let allChats = []; // Almacena todos los chats obtenidos de Firestore
+        let currentPage = 0; // Rastrea la página actual para la paginación manual
 
         // --- Funciones de Utilidad ---
 
@@ -703,6 +718,7 @@
                 quickRepliesBtn.disabled = true;
                 closeChatSessionBtn.disabled = true; // Deshabilitar el botón de cerrar chat
                 chatDetailsSection.classList.add('hidden');
+                loadMoreChatsBtn.classList.add('hidden'); // Hide load more button on logout
             }
         });
 
@@ -910,7 +926,7 @@
             const avatarColor = stringToColor(chat.userName || 'Usuario Anónimo');
 
             // Indicador de nuevo mensaje (si hay mensajes no leídos por el psicólogo)
-            const hasUnreadMessages = chat.hasUnreadMessagesForPsicologo; // Este campo debe ser actualizado por el listener de mensajes
+            const hasUnreadMessages = chat.hasUnreadMessagesForPsicologo; 
             let newMessageIndicatorHTML = '';
             if (hasUnreadMessages && chat.id !== currentSelectedChatId) { // Solo mostrar si no es el chat activo
                 newMessageIndicatorHTML = `<span class="new-message-indicator-dot"></span>`;
@@ -936,73 +952,37 @@
             if (unsubscribeChatList) unsubscribeChatList(); 
             
             const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
-            let q;
-            const selectedFilter = chatFilter.value;
-            const searchTerm = searchChatInput.value.toLowerCase().trim();
-
-            if (selectedFilter === 'active') {
-                q = query(chatsRef, where('status', '==', 'active')); 
-            } else if (selectedFilter === 'closed') {
-                q = query(chatsRef, where('status', '==', 'closed'));
-            } else if (selectedFilter === 'deleted') {
-                q = query(chatsRef, where('status', '==', 'deleted'));
-            } else { 
-                q = query(chatsRef); 
-            }
+            // Siempre ordenar por lastMessageTimestamp para consistencia.
+            // Firestore por defecto indexa los campos individuales, así que esta query simple no requiere índice compuesto.
+            const q = query(chatsRef, orderBy('lastMessageTimestamp', 'desc')); 
 
             unsubscribeChatList = onSnapshot(q, (snapshot) => {
-                // No limpiar chatDomElements.clear() aquí para mantener los elementos existentes
-                // y permitir que createOrUpdateChatItem los actualice.
-                // Sin embargo, sí necesitamos un mecanismo para remover chats que ya no existen.
-
-                const existingChatIds = new Set(chatDomElements.keys());
-                const currentChatIds = new Set();
-                
-                let chats = [];
+                allChats = []; // Reiniciar allChats en cada nueva instantánea completa
                 snapshot.forEach(docSnap => {
-                    const chat = { id: docSnap.id, ...docSnap.data() };
-                    currentChatIds.add(chat.id);
-                    if (searchTerm === '' || (chat.userName && chat.userName.toLowerCase().includes(searchTerm))) {
-                        chats.push(chat);
-                    }
+                    allChats.push({ id: docSnap.id, ...docSnap.data() });
                 });
 
-                // Remover chats que ya no están en el snapshot
-                existingChatIds.forEach(chatId => {
-                    if (!currentChatIds.has(chatId)) {
-                        const itemToRemove = chatDomElements.get(chatId);
-                        if (itemToRemove) {
-                            itemToRemove.remove();
-                            chatDomElements.delete(chatId);
-                        }
-                    }
+                // Aplicar filtrado y ordenamiento en memoria
+                let filteredChats = allChats.filter(chat => {
+                    const selectedFilter = chatFilter.value;
+                    const searchTerm = searchChatInput.value.toLowerCase().trim();
+
+                    const matchesFilter = (selectedFilter === 'all' || chat.status === selectedFilter);
+                    const matchesSearch = (searchTerm === '' || (chat.userName && chat.userName.toLowerCase().includes(searchTerm)));
+                    
+                    return matchesFilter && matchesSearch;
                 });
 
-
-                chats.sort((a, b) => {
+                // Ordenar de nuevo para asegurar el orden correcto después del filtrado en memoria
+                filteredChats.sort((a, b) => {
                     const timestampA = a.lastMessageTimestamp ? a.lastMessageTimestamp.seconds : 0;
                     const timestampB = b.lastMessageTimestamp ? b.lastMessageTimestamp.seconds : 0;
                     return timestampB - timestampA; 
                 });
 
-                // Re-renderizar o actualizar los chats
-                chatList.innerHTML = ''; // Limpiar y re-añadir para mantener el orden de la UI
-                if (chats.length === 0) {
-                    chatList.innerHTML = '<p class="text-gray-500 text-center">No hay chats para mostrar con los filtros actuales.</p>';
-                    return;
-                }
-
-                chats.forEach(chat => {
-                    const chatItem = createOrUpdateChatItem(chat);
-                    chatList.appendChild(chatItem);
-                });
-
-                // Iniciar listeners de mensajes no leídos para cada chat
-                chats.forEach(chat => {
-                    if (!messageListeners.has(chat.id)) {
-                        listenForUnreadMessages(chat.id);
-                    }
-                });
+                // Paginación manual
+                currentPage = 0; // Reiniciar página al cambiar filtro/búsqueda o al cargar la lista completa
+                renderPaginatedChats(filteredChats);
 
             }, (error) => {
                 console.error("Error al cargar la lista de chats:", error);
@@ -1010,6 +990,41 @@
                 chatList.innerHTML = '<p class="text-red-500 text-center">Error al cargar chats.</p>';
             });
         };
+
+        const renderPaginatedChats = (chats) => {
+            const startIndex = currentPage * chatsPerPage;
+            const endIndex = startIndex + chatsPerPage;
+            const chatsToDisplay = chats.slice(startIndex, endIndex);
+
+            chatList.innerHTML = ''; // Limpiar la lista actual
+            chatDomElements.clear(); // Limpiar el mapa también
+
+            if (chatsToDisplay.length === 0) {
+                chatList.innerHTML = '<p class="text-gray-500 text-center">No hay chats para mostrar con los filtros actuales.</p>';
+            } else {
+                chatsToDisplay.forEach(chat => {
+                    const chatItem = createOrUpdateChatItem(chat);
+                    chatList.appendChild(chatItem);
+                });
+            }
+
+            // Actualizar visibilidad del botón "Cargar más chats"
+            if (loadMoreChatsBtn) {
+                if (endIndex < chats.length) {
+                    loadMoreChatsBtn.classList.remove('hidden');
+                } else {
+                    loadMoreChatsBtn.classList.add('hidden');
+                }
+            }
+
+            // Asegurar que los listeners de mensajes no leídos estén activos para todos los chats mostrados
+            chatsToDisplay.forEach(chat => {
+                if (!messageListeners.has(chat.id)) {
+                    listenForUnreadMessages(chat.id);
+                }
+            });
+        };
+
 
         // Listener para detectar mensajes no leídos en cada chat
         const listenForUnreadMessages = (chatId) => {
@@ -1038,13 +1053,31 @@
         };
 
         const playNewMessageSound = () => {
-            const audio = new Audio('https://www.soundjay.com/buttons/beep-07.mp3'); // Sonido de ejemplo
+            // Usando un sonido más genérico y compatible
+            const audio = new Audio('https://notificationsounds.com/storage/sounds/notification.mp3'); 
             audio.play().catch(e => console.warn("No se pudo reproducir el sonido de notificación:", e));
         };
 
 
-        chatFilter.addEventListener('change', loadChatList);
-        searchChatInput.addEventListener('input', loadChatList); 
+        chatFilter.addEventListener('change', () => {
+            currentPage = 0; // Reset pagination
+            loadChatList(); // Reload all chats and re-render
+        });
+        searchChatInput.addEventListener('input', () => {
+            currentPage = 0; // Reset pagination
+            loadChatList(); // Reload all chats and re-render
+        });
+        loadMoreChatsBtn.addEventListener('click', () => {
+            currentPage++;
+            renderPaginatedChats(allChats.filter(chat => {
+                const selectedFilter = chatFilter.value;
+                const searchTerm = searchChatInput.value.toLowerCase().trim();
+                const matchesFilter = (selectedFilter === 'all' || chat.status === selectedFilter);
+                const matchesSearch = (searchTerm === '' || (chat.userName && chat.userName.toLowerCase().includes(searchTerm)));
+                return matchesFilter && matchesSearch;
+            }));
+        });
+
 
         const selectChat = async (chatId) => {
             if (currentSelectedChatId === chatId) return; 
@@ -1096,7 +1129,7 @@
                     where('readByPsicologo', '==', false)
                 );
                 const snapshot = await getDocs(messagesToMarkReadQuery);
-                const batch = db.batch();
+                const batch = writeBatch(db); // Corrected: Initialize batch using writeBatch(db)
                 snapshot.forEach(docSnap => {
                     batch.update(docSnap.ref, { readByPsicologo: true });
                 });
@@ -1126,7 +1159,7 @@
                 }
                 
                 snapshot.docChanges().forEach(change => {
-                    const message = { id: change.doc.id, ...change.doc.data() };
+                    const message = { id: change.doc.id, ...change.doc.data() }; 
                     if (change.type === "added") {
                         appendMessageToPanelDOM(message);
                     } else if (change.type === "modified") {
@@ -1568,10 +1601,19 @@
         addQuickReplyForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const replyText = newQuickReplyTextInput.value.trim();
-            if (!replyText || !auth.currentUser) {
+            console.log("DEBUG: Intentando añadir respuesta rápida.");
+            console.log("DEBUG: Texto de respuesta:", replyText);
+
+            if (!replyText) {
+                displayPanelMessage("El texto de la respuesta rápida no puede estar vacío.", "error");
+                return;
+            }
+            if (!auth.currentUser) {
                 displayPanelMessage("Debes iniciar sesión para añadir respuestas rápidas.", "error");
                 return;
             }
+            console.log("DEBUG: UID del psicólogo:", auth.currentUser.uid);
+
 
             try {
                 const quickRepliesRef = collection(db, `artifacts/${appId}/psychologistProfiles/${auth.currentUser.uid}/quickReplies`);
