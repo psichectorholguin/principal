@@ -28,17 +28,38 @@
         .modal {
             transition: opacity 0.25s ease;
         }
+        .modal.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
         .modal-content {
+            transform: translateY(-50px);
             transition: transform 0.25s ease;
         }
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        /* Estilos para los avatares de iniciales */
+        .initials-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            color: white;
+            background-color: #8b5cf6; /* default purple */
+            flex-shrink: 0; /* Evita que se encoja */
+        }
+
         /* Estilos para los ticks de mensaje */
         .message-ticks {
             font-size: 0.75rem; /* text-xs */
             margin-left: 0.5rem; /* ml-2 */
             color: rgba(255, 255, 255, 0.75); /* Para mensajes enviados */
-        }
-        .message-ticks.received {
-            color: rgba(0, 0, 0, 0.5); /* Para mensajes recibidos */
         }
         .message-ticks.read {
             color: #3b82f6; /* blue-500 para leido */
@@ -295,6 +316,7 @@
         let currentChatId = null;
         let unsubscribeMessages = null;
         let unsubscribeChatStatus = null; // Nuevo listener para el estado del chat
+        let currentPsicologoDisplayName = 'Psicólogo'; // Default name, moved to global scope
 
         // --- Claves para localStorage ---
         const CHAT_ID_KEY = 'currentChatId';
@@ -307,6 +329,34 @@
             if (!timestamp) return '';
             const date = timestamp.toDate();
             return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
+        }
+
+        // Función para obtener las iniciales de un nombre
+        function getInitials(name) {
+            if (!name) return '';
+            const parts = name.split(' ');
+            let initials = '';
+            if (parts.length > 0 && parts[0].length > 0) {
+                initials += parts[0][0];
+            }
+            if (parts.length > 1 && parts[parts.length - 1].length > 0) {
+                initials += parts[parts.length - 1][0];
+            }
+            return initials.toUpperCase();
+        }
+
+        // Función para generar un color de avatar consistente basado en el nombre
+        function stringToColor(str) {
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            let color = '#';
+            for (let i = 0; i < 3; i++) {
+                let value = (hash >> (i * 8)) & 0xFF;
+                color += ('00' + value.toString(16)).substr(-2);
+            }
+            return color;
         }
 
         // Función para abrir el modal
@@ -335,6 +385,11 @@
                 userEmailInput.value = savedUserEmail;
                 currentChatId = savedChatId;
                 
+                // Obtener el nombre del psicólogo del documento del chat si existe
+                if (chatSnap.exists() && chatSnap.data().psicologoDisplayName) {
+                    currentPsicologoDisplayName = chatSnap.data().psicologoDisplayName;
+                }
+
                 preChatView.style.display = 'none';
                 loadingView.style.display = 'flex';
                 chatView.style.display = 'none';
@@ -443,7 +498,9 @@
             const userName = userNameInput.value.trim();
             const userEmail = userEmailInput.value.trim();
             if (!userName) {
-                alert("Por favor, introduce tu nombre para continuar."); // Usar un modal personalizado en producción
+                // Reemplazar alert() con un modal personalizado o mensaje en UI
+                // Por ahora, para la depuración, se mantiene el alert
+                alert("Por favor, introduce tu nombre para continuar."); 
                 return;
             }
 
@@ -477,7 +534,8 @@
                     lastMessageText: '¡Hola! Necesito ayuda.', // Mensaje inicial del usuario
                     lastMessageTimestamp: serverTimestamp(),
                     supervisorId: null, // Asignar a null inicialmente
-                    priority: 'low' 
+                    priority: 'low',
+                    psicologoDisplayName: 'Psicólogo' // Default, will be updated by psychologist
                 });
                 currentChatId = newChatDoc.id;
                 localStorage.setItem(CHAT_ID_KEY, currentChatId); // Guardar el ID del chat
@@ -502,7 +560,7 @@
                     timestamp: serverTimestamp(), // Esto le dará un timestamp ligeramente posterior al del usuario
                     senderId: 'psicologo_hector_uid', // ID de ejemplo para el psicólogo
                     senderRole: 'psicologo',
-                    senderName: 'Psicólogo Héctor Holguin', // Nombre del psicólogo
+                    senderName: 'Psic. Héctor', // Usar el nombre fijo del psicólogo
                     readByPsicologo: true, // El psicólogo lo "escribió"
                     readByUser: false // El usuario aún no lo ha leído
                 });
@@ -572,21 +630,38 @@
             unsubscribeChatStatus = onSnapshot(chatDocRef, (docSnap) => {
                 if (docSnap.exists()) {
                     const chatData = docSnap.data();
+                    // Actualizar el nombre del psicólogo si cambia en el documento del chat
+                    if (chatData.psicologoDisplayName) {
+                        currentPsicologoDisplayName = chatData.psicologoDisplayName;
+                    }
+
                     if (chatData.status === 'closed') {
                         // Deshabilitar input y botón de envío
                         messageInput.disabled = true;
                         sendMessageBtn.disabled = true;
                         messageInput.placeholder = 'Este chat ha sido cerrado.';
                         
-                        // Añadir mensaje al final de la conversación
-                        const closedMessageElement = document.createElement('div');
-                        closedMessageElement.className = 'text-center text-gray-500 mt-4';
-                        closedMessageElement.textContent = 'El psicólogo ha cerrado esta conversación. No se pueden enviar más mensajes.';
-                        messagesContainer.appendChild(closedMessageElement);
-                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        // Añadir mensaje al final de la conversación si no existe ya
+                        if (!messagesContainer.querySelector('.chat-closed-message')) {
+                            const closedMessageElement = document.createElement('div');
+                            closedMessageElement.className = 'text-center text-gray-500 mt-4 chat-closed-message'; // Added class for identification
+                            closedMessageElement.textContent = 'El psicólogo ha cerrado esta conversación. No se pueden enviar más mensajes.';
+                            messagesContainer.appendChild(closedMessageElement);
+                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        }
 
                         // Revocar acceso guardado
                         clearSavedChatAccess();
+                    } else {
+                        // Re-habilitar si el estado cambia a activo (aunque no debería pasar de cerrado a activo)
+                        messageInput.disabled = false;
+                        sendMessageBtn.disabled = false;
+                        messageInput.placeholder = 'Escribe tu mensaje...';
+                        // Remover el mensaje de chat cerrado si existe
+                        const closedMessageElement = messagesContainer.querySelector('.chat-closed-message');
+                        if (closedMessageElement) {
+                            closedMessageElement.remove();
+                        }
                     }
                 }
             }, (error) => {
@@ -614,6 +689,7 @@
             if (!ticksElement) return;
 
             ticksElement.innerHTML = ''; // Limpiar ticks existentes
+            ticksElement.classList.remove('read'); // Limpiar clase 'read'
 
             if (isUserSender) {
                 // Mensaje enviado por el usuario
@@ -641,48 +717,68 @@
         };
 
 
-        // Nueva función para añadir un mensaje al DOM
+        // Función para añadir un mensaje al DOM
         const appendMessageToDOM = (msg) => {
             const messageElement = document.createElement('div');
             messageElement.dataset.messageId = msg.id; // Añadir ID para futuras actualizaciones
-            const isSent = msg.senderId === currentUserId;
-            
-            messageElement.className = `flex flex-col ${isSent ? 'items-end' : 'items-start'}`;
-            const bubbleClass = msg.senderRole === 'psicologo' || msg.senderRole === 'system'
-                ? 'bg-yellow-200 text-gray-900'
-                : (isSent ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm');
-            
-            let senderName = '';
-            if (msg.senderRole === 'psicologo') {
-                senderName = '<p class="text-sm font-bold mb-1 text-purple-700">Apoyo Psicológico</p>';
-            } else if (msg.senderRole === 'system') {
-                 senderName = '<p class="text-sm font-bold mb-1 text-gray-600">Sistema</p>';
+            const isUser = msg.senderId === currentUserId;
+            const isPsicologo = msg.senderRole === 'psicologo';
+            const isSystem = msg.senderRole === 'system';
+
+            // Determinar el nombre a mostrar
+            let displayName = '';
+            if (isUser) {
+                displayName = msg.senderName || 'Tú';
+            } else if (isPsicologo) {
+                displayName = 'Psic. Héctor'; // Nombre fijo para el psicólogo
+            } else if (isSystem) {
+                displayName = 'Sistema';
             }
-            else if (msg.senderRole === 'user' && !isSent) { // Mostrar nombre de usuario si no es el mensaje propio
-                senderName = `<p class="text-xs font-semibold mb-1">${msg.senderName || 'Usuario'}</p>`;
+
+            const initials = getInitials(displayName);
+            // Color fijo para el avatar del psicólogo, color dinámico para el usuario
+            const avatarColor = isPsicologo ? 'rgb(139, 92, 246)' : stringToColor(displayName); // Púrpura para psicólogo
+
+            messageElement.className = `flex items-start ${isUser ? 'justify-end' : ''} mb-4`; // Alineación general y margen inferior
+
+            const bubbleClass = isUser 
+                ? 'bg-purple-600 text-white' 
+                : (isPsicologo 
+                    ? 'bg-gray-200 text-gray-800' 
+                    : 'bg-yellow-200 text-gray-900'); // Fondo para mensajes de sistema
+
+            // HTML del avatar, solo si no es un mensaje del sistema
+            let avatarHTML = '';
+            if (!isSystem) {
+                avatarHTML = `
+                    <div class="initials-avatar ${isUser ? 'order-2 ml-2' : 'order-1 mr-2'}" style="background-color: ${avatarColor};">
+                        ${initials}
+                    </div>
+                `;
             }
 
             messageElement.innerHTML = `
-                <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
-                    <div>
-                        ${senderName}
+                ${avatarHTML}
+                <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'} ${isUser ? 'order-1' : 'order-2'}">
+                    <span class="text-xs font-semibold mb-1 ${isUser ? 'text-right' : 'text-left'}">${displayName}</span>
+                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
                         <p>${msg.text}</p>
-                        <p class="text-right text-xs mt-1 opacity-75">${formatTimestampToTime(msg.timestamp)}</p>
+                        <div class="flex ${isUser ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75">
+                            <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                            <span class="message-ticks ml-2">
+                                <!-- Ticks will be updated dynamically -->
+                            </span>
+                        </div>
                     </div>
-                    <!-- Ticks de mensaje -->
-                    <span class="message-ticks">
-                        <!-- Se actualizarán dinámicamente -->
-                    </span>
                 </div>
             `;
             messagesContainer.appendChild(messageElement);
 
             // Inicializar los ticks
             const ticksElement = messageElement.querySelector('.message-ticks');
-            // Solo mostrar ticks para mensajes de usuario o psicólogo, no para el sistema
-            if (msg.senderRole === 'user' || msg.senderRole === 'psicologo') {
-                updateMessageTicks(ticksElement, msg.readByPsicologo, msg.readByUser, msg.senderRole === 'user');
-            } else {
+            if (ticksElement && (isUser || isPsicologo)) { // Solo mostrar ticks para mensajes de usuario o psicólogo
+                updateMessageTicks(ticksElement, msg.readByPsicologo, msg.readByUser, isUser);
+            } else if (ticksElement) {
                 ticksElement.style.display = 'none'; // Ocultar ticks para mensajes del sistema
             }
         };
@@ -691,7 +787,19 @@
         messageForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = messageInput.value.trim();
-            if (text === '' || !currentChatId) return;
+            const userName = userNameInput.value.trim();
+
+            if (text === '' || userName === '' || !currentChatId) return;
+
+            // Obtener el estado actual del chat para verificar si está cerrado
+            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
+            const chatSnap = await getDoc(chatDocRef);
+            if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
+                // Si el chat está cerrado o eliminado, no permitir enviar mensajes
+                // y mostrar un mensaje al usuario.
+                // Ya se maneja en listenForChatStatus, pero esta es una doble verificación.
+                return; 
+            }
 
             // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
             const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
@@ -701,7 +809,7 @@
                     timestamp: serverTimestamp(),
                     senderId: currentUserId,
                     senderRole: 'user',
-                    senderName: userNameInput.value.trim(), // Usar el nombre del usuario del formulario
+                    senderName: userName, // Usar el nombre del usuario del formulario
                     readByPsicologo: false, // Marcado como no leído por el psicólogo
                     readByUser: true // El usuario lo acaba de escribir, ya lo leyó
                 });
@@ -709,11 +817,12 @@
 
                 // Actualizar el último mensaje y estado en el documento del chat principal
                 // RUTA DE CHATS: artifacts/{appId}/public/data/chats
-                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
                 await updateDoc(chatDocRef, {
                     lastMessageText: text,
                     lastMessageTimestamp: serverTimestamp(),
-                    status: 'active' // Asegurarse de que el chat esté marcado como activo
+                    status: 'active', // Asegurarse de que el chat esté marcado como activo
+                    userName: userName, // Actualizar el nombre del usuario en el documento del chat
+                    hasUnreadMessagesForPsicologo: true // Marcar como no leído para el psicólogo
                 });
 
             } catch (error) {
