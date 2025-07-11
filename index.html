@@ -373,10 +373,10 @@
                 const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, savedChatId);
                 const chatSnap = await getDoc(chatDocRef);
 
-                if (chatSnap.exists() && chatSnap.data().status === 'closed') {
-                    // Si el chat guardado está cerrado, revocar acceso y forzar nuevo registro
+                if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
+                    // Si el chat guardado está cerrado o eliminado, revocar acceso y forzar nuevo registro
                     clearSavedChatAccess();
-                    displayClosedChatInfo(); // Mostrar mensaje de chat cerrado
+                    displayClosedChatInfo(chatSnap.data().status); // Pasar el estado para mensaje específico
                     return; // Salir de la función para no intentar reanudar
                 }
 
@@ -435,14 +435,19 @@
             }
         };
 
-        // Función para mostrar mensaje de chat cerrado y forzar nuevo registro
-        const displayClosedChatInfo = () => {
+        // Función para mostrar mensaje de chat cerrado o eliminado y forzar nuevo registro
+        const displayClosedChatInfo = (status) => {
             preChatView.style.display = 'flex';
             loadingView.style.display = 'none';
             chatView.style.display = 'none';
             preChatForm.reset(); // Limpiar el formulario para un nuevo registro
-            preChatTitle.textContent = 'Chat Cerrado';
-            preChatDescription.textContent = 'Esta conversación ha sido cerrada. Por favor, introduce tus datos para iniciar un nuevo chat.';
+            if (status === 'closed') {
+                preChatTitle.textContent = 'Chat Cerrado';
+                preChatDescription.textContent = 'Esta conversación ha sido cerrada. Por favor, introduce tus datos para iniciar un nuevo chat.';
+            } else if (status === 'deleted') {
+                preChatTitle.textContent = 'Chat Eliminado';
+                preChatDescription.textContent = 'Esta conversación ha sido eliminada. Por favor, introduce tus datos para iniciar un nuevo chat.';
+            }
             preChatSubmitBtn.textContent = 'Iniciar Nuevo Chat';
             preChatSubmitBtn.classList.remove('bg-gray-600', 'hover:bg-gray-700');
             preChatSubmitBtn.classList.add('bg-green-600', 'hover:bg-green-700');
@@ -541,7 +546,7 @@
                 currentChatId = newChatDoc.id;
                 localStorage.setItem(CHAT_ID_KEY, currentChatId); // Guardar el ID del chat
 
-                // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{chatId}/messages
+                // RUTA DE MENSAJES: artifacts/{appId}/public/data/chats/{currentChatId}/messages
                 const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
                 
                 // Primero el mensaje del usuario
@@ -637,33 +642,39 @@
                         currentPsicologoDisplayName = chatData.psicologoDisplayName;
                     }
 
-                    if (chatData.status === 'closed') {
+                    if (chatData.status === 'closed' || chatData.status === 'deleted') {
                         // Deshabilitar input y botón de envío
                         messageInput.disabled = true;
                         sendMessageBtn.disabled = true;
-                        messageInput.placeholder = 'Este chat ha sido cerrado.';
+                        messageInput.placeholder = `Este chat ha sido ${chatData.status === 'closed' ? 'cerrado' : 'eliminado'}.`;
                         
                         // Añadir mensaje al final de la conversación si no existe ya
-                        if (!messagesContainer.querySelector('.chat-closed-message')) {
-                            const closedMessageElement = document.createElement('div');
-                            closedMessageElement.className = 'text-center text-gray-500 mt-4 chat-closed-message'; // Added class for identification
-                            closedMessageElement.textContent = 'El psicólogo ha cerrado esta conversación. No se pueden enviar más mensajes.';
-                            messagesContainer.appendChild(closedMessageElement);
+                        if (!messagesContainer.querySelector('.chat-status-message')) {
+                            const statusMessageElement = document.createElement('div');
+                            statusMessageElement.className = 'text-center text-gray-500 mt-4 chat-status-message'; // Added class for identification
+                            statusMessageElement.textContent = `El psicólogo ha ${chatData.status === 'closed' ? 'cerrado' : 'eliminado'} esta conversación. No se pueden enviar más mensajes.`;
+                            messagesContainer.appendChild(statusMessageElement);
                             messagesContainer.scrollTop = messagesContainer.scrollHeight;
                         }
 
                         // Revocar acceso guardado
                         clearSavedChatAccess();
                     } else {
-                        // Re-habilitar si el estado cambia a activo (aunque no debería pasar de cerrado a activo)
+                        // Re-habilitar si el estado cambia a activo (aunque no debería pasar de cerrado/eliminado a activo)
                         messageInput.disabled = false;
                         sendMessageBtn.disabled = false;
                         messageInput.placeholder = 'Escribe tu mensaje...';
-                        // Remover el mensaje de chat cerrado si existe
-                        const closedMessageElement = messagesContainer.querySelector('.chat-closed-message');
-                        if (closedMessageElement) {
-                            closedMessageElement.remove();
+                        // Remover el mensaje de chat cerrado/eliminado si existe
+                        const statusMessageElement = messagesContainer.querySelector('.chat-status-message');
+                        if (statusMessageElement) {
+                            statusMessageElement.remove();
                         }
+                    }
+                } else {
+                    // Si el documento del chat no existe (fue eliminado permanentemente), revocar acceso
+                    if (currentChatId === chatId) { // Asegurarse de que es el chat actual
+                        clearSavedChatAccess();
+                        displayClosedChatInfo('deleted'); // Forzar mensaje de chat eliminado
                     }
                 }
             }, (error) => {
@@ -795,7 +806,7 @@
 
             if (text === '' || userName === '' || !currentChatId) return;
 
-            // Obtener el estado actual del chat para verificar si está cerrado
+            // Obtener el estado actual del chat para verificar si está cerrado o eliminado
             const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
             const chatSnap = await getDoc(chatDocRef);
             if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
