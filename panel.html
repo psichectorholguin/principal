@@ -1194,6 +1194,7 @@
                 );
                 const snapshot = await getDocs(messagesToMarkReadQuery);
                 const batch = writeBatch(db); 
+
                 snapshot.forEach(docSnap => {
                     batch.update(docSnap.ref, { readByPsicologo: true });
                 });
@@ -1529,7 +1530,24 @@
             try {
                 const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentSelectedChatId);
 
-                // 1. Eliminar todos los mensajes en la subcolección
+                // 1. Marcar el chat como 'deleted' para que el usuario pierda el acceso
+                await updateDoc(chatDocRef, {
+                    status: 'deleted',
+                    closedAt: serverTimestamp() // Usar closedAt para registrar cuándo se marcó como eliminado
+                });
+
+                // 2. Añadir un mensaje al chat indicando que ha sido eliminado (opcional, pero útil para el historial)
+                await addDoc(collection(db, `artifacts/${appId}/public/data/chats/${currentSelectedChatId}/messages`), {
+                    text: 'Este chat ha sido eliminado por el psicólogo. No se pueden enviar más mensajes.',
+                    timestamp: serverTimestamp(),
+                    senderId: auth.currentUser.uid,
+                    senderRole: 'system', 
+                    senderName: 'Sistema',
+                    readByPsicologo: true,
+                    readByUser: false
+                });
+
+                // 3. Eliminar todos los mensajes en la subcolección
                 const messagesRef = collection(chatDocRef, 'messages');
                 const messageSnapshot = await getDocs(messagesRef);
                 const batch = writeBatch(db); // Usar un batch para eficiencia
@@ -1541,7 +1559,9 @@
                 // Commit the batch para eliminar mensajes
                 await batch.commit();
 
-                // 2. Eliminar el documento del chat principal
+                // 4. Eliminar el documento del chat principal (después de que el estado 'deleted' haya sido propagado y el cliente haya reaccionado)
+                // Se podría considerar un pequeño retraso aquí si se quiere asegurar que el cliente procese el cambio de estado primero.
+                // Sin embargo, para una eliminación "permanente", eliminarlo directamente es lo más común.
                 await deleteDoc(chatDocRef);
                 
                 currentSelectedChatId = null; 
