@@ -586,6 +586,16 @@
             return date.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' });
         }
 
+        // Función para truncar el texto a un número específico de palabras
+        function truncateWords(text, limit) {
+            if (!text) return '';
+            const words = text.split(' ');
+            if (words.length > limit) {
+                return words.slice(0, limit).join(' ') + '...';
+            }
+            return text;
+        }
+
         // --- Lógica de Modales de Confirmación ---
         const showDeleteConfirmModal = () => {
             deleteConfirmModal.classList.add('show');
@@ -962,6 +972,16 @@
                 newMessageIndicatorHTML = `<span class="new-message-indicator-dot"></span>`;
             }
 
+            // Determinar el prefijo del mensaje
+            let messagePrefix = '';
+            if (chat.lastMessageSenderRole === 'psicologo') {
+                messagePrefix = 'Tú: ';
+            }
+            // Truncar el mensaje a 5 palabras
+            const truncatedMessageText = truncateWords(chat.lastMessageText || 'No hay mensajes aún.', 5);
+            const displayedMessage = messagePrefix + truncatedMessageText;
+
+
             chatItem.innerHTML = `
                 ${newMessageIndicatorHTML}
                 <div class="initials-avatar mr-3" style="background-color: ${avatarColor};">
@@ -972,7 +992,7 @@
                         <p class="font-semibold text-gray-800 truncate">${chat.userName || 'Usuario Anónimo'}</p>
                         <p class="text-xs text-gray-400 ml-2">${formatTimestampForList(chat.lastMessageTimestamp || chat.createdAt)}</p>
                     </div>
-                    <p class="text-sm text-gray-600 break-all">${chat.lastMessageText || 'No hay mensajes aún.'}</p>
+                    <p class="text-sm text-gray-600 truncate">${displayedMessage}</p>
                 </div>
             `;
             return chatItem;
