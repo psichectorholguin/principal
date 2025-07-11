@@ -772,6 +772,8 @@
 
             const isLongUnbrokenText = msg.text && !msg.text.includes(' ') && msg.text.length > 30;
             const textClass = isLongUnbrokenText ? 'break-all' : 'break-words';
+           
+            const timeAndTicksAlignmentClass = isUser ? 'justify-end' : 'justify-end'; // Ambos a la derecha dentro de la burbuja
 
             messageElement.innerHTML = `
             ${avatarHTML}
