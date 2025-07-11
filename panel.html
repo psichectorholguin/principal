@@ -7,10 +7,12 @@
     
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
     
+    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <style>
@@ -277,21 +279,23 @@
                 </div>
 
                 <div class="flex flex-col sm:flex-row justify-between items-center gap-4 mb-4 p-3 bg-gray-100 rounded-lg shadow-sm">
-                    <div class="flex items-center space-x-2">
+                    <div class="flex items-center space-x-2 flex-wrap justify-center sm:justify-start">
                         <span class="font-semibold text-gray-700">Prioridad:</span>
                         <button id="priority-low-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-green-200 text-green-800 hover:bg-green-300 transition-colors" disabled>Baja</button>
                         <button id="priority-medium-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-yellow-200 text-yellow-800 hover:bg-yellow-300 transition-colors" disabled>Media</button>
-                    <button id="priority-high-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-red-200 text-red-800 hover:bg-red-300 transition-colors" disabled>Alta</button>
+                        <button id="priority-high-btn" class="px-3 py-1 rounded-full text-sm font-medium bg-red-200 text-red-800 hover:bg-red-300 transition-colors" disabled>Alta</button>
                     </div>
-                    <button id="export-chat-btn" class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105" disabled>
-                        <i class="fas fa-file-export mr-2"></i> Exportar Chat
-                    </button>
-                    <button id="close-chat-session-btn" class="bg-orange-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-700 transition-colors transform hover:scale-105" disabled>
-                        <i class="fas fa-times-circle mr-2"></i> Cerrar Chat
-                    </button>
-                    <button id="delete-chat-btn" class="bg-red-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors transform hover:scale-105" disabled>
-                        <i class="fas fa-trash-alt mr-2"></i> Eliminar Chat
-                    </button>
+                    <div class="flex flex-wrap justify-center gap-2 mt-4 sm:mt-0">
+                        <button id="export-chat-btn" class="bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 transition-colors transform hover:scale-105" disabled>
+                            <i class="fas fa-file-export mr-2"></i> Exportar Chat
+                        </button>
+                        <button id="close-chat-session-btn" class="bg-orange-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-orange-700 transition-colors transform hover:scale-105" disabled>
+                            <i class="fas fa-times-circle mr-2"></i> Cerrar Chat
+                        </button>
+                        <button id="delete-chat-btn" class="bg-red-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-red-700 transition-colors transform hover:scale-105" disabled>
+                            <i class="fas fa-trash-alt mr-2"></i> Eliminar Chat
+                        </button>
+                    </div>
                 </div>
 
                 <form id="psicologo-message-form" class="flex items-center space-x-2">
@@ -968,7 +972,7 @@
                         <p class="font-semibold text-gray-800 truncate">${chat.userName || 'Usuario Anónimo'}</p>
                         <p class="text-xs text-gray-400 ml-2">${formatTimestampForList(chat.lastMessageTimestamp || chat.createdAt)}</p>
                     </div>
-                    <p class="text-sm text-gray-600 truncate">${chat.lastMessageText || 'No hay mensajes aún.'}</p>
+                    <p class="text-sm text-gray-600 break-all">${chat.lastMessageText || 'No hay mensajes aún.'}</p>
                 </div>
             `;
             return chatItem;
@@ -1288,8 +1292,8 @@
                 ${avatarHTML}
                 <div class="flex flex-col ${isPsicologo ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 ${isPsicologo ? 'text-right' : 'text-left'}">${displayName}</span>
-                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
-                        <p class="break-words">${message.text}</p>
+                    <div class="px-4 py-2 rounded-lg max-w-[85%] ${bubbleClass} flex items-end min-w-0">
+                        <p class="break-all">${message.text}</p>
                         <div class="flex ${isPsicologo ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75">
                             <span>${formatTimestampToTime(message.timestamp)}</span>
                             <span class="message-ticks ml-2">
