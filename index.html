@@ -781,7 +781,7 @@
                 <span class="text-xs font-semibold mb-1 ${isUser ? 'text-right' : 'text-left'}">${displayName}</span>
                 <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex ${bubbleContentAlignClass} flex-col">
                     <p class="${textClass} text-left" style="word-break: break-word; overflow-wrap: break-word;">${msg.text}</p>
-                    <div class="flex ${isUser ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75 w-full">
+                    <div class="flex ${isUser ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75">
                         <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
                         <span class="message-ticks ml-2">
                             <!-- Ticks will be updated dynamically -->
