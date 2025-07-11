@@ -395,6 +395,7 @@
                 loadingView.style.display = 'flex';
                 chatView.style.display = 'none';
                 messagesContainer.innerHTML = ''; // Limpiar mensajes
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll al final
 
                 // Intentar re-autenticar anónimamente si no está ya autenticado
                 if (!auth.currentUser) {
@@ -576,6 +577,7 @@
                 listenForChatStatus(currentChatId); // Iniciar escucha del estado del chat
                 loadingView.style.display = 'none';
                 chatView.style.display = 'flex';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; // Scroll al final
 
             } catch (error) {
                 console.error("Error al iniciar el chat:", error);
@@ -618,7 +620,10 @@
                             // Re-renderizar solo los ticks o la burbuja si es necesario
                             const ticksElement = existingMsgElement.querySelector('.message-ticks');
                             if (ticksElement) {
-                                updateMessageTicks(ticksElement, modifiedMsg.readByPsicologo, modifiedMsg.readByUser, modifiedMsg.senderRole === 'user');
+                                // Solo actualizar ticks si el mensaje es del usuario
+                                if (modifiedMsg.senderRole === 'user') {
+                                    updateMessageTicks(ticksElement, modifiedMsg.readByPsicologo, modifiedMsg.readByUser, true);
+                                }
                             }
                         }
                     }
@@ -712,20 +717,10 @@
                     ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
                 } else {
                     // Doble tick gris (recibido por psicólogo, no leído)
-                    ticksElement.classList.remove('read');
                     ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
                 }
-            } else {
-                // Mensaje enviado por el psicólogo
-                if (readByUser) {
-                    // Doble tick azul (leído por usuario)
-                    ticksElement.classList.add('read');
-                    ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
-                } else {
-                    // Doble tick gris (recibido por usuario, no leído)
-                    ticksElement.innerHTML = '<i class="fas fa-check-double"></i>';
-                }
-            }
+            } 
+            // No se añaden ticks para mensajes del psicólogo aquí
         };
 
 
@@ -762,6 +757,9 @@
                     ? 'bg-gray-200 text-gray-800' 
                     : 'bg-yellow-200 text-gray-900'); // Fondo para mensajes de sistema
 
+            // Clase para la alineación del contenido dentro de la burbuja
+            const bubbleContentAlignClass = isUser ? 'items-end' : 'items-start';
+
             // HTML del avatar, solo si no es un mensaje del sistema
             let avatarHTML = '';
             if (!isSystem) {
@@ -776,9 +774,9 @@
                 ${avatarHTML}
                 <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 ${isUser ? 'text-right' : 'text-left'}">${displayName}</span>
-                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
-                        <p class="break-all">${msg.text}</p>
-                        <div class="flex ${isUser ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75">
+                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex ${bubbleContentAlignClass} flex-col">
+                        <p class="break-all text-left">${msg.text}</p>
+                        <div class="flex ${isUser ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75 w-full">
                             <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
                             <span class="message-ticks ml-2">
                                 <!-- Ticks will be updated dynamically -->
