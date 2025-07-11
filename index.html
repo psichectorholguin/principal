@@ -777,7 +777,7 @@
                 <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 ${isUser ? 'text-right' : 'text-left'}">${displayName}</span>
                     <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex items-end">
-                        <p>${msg.text}</p>
+                        <p class="break-all">${msg.text}</p>
                         <div class="flex ${isUser ? 'justify-end' : 'justify-start'} items-center text-xs mt-1 opacity-75">
                             <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
                             <span class="message-ticks ml-2">
