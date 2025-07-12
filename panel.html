@@ -1295,8 +1295,6 @@
             const initials = getInitials(displayName);
             const avatarColor = isPsicologo ? 'rgb(139, 92, 246)' : stringToColor(displayName);
 
-            // *** CORRECCIÓN PRINCIPAL ***
-            // La alineación ahora depende de si el rol es 'psicologo', no de si es el psicólogo actual.
             messageElement.className = `flex mb-4 items-start ${isPsicologo ? 'flex-row-reverse' : 'flex-row'}`;
 
             const bubbleClass = isPsicologo
@@ -1313,21 +1311,22 @@
                     </div>
                 `;
             }
-
-        // *** CORRECCIÓN PARA EL CORTE DE PALABRAS ***
+            
             const isLongUnbrokenText = message.text && !message.text.includes(' ') && message.text.length > 30;
             const textClass = isLongUnbrokenText ? 'break-all' : 'break-words';
+            const bubbleContentAlignClass = isPsicologo ? 'items-end' : 'items-start';
+            const timeAndTicksAlignmentClass = 'justify-end';
 
             messageElement.innerHTML = `
                 ${avatarHTML}
                 <div class="flex flex-col ${isPsicologo ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 ${isPsicologo ? 'text-right' : 'text-left'}">${displayName}</span>
-                    <div class="px-4 py-2 rounded-lg max-w-[85%] ${bubbleClass} flex flex-col min-w-0">
-                        <p class="${textClass}" style="overflow-wrap: break-word;">${message.text}</p>
-                        <div class="flex justify-end items-center text-xs mt-1 opacity-75 self-end">
+                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass} flex ${bubbleContentAlignClass} flex-col">
+                        <p class="${textClass} text-left" style="word-break: break-word; overflow-wrap: break-word;">${message.text}</p>
+                        <div class="flex ${timeAndTicksAlignmentClass} items-center text-xs mt-1 opacity-75">
                             <span>${formatTimestampToTime(message.timestamp)}</span>
                             <span class="message-ticks ml-2">
-                                </span>
+                            </span>
                         </div>
                     </div>
                 </div>
@@ -1337,7 +1336,6 @@
 
             const ticksElement = messageElement.querySelector('.message-ticks');
             if (ticksElement && !isSystem) {
-                // Los ticks solo deben mostrarse para los mensajes del psicólogo que está viendo el panel
                 updateMessageTicks(ticksElement, message.readByPsicologo, message.readByUser, isFromCurrentPsicologo);
             } else if (ticksElement) {
                 ticksElement.style.display = 'none';
