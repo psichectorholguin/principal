@@ -139,8 +139,12 @@
                         </div>
                     </div>
                 </div>
-              <div class="order-first md:order-last flex justify-center md:justify-end">
+                <div class="order-first md:order-last flex justify-center md:justify-center">
                     <div class="relative w-64 h-96 bg-blue-800 rounded-xl overflow-hidden shadow-xl flex-shrink-0">
+                        <!-- Tu foto profesional se posicionará absolutamente dentro de este contenedor -->
+                        <!-- Usamos inset-0 para que ocupe todo el espacio del contenedor padre -->
+                        <!-- object-cover asegura que la imagen cubra el área sin distorsión, recortando si es necesario -->
+                        <!-- Reemplaza 'Imagenes/Perfil.png' con la ruta a tu foto profesional -->
                         <img src="Imagenes/Perfil.png"
                              alt="Foto profesional de Héctor Holguín"
                              class="absolute inset-0 w-full h-full object-cover rounded-xl"
