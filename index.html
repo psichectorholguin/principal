@@ -65,7 +65,14 @@
         .message-ticks.read {
             color: #3b82f6; /* blue-500 para leido */
         }
-    </style>
+        /* Estilos para cortar texto largo sin espacios */
+        .message-bubble {
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -384,7 +391,7 @@
         const USER_EMAIL_KEY = 'userEmail';
 
         function getInitials(name) {
-            if (!name) return '';
+           if (!name || name === 'Psicólogo de Apoyo') return 'PA';
             const parts = name.split(' ');
             let initials = '';
             if (parts.length > 0 && parts[0].length > 0) {
@@ -602,7 +609,7 @@
                 }
                 const chatData = docSnap.data();
                 if (chatData.psicologoDisplayName) {
-                    currentPsicologoDisplayName = chatData.psicologoDisplayName;
+                    currentPsicologoDisplayName = 'Psicólogo de Apoyo';
                 }
                 const isClosed = chatData.status === 'closed' || chatData.status === 'deleted';
                 messageInput.disabled = isClosed;
@@ -640,7 +647,7 @@
 
         const appendMessageToDOM = (msg) => {
             const isUser = msg.senderId === currentUserId;
-            const displayName = isUser ? (msg.senderName || 'Tú') : (msg.senderName || 'Psicólogo');
+          const displayName = isUser ? (msg.senderName || 'Tú') : 'Psicólogo de Apoyo';
             const initials = getInitials(displayName);
             const avatarColor = isUser ? stringToColor(displayName) : '#8b5cf6';
 
@@ -655,7 +662,7 @@
                 </div>
                 <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 px-1">${displayName}</span>
-                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}" style="word-wrap: break-word;">
+                    <div class="message-bubble px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
                         <p>${msg.text}</p>
                         <div class="flex justify-end items-center text-xs mt-1 opacity-75">
                             <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
