@@ -56,33 +56,18 @@
             flex-shrink: 0; /* Evita que se encoja */
         }
 
-        /* Estilos para cortar texto largo sin espacios */
-        .message-bubble {
-            word-wrap: break-word;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
-            max-width: 100%;
+        /* Estilos para los ticks de mensaje */
+        .message-ticks {
+            font-size: 0.75rem; /* text-xs */
+            margin-left: 0.5rem; /* ml-2 */
+            color: rgba(255, 255, 255, 0.75); /* Para mensajes enviados */
         }
-
-        /* Estilo para mensaje de error */
-        .error-banner {
-            background-color: #fee2e2;
-            border: 1px solid #fca5a5;
-            color: #dc2626;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            margin: 1rem;
-            text-align: center;
+        .message-ticks.read {
+            color: #3b82f6; /* blue-500 para leido */
         }
     </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
-
-    <!-- Banner de error de configuración (oculto por defecto) -->
-    <div id="config-error-banner" class="error-banner" style="display: none;">
-        <p><strong>Error de configuración:</strong> El sistema de chat no está disponible temporalmente. Por favor, contacta directamente por WhatsApp o email.</p>
-    </div>
 
     <!-- Header -->
     <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
@@ -131,7 +116,7 @@
 
         <!-- Sobre Mí -->
         <section id="sobre-mi" class="py-20 bg-white">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-4">Sobre Mí</h2>
                     <p class="text-gray-600 mb-4 text-justify">
@@ -141,7 +126,7 @@
                         Ofrezco atención presencial y online, siempre desde un espacio de empatía, cercanía y compromiso con tu proceso.
                     </p>
                     <blockquote class="border-l-4 border-purple-500 pl-4 py-2 my-6 bg-purple-50 text-purple-800 italic">
-                        "Aquí no sanas solo: te acompaño."
+                        “Aquí no sanas solo: te acompaño.”
                     </blockquote>
                     <div class="flex space-x-4 mt-8">
                         <div class="bg-purple-100 p-4 rounded-lg text-center flex-1">
@@ -154,18 +139,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="order-first md:order-last flex justify-center md:justify-center">
-                    <div class="relative w-64 h-96 bg-blue-800 rounded-xl overflow-hidden shadow-xl flex-shrink-0">
-                        <!-- Tu foto profesional se posicionará absolutamente dentro de este contenedor -->
-                        <!-- Usamos inset-0 para que ocupe todo el espacio del contenedor padre -->
-                        <!-- object-cover asegura que la imagen cubra el área sin distorsión, recortando si es necesario -->
-                        <!-- Reemplaza 'Imagenes/Perfil.png' con la ruta a tu foto profesional -->
-                        <img src="Imagenes/Perfil.png"
-                             alt="Foto profesional de Héctor Holguín"
-                             class="absolute inset-0 w-full h-full object-cover rounded-xl"
-                             onerror="this.onerror=null;this.src='https://placehold.co/256x384/A78BFA/FFFFFF?text=Imagen+No+Cargada';"
-                        >
-                    </div>
+                <div class="order-first md:order-last">
+                    <img src="https://placehold.co/600x400/F3F4F6/9CA3AF?text=Imagen+Profesional" alt="Imagen del consultorio o profesional" class="rounded-lg shadow-xl">
                 </div>
             </div>
         </section>
@@ -215,7 +190,7 @@
                 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     <!-- Perfil 1 -->
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                        <img src="Imagenes/Erik.png" alt="Foto de perfil de Psicóloga Erik Curay" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
+                        <img src="https://placehold.co/128x128/E9D5FF/4C1D95?text=EC" alt="Foto de perfil de Psicóloga Erik Curay" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
                         <h3 class="text-xl font-bold text-gray-900">Psic. Erik Curay</h3>
                         <p class="text-purple-600 font-semibold mb-3">Psicólogo</p>
                         <p class="text-gray-600 text-sm text-justify">Soy Erik, un profesional de la psicología con formación sólida y versátil. Me especializo en adaptar distintas corrientes terapéuticas para promover el bienestar emocional y conductual. Mi objetivo es ayudar a las personas a manejar sus emociones, progresar, transformar y lograr cambios reales junto al crecimiento personal.</p>
@@ -230,14 +205,14 @@
                     </div>
                     <!-- Perfil 3 -->
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                        <img src="Imagenes/Foto3.png" alt="Foto de perfil de Psicóloga Ana García" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
+                        <img src="https://placehold.co/128x128/FFD700/8B4513?text=JS" alt="Foto de perfil de Psicóloga Ana García" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
                         <h3 class="text-xl font-bold text-gray-900">Psic. Jordan Sánchez</h3>
                         <p class="text-yellow-600 font-semibold mb-3">Psicólogo</p>
                         <p class="text-gray-600 text-sm text-justify">Psicólogo de vocación con formación en Terapia Cognitivo-Conductual y experiencia en evaluación, diagnóstico e intervención clínica, apasionado por la salud mental y el comportamiento humano, con un enfoque empático, ético y centrado en el bienestar y desarrollo personal de cada paciente.</p>
                     </div>
                     <!-- Perfil 4 -->
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                        <img src="Imagenes/Hector.png" alt="Foto de perfil de Psicóloga Héctor Holguin" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
+                        <img src="https://placehold.co/128x128/DBEAFE/1E40AF?text=HH" alt="Foto de perfil de Psicóloga Héctor Holguin" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
                         <h3 class="text-xl font-bold text-gray-900">Psic. Héctor Holguin</h3>
                         <p class="text-blue-600 font-semibold mb-3">Psicólogo</p>
                         <p class="text-gray-600 text-sm text-justify">Psicólogo con enfoque Cognitivo-Conductual, apasionado por el bienestar emocional y la intervención en contextos de alta vulnerabilidad. Experto en evaluación psicosocial, apoyo a víctimas y coordinación de alianzas estratégicas. Trabajo con compromiso, ética y herramientas basadas en evidencia para generar impacto real.</p>
@@ -292,6 +267,8 @@
                 </a>
                 <a href="https://www.tiktok.com/@psic.hectorholguin" target="_blank" aria-label="TikTok" class="text-gray-400 hover:text-white transition-colors">
                     <i class="fab fa-tiktok text-3xl"></i>
+                <a href="https://wa.me/message/WMXPODFNZLDXE1" target="_blank" aria-label="whatsApp" class="text-gray-400 hover:text-white transition-colors">
+                    <i class="fab fa-whatsapp text-3xl"></i>
                 </a>
             </div>
         </div>
@@ -301,10 +278,9 @@
     <div id="chat-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
         <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform scale-95">
             
-             <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
-                <div class="w-8"></div> <!-- Espaciador para mantener el título centrado -->
-                <h3 class="text-xl font-bold text-gray-800 flex-1 text-center">Chat de Primeros Auxilios</h3>
-                <button id="close-chat-btn" class="text-2xl text-gray-500 hover:text-gray-800 w-8 h-8 flex items-center justify-center">&times;</button>
+            <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
+                <h3 class="text-xl font-bold text-gray-800">Chat de Primeros Auxilios</h3>
+                <button id="close-chat-btn" class="text-2xl text-gray-500 hover:text-gray-800">&times;</button>
             </div>
 
             <div id="pre-chat-view" class="p-6 flex flex-col justify-center text-center h-full">
@@ -346,427 +322,376 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        // Función para mostrar el banner de error
-        function showConfigError(message) {
-            const banner = document.getElementById('config-error-banner');
-            banner.style.display = 'block';
-            console.error('Error de configuración:', message);
-            
-            // Deshabilitar botones de chat
-            const chatButtons = [
-                'open-chat-btn-nav',
-                'open-chat-btn-mobile', 
-                'open-chat-btn-hero',
-                'open-chat-btn-service'
-            ];
-            
-            chatButtons.forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) {
-                    btn.disabled = true;
-                    btn.textContent = 'Chat no disponible';
-                    btn.onclick = () => {
-                        alert('El sistema de chat no está disponible. Por favor, contacta directamente por WhatsApp: +593 969335032');
-                    };
-                }
-            });
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
+            authDomain: "pap-chat-14552.firebaseapp.com",
+            projectId: "pap-chat-14552",
+            storageBucket: "pap-chat-14552.firebasestorage.app",
+            messagingSenderId: "939187274099",
+            appId: "1:939187274099:web:b021f995b9771122db0506",
+            measurementId: "G-PDH53KMFR3"
+        };
+
+        const appId = firebaseConfig.projectId; 
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const chatModal = document.getElementById('chat-modal');
+        const chatModalContent = document.getElementById('chat-modal-content');
+        const openChatButtons = [
+            document.getElementById('open-chat-btn-nav'),
+            document.getElementById('open-chat-btn-mobile'),
+            document.getElementById('open-chat-btn-hero'),
+            document.getElementById('open-chat-btn-service')
+        ];
+        const closeChatBtn = document.getElementById('close-chat-btn');
+        const preChatView = document.getElementById('pre-chat-view');
+        const preChatForm = document.getElementById('pre-chat-form');
+        const userNameInput = document.getElementById('user-name');
+        const userEmailInput = document.getElementById('user-email');
+        const preChatTitle = document.getElementById('pre-chat-title');
+        const preChatDescription = document.getElementById('pre-chat-description');
+        const preChatSubmitBtn = document.getElementById('pre-chat-submit-btn');
+        const loadingView = document.getElementById('loading-view');
+        const chatView = document.getElementById('chat-view');
+        const messagesContainer = document.getElementById('messages-container');
+        const messageForm = document.getElementById('message-form');
+        const messageInput = document.getElementById('message-input');
+        const sendMessageBtn = document.getElementById('send-message-btn'); 
+
+        let currentUserId = null;
+        let currentChatId = null;
+        let unsubscribeMessages = null;
+        let unsubscribeChatStatus = null; 
+        let currentPsicologoDisplayName = 'Psicólogo de Apoyo'; 
+
+        const CHAT_ID_KEY = 'currentChatId';
+        const USER_ID_KEY = 'currentUserId';
+        const USER_NAME_KEY = 'userName';
+        const USER_EMAIL_KEY = 'userEmail';
+
+        function getInitials(name) {
+            if (!name) return '';
+            const parts = name.split(' ');
+            let initials = '';
+            if (parts.length > 0 && parts[0].length > 0) {
+                initials += parts[0][0];
+            }
+            if (parts.length > 1 && parts[parts.length - 1].length > 0) {
+                initials += parts[parts.length - 1][0];
+            }
+            return initials.toUpperCase();
         }
 
-        // Verificar que la configuración de Firebase esté disponible
-        let firebaseConfig;
-        
-        // Esperar un momento para que el middleware inyecte la configuración
-        setTimeout(() => {
-            if (!window.firebaseConfig) {
-                console.warn('Configuración de Firebase no encontrada desde middleware, usando configuración de respaldo.');
-                // Configuración de respaldo (puedes mantener las keys aquí temporalmente para debug)
-                firebaseConfig = {
-                    apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-                    authDomain: "pap-chat-14552.firebaseapp.com",
-                    projectId: "pap-chat-14552",
-                    storageBucket: "pap-chat-14552.firebasestorage.app",
-                    messagingSenderId: "939187274099",
-                    appId: "1:939187274099:web:b021f995b9771122db0506",
-                    measurementId: "G-PDH53KMFR3"
-                };
-            } else {
-                firebaseConfig = window.firebaseConfig;
-                console.log('✅ Configuración de Firebase cargada desde middleware');
+        function stringToColor(str) {
+            if (!str) return '#8b5cf6'; 
+            let hash = 0;
+            for (let i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
             }
-
-            // Validar que la configuración tenga los campos necesarios
-            const requiredFields = ['apiKey', 'authDomain', 'projectId', 'storageBucket', 'messagingSenderId', 'appId'];
-            const missingFields = requiredFields.filter(field => !firebaseConfig[field]);
-            
-            if (missingFields.length > 0) {
-                showConfigError(`Campos faltantes en la configuración: ${missingFields.join(', ')}`);
-                return;
+            let color = '#';
+            for (let i = 0; i < 3; i++) {
+                let value = (hash >> (i * 8)) & 0xFF;
+                color += ('00' + value.toString(16)).substr(-2);
             }
+            return color;
+        }
 
-            // Inicializar Firebase
-            initializeFirebase();
-        }, 100);
+        const openModal = async () => { 
+            chatModal.classList.remove('opacity-0', 'pointer-events-none');
+            chatModal.classList.add('show');
+            chatModalContent.classList.remove('scale-95');
 
-        async function initializeFirebase() {
-            try {
-                const { initializeApp } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js");
-                const { getAuth, signInAnonymously, onAuthStateChanged } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js");
-                const { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } = await import("https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js");
+            const savedChatId = localStorage.getItem(CHAT_ID_KEY);
+            const savedUserName = localStorage.getItem(USER_NAME_KEY);
 
-                const appId = firebaseConfig.projectId; 
-                const app = initializeApp(firebaseConfig);
-                const auth = getAuth(app);
-                const db = getFirestore(app);
+            if (savedChatId && savedUserName) {
+                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, savedChatId);
+                const chatSnap = await getDoc(chatDocRef);
 
-                console.log('✅ Firebase inicializado correctamente');
-
-                const chatModal = document.getElementById('chat-modal');
-                const chatModalContent = document.getElementById('chat-modal-content');
-                const openChatButtons = [
-                    document.getElementById('open-chat-btn-nav'),
-                    document.getElementById('open-chat-btn-mobile'),
-                    document.getElementById('open-chat-btn-hero'),
-                    document.getElementById('open-chat-btn-service')
-                ];
-                const closeChatBtn = document.getElementById('close-chat-btn');
-                const preChatView = document.getElementById('pre-chat-view');
-                const preChatForm = document.getElementById('pre-chat-form');
-                const userNameInput = document.getElementById('user-name');
-                const userEmailInput = document.getElementById('user-email');
-                const preChatTitle = document.getElementById('pre-chat-title');
-                const preChatDescription = document.getElementById('pre-chat-description');
-                const preChatSubmitBtn = document.getElementById('pre-chat-submit-btn');
-                const loadingView = document.getElementById('loading-view');
-                const chatView = document.getElementById('chat-view');
-                const messagesContainer = document.getElementById('messages-container');
-                const messageForm = document.getElementById('message-form');
-                const messageInput = document.getElementById('message-input');
-                const sendMessageBtn = document.getElementById('send-message-btn'); 
-
-                let currentUserId = null;
-                let currentChatId = null;
-                let unsubscribeMessages = null;
-                let unsubscribeChatStatus = null; 
-                let currentPsicologoDisplayName = 'Psicólogo de Apoyo'; 
-
-                const CHAT_ID_KEY = 'currentChatId';
-                const USER_ID_KEY = 'currentUserId';
-                const USER_NAME_KEY = 'userName';
-                const USER_EMAIL_KEY = 'userEmail';
-
-                function getInitials(name) {
-                   if (!name || name === 'Psicólogo de Apoyo') return 'PA';
-                    const parts = name.split(' ');
-                    let initials = '';
-                    if (parts.length > 0 && parts[0].length > 0) {
-                        initials += parts[0][0];
-                    }
-                    if (parts.length > 1 && parts[parts.length - 1].length > 0) {
-                        initials += parts[parts.length - 1][0];
-                    }
-                    return initials.toUpperCase();
+                if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
+                    clearSavedChatAccess();
+                    displayClosedChatInfo(chatSnap.data().status); 
+                    return; 
                 }
-
-                function stringToColor(str) {
-                    if (!str) return '#8b5cf6'; 
-                    let hash = 0;
-                    for (let i = 0; i < str.length; i++) {
-                        hash = str.charCodeAt(i) + ((hash << 5) - hash);
-                    }
-                    let color = '#';
-                    for (let i = 0; i < 3; i++) {
-                        let value = (hash >> (i * 8)) & 0xFF;
-                        color += ('00' + value.toString(16)).substr(-2);
-                    }
-                    return color;
-                }
-
-                const openModal = async () => { 
-                    chatModal.classList.remove('opacity-0', 'pointer-events-none');
-                    chatModal.classList.add('show');
-                    chatModalContent.classList.remove('scale-95');
-
-                    const savedChatId = localStorage.getItem(CHAT_ID_KEY);
-                    const savedUserName = localStorage.getItem(USER_NAME_KEY);
-
-                    if (savedChatId && savedUserName) {
-                        const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, savedChatId);
-                        const chatSnap = await getDoc(chatDocRef);
-
-                        if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
-                            clearSavedChatAccess();
-                            displayClosedChatInfo(chatSnap.data().status); 
-                            return; 
-                        }
-                        
-                        userNameInput.value = savedUserName;
-                        userEmailInput.value = localStorage.getItem(USER_EMAIL_KEY) || '';
-                        currentChatId = savedChatId;
-                        
-                        showView('loading');
-
-                        if (!auth.currentUser) {
-                            try {
-                                const userCredential = await signInAnonymously(auth);
-                                currentUserId = userCredential.user.uid;
-                                await setupChatListeners(currentChatId);
-                                showView('chat');
-                            } catch (error) {
-                                console.error("Error re-autenticando:", error);
-                                showView('pre-chat');
-                            }
-                        } else {
-                            currentUserId = auth.currentUser.uid; 
-                            await setupChatListeners(currentChatId);
-                            showView('chat');
-                        }
-                    } else {
-                        showView('pre-chat');
-                        resetPreChatForm();
-                    }
-                };
-
-                const closeModal = () => {
-                    chatModal.classList.add('opacity-0', 'pointer-events-none');
-                    chatModal.classList.remove('show');
-                    chatModalContent.classList.add('scale-95');
-                    if (unsubscribeMessages) unsubscribeMessages();
-                    if (unsubscribeChatStatus) unsubscribeChatStatus();
-                    unsubscribeMessages = null;
-                    unsubscribeChatStatus = null;
-                    messagesContainer.innerHTML = ''; 
-                };
                 
-                const showView = (viewName) => {
-                    preChatView.style.display = 'none';
-                    loadingView.style.display = 'none';
-                    chatView.style.display = 'none';
-                    document.getElementById(`${viewName}-view`).style.display = 'flex';
-                };
+                userNameInput.value = savedUserName;
+                userEmailInput.value = localStorage.getItem(USER_EMAIL_KEY) || '';
+                currentChatId = savedChatId;
+                
+                showView('loading');
 
-                const resetPreChatForm = () => {
-                    preChatForm.reset(); 
-                    preChatTitle.textContent = 'Antes de comenzar...';
-                    preChatDescription.textContent = 'Por favor, indícanos tu nombre para personalizar la conversación.';
-                    preChatSubmitBtn.textContent = 'Iniciar Chat';
-                };
-
-                const displayClosedChatInfo = (status) => {
-                    showView('pre-chat');
-                    resetPreChatForm();
-                    preChatTitle.textContent = status === 'closed' ? 'Chat Cerrado' : 'Chat Eliminado';
-                    preChatDescription.textContent = `Esta conversación ha sido ${status === 'closed' ? 'cerrada' : 'eliminada'}. Por favor, inicia un nuevo chat.`;
-                    preChatSubmitBtn.textContent = 'Iniciar Nuevo Chat';
-                };
-
-                const clearSavedChatAccess = () => {
-                    localStorage.removeItem(CHAT_ID_KEY);
-                    localStorage.removeItem(USER_ID_KEY);
-                    localStorage.removeItem(USER_NAME_KEY);
-                    localStorage.removeItem(USER_EMAIL_KEY);
-                    currentChatId = null;
-                    currentUserId = null;
-                    if (unsubscribeMessages) unsubscribeMessages();
-                    if (unsubscribeChatStatus) unsubscribeChatStatus();
-                    messagesContainer.innerHTML = ''; 
-                };
-
-                openChatButtons.forEach(btn => btn?.addEventListener('click', openModal));
-                closeChatBtn.addEventListener('click', closeModal);
-                chatModal.addEventListener('click', (e) => e.target === chatModal && closeModal());
-
-                preChatForm.addEventListener('submit', (e) => {
-                    e.preventDefault();
-                    const userName = userNameInput.value.trim();
-                    if (!userName) return;
-                    startChatSession(userName, userEmailInput.value.trim());
-                });
-
-                const startChatSession = async (userName, userEmail) => {
-                    showView('loading');
+                if (!auth.currentUser) {
                     try {
                         const userCredential = await signInAnonymously(auth);
                         currentUserId = userCredential.user.uid;
-
-                        localStorage.setItem(USER_ID_KEY, currentUserId);
-                        localStorage.setItem(USER_NAME_KEY, userName);
-                        if (userEmail) localStorage.setItem(USER_EMAIL_KEY, userEmail);
-
-                        const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
-                        const newChatDoc = await addDoc(chatsRef, {
-                            userId: currentUserId,
-                            userName: userName,
-                            userEmail: userEmail,
-                            createdAt: serverTimestamp(),
-                            status: 'active',
-                            lastMessageText: '¡Hola! Necesito ayuda.',
-                            lastMessageTimestamp: serverTimestamp(),
-                            psicologoDisplayName: 'Psicólogo de Apoyo'
-                        });
-                        currentChatId = newChatDoc.id;
-                        localStorage.setItem(CHAT_ID_KEY, currentChatId);
-
-                        const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
-                        await addDoc(messagesRef, {
-                            text: '¡Hola! Necesito ayuda.',
-                            timestamp: serverTimestamp(),
-                            senderId: currentUserId,
-                            senderRole: 'user',
-                            senderName: userName,
-                            readByPsicologo: false, 
-                            readByUser: true 
-                        });
-                        await addDoc(messagesRef, {
-                            text: '¡Hola! Siéntete libre de expresarte. Este chat es un espacio confidencial para ofrecerte un primer apoyo en lo que necesites. ¿Cómo puedo ayudarte hoy?',
-                            timestamp: serverTimestamp(),
-                            senderId: 'psicologo_sistema_uid',
-                            senderRole: 'psicologo',
-                            senderName: 'Psicólogo de Apoyo',
-                            readByPsicologo: true,
-                            readByUser: false
-                        });
-
                         await setupChatListeners(currentChatId);
                         showView('chat');
-                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
-
                     } catch (error) {
-                        console.error("Error al iniciar el chat:", error);
+                        console.error("Error re-autenticando:", error);
                         showView('pre-chat');
                     }
-                };
+                } else {
+                    currentUserId = auth.currentUser.uid; 
+                    await setupChatListeners(currentChatId);
+                    showView('chat');
+                }
+            } else {
+                showView('pre-chat');
+                resetPreChatForm();
+            }
+        };
 
-                const setupChatListeners = async (chatId) => {
-                    listenForMessages(chatId);
-                    listenForChatStatus(chatId);
-                };
+        const closeModal = () => {
+            chatModal.classList.add('opacity-0', 'pointer-events-none');
+            chatModal.classList.remove('show');
+            chatModalContent.classList.add('scale-95');
+            if (unsubscribeMessages) unsubscribeMessages();
+            if (unsubscribeChatStatus) unsubscribeChatStatus();
+            unsubscribeMessages = null;
+            unsubscribeChatStatus = null;
+            messagesContainer.innerHTML = ''; 
+        };
+        
+        const showView = (viewName) => {
+            preChatView.style.display = 'none';
+            loadingView.style.display = 'none';
+            chatView.style.display = 'none';
+            document.getElementById(`${viewName}-view`).style.display = 'flex';
+        };
 
-                const listenForMessages = (chatId) => {
-                    if (unsubscribeMessages) unsubscribeMessages();
-                    const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
-                    const q = query(messagesRef, orderBy('timestamp'));
+        const resetPreChatForm = () => {
+            preChatForm.reset(); 
+            preChatTitle.textContent = 'Antes de comenzar...';
+            preChatDescription.textContent = 'Por favor, indícanos tu nombre para personalizar la conversación.';
+            preChatSubmitBtn.textContent = 'Iniciar Chat';
+        };
 
-                    unsubscribeMessages = onSnapshot(q, (snapshot) => {
-                        if (snapshot.empty) return;
-                        messagesContainer.innerHTML = '';
-                        snapshot.forEach(doc => {
-                            const msg = { id: doc.id, ...doc.data() };
-                            appendMessageToDOM(msg);
-                            if (msg.senderRole === 'psicologo' && !msg.readByUser) {
-                                markMessageAsRead(chatId, msg.id, 'user');
-                            }
-                        });
-                        messagesContainer.scrollTop = messagesContainer.scrollHeight; 
-                    });
-                };
+        const displayClosedChatInfo = (status) => {
+            showView('pre-chat');
+            resetPreChatForm();
+            preChatTitle.textContent = status === 'closed' ? 'Chat Cerrado' : 'Chat Eliminado';
+            preChatDescription.textContent = `Esta conversación ha sido ${status === 'closed' ? 'cerrada' : 'eliminada'}. Por favor, inicia un nuevo chat.`;
+            preChatSubmitBtn.textContent = 'Iniciar Nuevo Chat';
+        };
 
-                const listenForChatStatus = (chatId) => {
-                    if (unsubscribeChatStatus) unsubscribeChatStatus();
-                    const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, chatId);
-                    unsubscribeChatStatus = onSnapshot(chatDocRef, (docSnap) => {
-                        if (!docSnap.exists()) {
-                            if (currentChatId === chatId) {
-                                clearSavedChatAccess();
-                                displayClosedChatInfo('deleted');
-                            }
-                            return;
-                        }
-                        const chatData = docSnap.data();
-                        if (chatData.psicologoDisplayName) {
-                            currentPsicologoDisplayName = 'Psicólogo de Apoyo';
-                        }
-                        const isClosed = chatData.status === 'closed' || chatData.status === 'deleted';
-                        messageInput.disabled = isClosed;
-                        sendMessageBtn.disabled = isClosed;
-                        messageInput.placeholder = isClosed ? `Este chat ha sido ${chatData.status === 'closed' ? 'cerrado' : 'eliminado'}.` : 'Escribe tu mensaje...';
-                        
-                        const existingStatusMsg = messagesContainer.querySelector('.chat-status-message');
-                        if (isClosed && !existingStatusMsg) {
-                            const statusMessageElement = document.createElement('div');
-                            statusMessageElement.className = 'text-center text-gray-500 my-2 chat-status-message';
-                            statusMessageElement.textContent = `La conversación ha sido ${chatData.status === 'closed' ? 'cerrada' : 'eliminada'}.`;
-                            messagesContainer.appendChild(statusMessageElement);
-                            messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                            clearSavedChatAccess();
-                        } else if (!isClosed && existingStatusMsg) {
-                            existingStatusMsg.remove();
-                        }
-                    });
-                };
+        const clearSavedChatAccess = () => {
+            localStorage.removeItem(CHAT_ID_KEY);
+            localStorage.removeItem(USER_ID_KEY);
+            localStorage.removeItem(USER_NAME_KEY);
+            localStorage.removeItem(USER_EMAIL_KEY);
+            currentChatId = null;
+            currentUserId = null;
+            if (unsubscribeMessages) unsubscribeMessages();
+            if (unsubscribeChatStatus) unsubscribeChatStatus();
+            messagesContainer.innerHTML = ''; 
+        };
 
-                const markMessageAsRead = async (chatId, messageId, readerRole) => {
-                    const messageDocRef = doc(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`, messageId);
-                    try {
-                        await updateDoc(messageDocRef, { [readerRole === 'user' ? 'readByUser' : 'readByPsicologo']: true });
-                    } catch (error) {
-                        console.error(`Error al marcar mensaje como leído:`, error);
-                    }
-                };
+        openChatButtons.forEach(btn => btn?.addEventListener('click', openModal));
+        closeChatBtn.addEventListener('click', closeModal);
+        chatModal.addEventListener('click', (e) => e.target === chatModal && closeModal());
 
-                const appendMessageToDOM = (msg) => {
-                    const isUser = msg.senderId === currentUserId;
-                  const displayName = isUser ? (msg.senderName || 'Tú') : 'Psicólogo de Apoyo';
-                    const initials = getInitials(displayName);
-                    const avatarColor = isUser ? stringToColor(displayName) : '#8b5cf6';
+        preChatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const userName = userNameInput.value.trim();
+            if (!userName) return;
+            startChatSession(userName, userEmailInput.value.trim());
+        });
 
-                    const messageWrapper = document.createElement('div');
-                    messageWrapper.className = `flex mb-4 items-start ${isUser ? 'flex-row-reverse' : 'flex-row'}`;
-                    
-                    const bubbleClass = isUser ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm';
+        const startChatSession = async (userName, userEmail) => {
+            showView('loading');
+            try {
+                const userCredential = await signInAnonymously(auth);
+                currentUserId = userCredential.user.uid;
 
-                    messageWrapper.innerHTML = `
-                        <div class="initials-avatar ${isUser ? 'ml-3' : 'mr-3'}" style="background-color: ${avatarColor};">
-                            ${initials}
-                        </div>
-                        <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
-                            <span class="text-xs font-semibold mb-1 px-1">${displayName}</span>
-                            <div class="message-bubble px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
-                                <p>${msg.text}</p>
-                                <div class="flex justify-end items-center text-xs mt-1 opacity-75">
-                                <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
-                            </div>
-                            </div>
-                        </div>
-                    `;
-                    messagesContainer.appendChild(messageWrapper);
-                };
+                localStorage.setItem(USER_ID_KEY, currentUserId);
+                localStorage.setItem(USER_NAME_KEY, userName);
+                if (userEmail) localStorage.setItem(USER_EMAIL_KEY, userEmail);
 
-                messageForm.addEventListener('submit', async (e) => {
-                    e.preventDefault();
-                    const text = messageInput.value.trim();
-                    const userName = localStorage.getItem(USER_NAME_KEY);
-                    if (!text || !userName || !currentChatId || messageInput.disabled) return;
+                const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
+                const newChatDoc = await addDoc(chatsRef, {
+                    userId: currentUserId,
+                    userName: userName,
+                    userEmail: userEmail,
+                    createdAt: serverTimestamp(),
+                    status: 'active',
+                    lastMessageText: '¡Hola! Necesito ayuda.',
+                    lastMessageTimestamp: serverTimestamp(),
+                    psicologoDisplayName: 'Psicólogo de Apoyo'
+                });
+                currentChatId = newChatDoc.id;
+                localStorage.setItem(CHAT_ID_KEY, currentChatId);
 
-                    const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
-                    const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
-                    
-                    messageInput.value = '';
-                    try {
-                        await addDoc(messagesRef, {
-                            text: text,
-                            timestamp: serverTimestamp(),
-                            senderId: currentUserId,
-                            senderRole: 'user',
-                            senderName: userName,
-                            readByPsicologo: false,
-                            readByUser: true
-                        });
-                        await updateDoc(chatDocRef, {
-                            lastMessageText: text,
-                            lastMessageTimestamp: serverTimestamp(),
-                            status: 'active',
-                            hasUnreadMessagesForPsicologo: true
-                        });
-                    } catch (error) {
-                        console.error("Error al enviar el mensaje:", error);
-                    }
+                const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
+                await addDoc(messagesRef, {
+                    text: '¡Hola! Necesito ayuda.',
+                    timestamp: serverTimestamp(),
+                    senderId: currentUserId,
+                    senderRole: 'user',
+                    senderName: userName,
+                    readByPsicologo: false, 
+                    readByUser: true 
+                });
+                await addDoc(messagesRef, {
+                    text: '¡Hola! Siéntete libre de expresarte. Este chat es un espacio confidencial para ofrecerte un primer apoyo en lo que necesites. ¿Cómo puedo ayudarte hoy?',
+                    timestamp: serverTimestamp(),
+                    senderId: 'psicologo_sistema_uid',
+                    senderRole: 'psicologo',
+                    senderName: 'Psicólogo de Apoyo',
+                    readByPsicologo: true,
+                    readByUser: false
                 });
 
+                await setupChatListeners(currentChatId);
+                showView('chat');
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+
             } catch (error) {
-                console.error('Error al inicializar Firebase:', error);
-                showConfigError('Error al cargar los servicios de Firebase');
+                console.error("Error al iniciar el chat:", error);
+                showView('pre-chat');
             }
-        }
+        };
+
+        const setupChatListeners = async (chatId) => {
+            listenForMessages(chatId);
+            listenForChatStatus(chatId);
+        };
+
+        const listenForMessages = (chatId) => {
+            if (unsubscribeMessages) unsubscribeMessages();
+            const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
+            const q = query(messagesRef, orderBy('timestamp'));
+
+            unsubscribeMessages = onSnapshot(q, (snapshot) => {
+                if (snapshot.empty) return;
+                messagesContainer.innerHTML = '';
+                snapshot.forEach(doc => {
+                    const msg = { id: doc.id, ...doc.data() };
+                    appendMessageToDOM(msg);
+                    if (msg.senderRole === 'psicologo' && !msg.readByUser) {
+                        markMessageAsRead(chatId, msg.id, 'user');
+                    }
+                });
+                messagesContainer.scrollTop = messagesContainer.scrollHeight; 
+            });
+        };
+
+        const listenForChatStatus = (chatId) => {
+            if (unsubscribeChatStatus) unsubscribeChatStatus();
+            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, chatId);
+            unsubscribeChatStatus = onSnapshot(chatDocRef, (docSnap) => {
+                if (!docSnap.exists()) {
+                    if (currentChatId === chatId) {
+                        clearSavedChatAccess();
+                        displayClosedChatInfo('deleted');
+                    }
+                    return;
+                }
+                const chatData = docSnap.data();
+                if (chatData.psicologoDisplayName) {
+                    currentPsicologoDisplayName = chatData.psicologoDisplayName;
+                }
+                const isClosed = chatData.status === 'closed' || chatData.status === 'deleted';
+                messageInput.disabled = isClosed;
+                sendMessageBtn.disabled = isClosed;
+                messageInput.placeholder = isClosed ? `Este chat ha sido ${chatData.status === 'closed' ? 'cerrado' : 'eliminado'}.` : 'Escribe tu mensaje...';
+                
+                const existingStatusMsg = messagesContainer.querySelector('.chat-status-message');
+                if (isClosed && !existingStatusMsg) {
+                    const statusMessageElement = document.createElement('div');
+                    statusMessageElement.className = 'text-center text-gray-500 my-2 chat-status-message';
+                    statusMessageElement.textContent = `La conversación ha sido ${chatData.status === 'closed' ? 'cerrada' : 'eliminada'}.`;
+                    messagesContainer.appendChild(statusMessageElement);
+                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                    clearSavedChatAccess();
+                } else if (!isClosed && existingStatusMsg) {
+                    existingStatusMsg.remove();
+                }
+            });
+        };
+
+        const markMessageAsRead = async (chatId, messageId, readerRole) => {
+            const messageDocRef = doc(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`, messageId);
+            try {
+                await updateDoc(messageDocRef, { [readerRole === 'user' ? 'readByUser' : 'readByPsicologo']: true });
+            } catch (error) {
+                console.error(`Error al marcar mensaje como leído:`, error);
+            }
+        };
+
+        const updateMessageTicks = (ticksElement, msg) => {
+            if (!ticksElement || msg.senderRole !== 'user') return;
+            ticksElement.innerHTML = msg.readByPsicologo ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>';
+            ticksElement.classList.toggle('read', msg.readByPsicologo);
+        };
+
+        const appendMessageToDOM = (msg) => {
+            const isUser = msg.senderId === currentUserId;
+            const displayName = isUser ? (msg.senderName || 'Tú') : (msg.senderName || 'Psicólogo');
+            const initials = getInitials(displayName);
+            const avatarColor = isUser ? stringToColor(displayName) : '#8b5cf6';
+
+            const messageWrapper = document.createElement('div');
+            messageWrapper.className = `flex mb-4 items-start ${isUser ? 'flex-row-reverse' : 'flex-row'}`;
+            
+            const bubbleClass = isUser ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm';
+
+            messageWrapper.innerHTML = `
+                <div class="initials-avatar ${isUser ? 'ml-3' : 'mr-3'}" style="background-color: ${avatarColor};">
+                    ${initials}
+                </div>
+                <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
+                    <span class="text-xs font-semibold mb-1 px-1">${displayName}</span>
+                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}" style="word-wrap: break-word;">
+                        <p>${msg.text}</p>
+                        <div class="flex justify-end items-center text-xs mt-1 opacity-75">
+                            <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                            ${isUser ? `<span class="message-ticks ml-2"></span>` : ''}
+                        </div>
+                    </div>
+                </div>
+            `;
+            messagesContainer.appendChild(messageWrapper);
+            if (isUser) {
+                updateMessageTicks(messageWrapper.querySelector('.message-ticks'), msg);
+            }
+        };
+
+        messageForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = messageInput.value.trim();
+            const userName = localStorage.getItem(USER_NAME_KEY);
+            if (!text || !userName || !currentChatId || messageInput.disabled) return;
+
+            const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
+            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
+            
+            messageInput.value = '';
+            try {
+                await addDoc(messagesRef, {
+                    text: text,
+                    timestamp: serverTimestamp(),
+                    senderId: currentUserId,
+                    senderRole: 'user',
+                    senderName: userName,
+                    readByPsicologo: false,
+                    readByUser: true
+                });
+                await updateDoc(chatDocRef, {
+                    lastMessageText: text,
+                    lastMessageTimestamp: serverTimestamp(),
+                    status: 'active',
+                    hasUnreadMessagesForPsicologo: true
+                });
+            } catch (error) {
+                console.error("Error al enviar el mensaje:", error);
+            }
+        });
         
         // --- Lógica del Menú Móvil ---
         const mobileMenuBtn = document.getElementById('mobile-menu-btn');
