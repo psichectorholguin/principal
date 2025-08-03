@@ -69,7 +69,7 @@
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Header -->
-    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+   <header id="header" class="bg-white bg-opacity-80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-xl font-bold text-purple-700">Psic. Héctor Holguin</a>
             <div class="hidden md:flex items-center space-x-8">
@@ -283,7 +283,7 @@
 
     <!-- Chat Modal -->
     <div id="chat-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
-        <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform scale-95">
+        <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-screen max-h-screen flex flex-col transform scale-95" style="height: 90vh; max-height: 700px;">
             
              <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
                 <div class="w-8"></div> <!-- Espaciador para mantener el título centrado -->
@@ -330,10 +330,16 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-     import { initializeApp } from "firebase/app";
-        import { getAnalytics } from "firebase/analytics";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+    
+    <script>
+    // Cambié toda la sintaxis de Firebase v9+ a compat
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+    
 
         // Verificar que firebaseConfig esté disponible
         if (typeof firebaseConfig === 'undefined') {
@@ -698,5 +704,6 @@
     </script>
 </body>
 </html>
+
 
 
