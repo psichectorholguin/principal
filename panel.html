@@ -412,18 +412,6 @@
         import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, setDoc, where, getDoc, getDocs, arrayUnion, arrayRemove, writeBatch, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
 
-        // --- Configuración de Firebase ---
-        // ¡¡¡CRÍTICO!!! ESTOS SON TUS VALORES REALES DE TU PROYECTO FIREBASE
-        const firebaseConfig = {
-            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-            authDomain: "pap-chat-14552.firebaseapp.com",
-            projectId: "pap-chat-14552",
-            storageBucket: "pap-chat-14552.firebasestorage.app",
-            messagingSenderId: "939187274099",
-            appId: "1:939187274099:web:b021f995b9771122db0506",
-            measurementId: "G-PDH53KMFR3"
-        };
-
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
         const db = getFirestore(app);
@@ -1783,3 +1771,4 @@
     </script>
 </body>
 </html>
+
