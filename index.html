@@ -125,7 +125,7 @@
                         Ofrezco atención presencial y online, siempre desde un espacio de empatía, cercanía y compromiso con tu proceso.
                     </p>
                     <blockquote class="border-l-4 border-purple-500 pl-4 py-2 my-6 bg-purple-50 text-purple-800 italic">
-                        “Aquí no sanas solo: te acompaño.”
+                        "Aquí no sanas solo: te acompaño."
                     </blockquote>
                     <div class="flex space-x-4 mt-8">
                         <div class="bg-purple-100 p-4 rounded-lg text-center flex-1">
@@ -334,16 +334,13 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-            authDomain: "pap-chat-14552.firebaseapp.com",
-            projectId: "pap-chat-14552",
-            storageBucket: "pap-chat-14552.firebasestorage.app",
-            messagingSenderId: "939187274099",
-            appId: "1:939187274099:web:b021f995b9771122db0506",
-            measurementId: "G-PDH53KMFR3"
-        };
+        // Verificar que la configuración de Firebase esté disponible desde el middleware
+        if (!window.firebaseConfig) {
+            console.error('Error: La configuración de Firebase no está disponible. Verifica que el middleware esté funcionando correctamente.');
+            alert('Error de configuración. Por favor, contacta al administrador.');
+        }
 
+        const firebaseConfig = window.firebaseConfig;
         const appId = firebaseConfig.projectId; 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
