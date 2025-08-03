@@ -330,7 +330,8 @@
 
     <!-- Firebase SDK -->
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+     import { initializeApp } from "firebase/app";
+        import { getAnalytics } from "firebase/analytics";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
@@ -338,7 +339,7 @@
         if (typeof firebaseConfig === 'undefined') {
             console.error('firebaseConfig no está definido. Verifica que el middleware esté funcionando y las variables de entorno estén configuradas.');
             alert('Error: No se pudo cargar la configuración de Firebase. Por favor, contacta al administrador.');
-            throw new Error('Firebase configuration not available');
+            return;
         }
 
         const appId = firebaseConfig.projectId; 
@@ -698,3 +699,4 @@
     </script>
 </body>
 </html>
+
