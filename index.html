@@ -125,7 +125,7 @@
                         Ofrezco atención presencial y online, siempre desde un espacio de empatía, cercanía y compromiso con tu proceso.
                     </p>
                     <blockquote class="border-l-4 border-purple-500 pl-4 py-2 my-6 bg-purple-50 text-purple-800 italic">
-                        “Aquí no sanas solo: te acompaño.”
+                        "Aquí no sanas solo: te acompaño."
                     </blockquote>
                     <div class="flex space-x-4 mt-8">
                         <div class="bg-purple-100 p-4 rounded-lg text-center flex-1">
@@ -329,10 +329,17 @@
     </div>
 
     <!-- Firebase SDK -->
-    <script type="module" defer>
+    <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Verificar que firebaseConfig esté disponible
+        if (typeof firebaseConfig === 'undefined') {
+            console.error('firebaseConfig no está definido. Verifica que el middleware esté funcionando y las variables de entorno estén configuradas.');
+            alert('Error: No se pudo cargar la configuración de Firebase. Por favor, contacta al administrador.');
+            return;
+        }
 
         const appId = firebaseConfig.projectId; 
         const app = initializeApp(firebaseConfig);
@@ -691,5 +698,3 @@
     </script>
 </body>
 </html>
-
-
