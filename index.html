@@ -334,16 +334,6 @@
         import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
         import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-            authDomain: "pap-chat-14552.firebaseapp.com",
-            projectId: "pap-chat-14552",
-            storageBucket: "pap-chat-14552.firebasestorage.app",
-            messagingSenderId: "939187274099",
-            appId: "1:939187274099:web:b021f995b9771122db0506",
-            measurementId: "G-PDH53KMFR3"
-        };
-
         const appId = firebaseConfig.projectId; 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
@@ -701,3 +691,4 @@
     </script>
 </body>
 </html>
+
