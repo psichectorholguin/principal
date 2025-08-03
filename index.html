@@ -338,7 +338,7 @@
         if (typeof firebaseConfig === 'undefined') {
             console.error('firebaseConfig no está definido. Verifica que el middleware esté funcionando y las variables de entorno estén configuradas.');
             alert('Error: No se pudo cargar la configuración de Firebase. Por favor, contacta al administrador.');
-            return;
+            throw new Error('Firebase configuration not available');
         }
 
         const appId = firebaseConfig.projectId; 
