@@ -6,8 +6,8 @@
     <title>Psic. Héctor Holguin - Apoyo Psicológico Profesional</title>
     <link rel="icon" type="image/png" href="Imagenes/icon.png">
     
-    <!-- Tailwind CSS - Versión fija para producción -->
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
     
     <!-- Google Fonts: Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -63,13 +63,13 @@
             overflow-wrap: break-word;
             hyphens: auto;
             max-width: 100%;
-        }
-    </style>
+            }
+            </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
     <!-- Header -->
-    <header id="header" class="bg-white bg-opacity-80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
+    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
         <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#" class="text-xl font-bold text-purple-700">Psic. Héctor Holguin</a>
             <div class="hidden md:flex items-center space-x-8">
@@ -125,7 +125,7 @@
                         Ofrezco atención presencial y online, siempre desde un espacio de empatía, cercanía y compromiso con tu proceso.
                     </p>
                     <blockquote class="border-l-4 border-purple-500 pl-4 py-2 my-6 bg-purple-50 text-purple-800 italic">
-                        "Aquí no sanas solo: te acompaño."
+                        “Aquí no sanas solo: te acompaño.”
                     </blockquote>
                     <div class="flex space-x-4 mt-8">
                         <div class="bg-purple-100 p-4 rounded-lg text-center flex-1">
@@ -140,6 +140,10 @@
                 </div>
                 <div class="order-first md:order-last flex justify-center md:justify-center">
                     <div class="relative w-64 h-96 bg-blue-800 rounded-xl overflow-hidden shadow-xl flex-shrink-0">
+                        <!-- Tu foto profesional se posicionará absolutamente dentro de este contenedor -->
+                        <!-- Usamos inset-0 para que ocupe todo el espacio del contenedor padre -->
+                        <!-- object-cover asegura que la imagen cubra el área sin distorsión, recortando si es necesario -->
+                        <!-- Reemplaza 'Imagenes/Perfil.png' con la ruta a tu foto profesional -->
                         <img src="Imagenes/Perfil.png"
                              alt="Foto profesional de Héctor Holguín"
                              class="absolute inset-0 w-full h-full object-cover rounded-xl"
@@ -279,7 +283,7 @@
 
     <!-- Chat Modal -->
     <div id="chat-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
-        <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-screen max-h-screen flex flex-col transform scale-95" style="height: 90vh; max-height: 700px;">
+        <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform scale-95">
             
              <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
                 <div class="w-8"></div> <!-- Espaciador para mantener el título centrado -->
@@ -324,26 +328,26 @@
         </div>
     </div>
 
-    <!-- Firebase SDK usando CDN -->
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore-compat.js"></script>
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
 
-    <script>
-        // Verificar que firebaseConfig esté disponible
-        if (typeof firebaseConfig === 'undefined') {
-            console.error('firebaseConfig no está definido. Verifica que el middleware esté funcionando y las variables de entorno estén configuradas.');
-            alert('Error: No se pudo cargar la configuración de Firebase. Por favor, contacta al administrador.');
-            throw new Error('Firebase configuration not available');
-        }
+        const firebaseConfig = {
+            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
+            authDomain: "pap-chat-14552.firebaseapp.com",
+            projectId: "pap-chat-14552",
+            storageBucket: "pap-chat-14552.firebasestorage.app",
+            messagingSenderId: "939187274099",
+            appId: "1:939187274099:web:b021f995b9771122db0506",
+            measurementId: "G-PDH53KMFR3"
+        };
 
-        console.log('Firebase config encontrado:', firebaseConfig);
-
-        // Inicializar Firebase usando la compatibilidad
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.firestore();
-        const appId = firebaseConfig.projectId;
+        const appId = firebaseConfig.projectId; 
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
 
         const chatModal = document.getElementById('chat-modal');
         const chatModalContent = document.getElementById('chat-modal-content');
@@ -415,10 +419,10 @@
             const savedUserName = localStorage.getItem(USER_NAME_KEY);
 
             if (savedChatId && savedUserName) {
-                const chatDocRef = db.collection(`artifacts/${appId}/public/data/chats`).doc(savedChatId);
-                const chatSnap = await chatDocRef.get();
+                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, savedChatId);
+                const chatSnap = await getDoc(chatDocRef);
 
-                if (chatSnap.exists && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
+                if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
                     clearSavedChatAccess();
                     displayClosedChatInfo(chatSnap.data().status); 
                     return; 
@@ -432,7 +436,7 @@
 
                 if (!auth.currentUser) {
                     try {
-                        const userCredential = await auth.signInAnonymously();
+                        const userCredential = await signInAnonymously(auth);
                         currentUserId = userCredential.user.uid;
                         await setupChatListeners(currentChatId);
                         showView('chat');
@@ -510,40 +514,40 @@
         const startChatSession = async (userName, userEmail) => {
             showView('loading');
             try {
-                const userCredential = await auth.signInAnonymously();
+                const userCredential = await signInAnonymously(auth);
                 currentUserId = userCredential.user.uid;
 
                 localStorage.setItem(USER_ID_KEY, currentUserId);
                 localStorage.setItem(USER_NAME_KEY, userName);
                 if (userEmail) localStorage.setItem(USER_EMAIL_KEY, userEmail);
 
-                const chatsRef = db.collection(`artifacts/${appId}/public/data/chats`);
-                const newChatDoc = await chatsRef.add({
+                const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
+                const newChatDoc = await addDoc(chatsRef, {
                     userId: currentUserId,
                     userName: userName,
                     userEmail: userEmail,
-                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    createdAt: serverTimestamp(),
                     status: 'active',
                     lastMessageText: '¡Hola! Necesito ayuda.',
-                    lastMessageTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastMessageTimestamp: serverTimestamp(),
                     psicologoDisplayName: 'Psicólogo de Apoyo'
                 });
                 currentChatId = newChatDoc.id;
                 localStorage.setItem(CHAT_ID_KEY, currentChatId);
 
-                const messagesRef = db.collection(`artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
-                await messagesRef.add({
+                const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
+                await addDoc(messagesRef, {
                     text: '¡Hola! Necesito ayuda.',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    timestamp: serverTimestamp(),
                     senderId: currentUserId,
                     senderRole: 'user',
                     senderName: userName,
                     readByPsicologo: false, 
                     readByUser: true 
                 });
-                await messagesRef.add({
+                await addDoc(messagesRef, {
                     text: '¡Hola! Siéntete libre de expresarte. Este chat es un espacio confidencial para ofrecerte un primer apoyo en lo que necesites. ¿Cómo puedo ayudarte hoy?',
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    timestamp: serverTimestamp(),
                     senderId: 'psicologo_sistema_uid',
                     senderRole: 'psicologo',
                     senderName: 'Psicólogo de Apoyo',
@@ -568,10 +572,10 @@
 
         const listenForMessages = (chatId) => {
             if (unsubscribeMessages) unsubscribeMessages();
-            const messagesRef = db.collection(`artifacts/${appId}/public/data/chats/${chatId}/messages`);
-            const q = messagesRef.orderBy('timestamp');
+            const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
+            const q = query(messagesRef, orderBy('timestamp'));
 
-            unsubscribeMessages = q.onSnapshot((snapshot) => {
+            unsubscribeMessages = onSnapshot(q, (snapshot) => {
                 if (snapshot.empty) return;
                 messagesContainer.innerHTML = '';
                 snapshot.forEach(doc => {
@@ -587,9 +591,9 @@
 
         const listenForChatStatus = (chatId) => {
             if (unsubscribeChatStatus) unsubscribeChatStatus();
-            const chatDocRef = db.collection(`artifacts/${appId}/public/data/chats`).doc(chatId);
-            unsubscribeChatStatus = chatDocRef.onSnapshot((docSnap) => {
-                if (!docSnap.exists) {
+            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, chatId);
+            unsubscribeChatStatus = onSnapshot(chatDocRef, (docSnap) => {
+                if (!docSnap.exists()) {
                     if (currentChatId === chatId) {
                         clearSavedChatAccess();
                         displayClosedChatInfo('deleted');
@@ -620,9 +624,9 @@
         };
 
         const markMessageAsRead = async (chatId, messageId, readerRole) => {
-            const messageDocRef = db.collection(`artifacts/${appId}/public/data/chats/${chatId}/messages`).doc(messageId);
+            const messageDocRef = doc(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`, messageId);
             try {
-                await messageDocRef.update({ [readerRole === 'user' ? 'readByUser' : 'readByPsicologo']: true });
+                await updateDoc(messageDocRef, { [readerRole === 'user' ? 'readByUser' : 'readByPsicologo']: true });
             } catch (error) {
                 console.error(`Error al marcar mensaje como leído:`, error);
             }
@@ -630,7 +634,7 @@
 
         const appendMessageToDOM = (msg) => {
             const isUser = msg.senderId === currentUserId;
-            const displayName = isUser ? (msg.senderName || 'Tú') : 'Psicólogo de Apoyo';
+          const displayName = isUser ? (msg.senderName || 'Tú') : 'Psicólogo de Apoyo';
             const initials = getInitials(displayName);
             const avatarColor = isUser ? stringToColor(displayName) : '#8b5cf6';
 
@@ -662,23 +666,23 @@
             const userName = localStorage.getItem(USER_NAME_KEY);
             if (!text || !userName || !currentChatId || messageInput.disabled) return;
 
-            const messagesRef = db.collection(`artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
-            const chatDocRef = db.collection(`artifacts/${appId}/public/data/chats`).doc(currentChatId);
+            const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
+            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
             
             messageInput.value = '';
             try {
-                await messagesRef.add({
+                await addDoc(messagesRef, {
                     text: text,
-                    timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    timestamp: serverTimestamp(),
                     senderId: currentUserId,
                     senderRole: 'user',
                     senderName: userName,
                     readByPsicologo: false,
                     readByUser: true
                 });
-                await chatDocRef.update({
+                await updateDoc(chatDocRef, {
                     lastMessageText: text,
-                    lastMessageTimestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                    lastMessageTimestamp: serverTimestamp(),
                     status: 'active',
                     hasUnreadMessagesForPsicologo: true
                 });
