@@ -27,3 +27,4 @@ export async function onRequest(context) {
   });
 
   return rewriter.transform(response);
+}
