@@ -56,16 +56,15 @@
             flex-shrink: 0; /* Evita que se encoja */
         }
 
-        /* Estilos para los ticks de mensaje */
-        .message-ticks {
-            font-size: 0.75rem; /* text-xs */
-            margin-left: 0.5rem; /* ml-2 */
-            color: rgba(255, 255, 255, 0.75); /* Para mensajes enviados */
-        }
-        .message-ticks.read {
-            color: #3b82f6; /* blue-500 para leido */
-        }
-    </style>
+        /* Estilos para cortar texto largo sin espacios */
+        .message-bubble {
+            word-wrap: break-word;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
+            max-width: 100%;
+            }
+            </style>
 </head>
 <body class="bg-gray-50 text-gray-800">
 
@@ -110,22 +109,21 @@
                 <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Un espacio seguro y confidencial para encontrar orientación y bienestar emocional. Estoy aquí para escucharte.</p>
                 <button id="open-chat-btn-hero" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition-transform transform hover:scale-105 shadow-lg">
                     <i class="fas fa-comments mr-2"></i> Iniciar Chat de Primeros Auxilios
-                    <!-- Powered by Badge -->
+                </button>
                 <div class="absolute bottom-4 right-4 z-10 flex flex-col items-center space-y-2">
-                <a href="#" target="_blank" rel="noopener noreferrer" class="block bg-black text-white text-sm font-semibold px-4 py-2 rounded-full shadow-lg hover:bg-gray-800 transition-colors">
+                <a href="#" target="_blank" rel="noopener noreferrer" class="block bg-black text-white text-sm font-semibold px-3 py-1.5 rounded-full shadow-lg hover:bg-gray-800 transition-colors">
                     Powered by <span class="font-bold">APTUA</span>
                 </a>
                 <a href="https://www.instagram.com/aptua.psic/" target="_blank" rel="noopener noreferrer" aria-label="APTUA Instagram" class="text-gray-700 hover:text-pink-500 transition-colors">
                     <i class="fab fa-instagram text-3xl"></i>
                 </a>
-            </div>
-                </button>
+                </div>
             </div>
         </section>
 
         <!-- Sobre Mí -->
         <section id="sobre-mi" class="py-20 bg-white">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
                 <div>
                     <h2 class="text-3xl font-bold text-gray-900 mb-4">Sobre Mí</h2>
                     <p class="text-gray-600 mb-4 text-justify">
@@ -148,8 +146,18 @@
                         </div>
                     </div>
                 </div>
-                <div class="order-first md:order-last">
-                    <img src="https://placehold.co/600x400/F3F4F6/9CA3AF?text=Imagen+Profesional" alt="Imagen del consultorio o profesional" class="rounded-lg shadow-xl">
+                <div class="order-first md:order-last flex justify-center md:justify-center">
+                    <div class="relative w-64 h-96 bg-blue-800 rounded-xl overflow-hidden shadow-xl flex-shrink-0">
+                        <!-- Tu foto profesional se posicionará absolutamente dentro de este contenedor -->
+                        <!-- Usamos inset-0 para que ocupe todo el espacio del contenedor padre -->
+                        <!-- object-cover asegura que la imagen cubra el área sin distorsión, recortando si es necesario -->
+                        <!-- Reemplaza 'Imagenes/Perfil.png' con la ruta a tu foto profesional -->
+                        <img src="Imagenes/Perfil.png"
+                             alt="Foto profesional de Héctor Holguín"
+                             class="absolute inset-0 w-full h-full object-cover rounded-xl"
+                             onerror="this.onerror=null;this.src='https://placehold.co/256x384/A78BFA/FFFFFF?text=Imagen+No+Cargada';"
+                        >
+                    </div>
                 </div>
             </div>
         </section>
@@ -199,7 +207,7 @@
                 <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
                     <!-- Perfil 1 -->
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                        <img src="https://placehold.co/128x128/E9D5FF/4C1D95?text=EC" alt="Foto de perfil de Psicóloga Erik Curay" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
+                        <img src="Imagenes/Erik.png" alt="Foto de perfil de Psicóloga Erik Curay" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
                         <h3 class="text-xl font-bold text-gray-900">Psic. Erik Curay</h3>
                         <p class="text-purple-600 font-semibold mb-3">Psicólogo</p>
                         <p class="text-gray-600 text-sm text-justify">Soy Erik, un profesional de la psicología con formación sólida y versátil. Me especializo en adaptar distintas corrientes terapéuticas para promover el bienestar emocional y conductual. Mi objetivo es ayudar a las personas a manejar sus emociones, progresar, transformar y lograr cambios reales junto al crecimiento personal.</p>
@@ -214,14 +222,14 @@
                     </div>
                     <!-- Perfil 3 -->
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                        <img src="https://placehold.co/128x128/FFD700/8B4513?text=JS" alt="Foto de perfil de Psicóloga Ana García" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
+                        <img src="Imagenes/Foto3.png" alt="Foto de perfil de Psicóloga Ana García" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
                         <h3 class="text-xl font-bold text-gray-900">Psic. Jordan Sánchez</h3>
                         <p class="text-yellow-600 font-semibold mb-3">Psicólogo</p>
                         <p class="text-gray-600 text-sm text-justify">Psicólogo de vocación con formación en Terapia Cognitivo-Conductual y experiencia en evaluación, diagnóstico e intervención clínica, apasionado por la salud mental y el comportamiento humano, con un enfoque empático, ético y centrado en el bienestar y desarrollo personal de cada paciente.</p>
                     </div>
                     <!-- Perfil 4 -->
                     <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                        <img src="https://placehold.co/128x128/DBEAFE/1E40AF?text=HH" alt="Foto de perfil de Psicóloga Héctor Holguin" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
+                        <img src="Imagenes/Hector.png" alt="Foto de perfil de Psicóloga Héctor Holguin" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
                         <h3 class="text-xl font-bold text-gray-900">Psic. Héctor Holguin</h3>
                         <p class="text-blue-600 font-semibold mb-3">Psicólogo</p>
                         <p class="text-gray-600 text-sm text-justify">Psicólogo con enfoque Cognitivo-Conductual, apasionado por el bienestar emocional y la intervención en contextos de alta vulnerabilidad. Experto en evaluación psicosocial, apoyo a víctimas y coordinación de alianzas estratégicas. Trabajo con compromiso, ética y herramientas basadas en evidencia para generar impacto real.</p>
@@ -255,10 +263,10 @@
                 <h2 class="text-3xl font-bold text-gray-900 mb-4">Hablemos</h2>
                 <p class="text-lg text-gray-600 mb-8">Si deseas agendar una cita para terapia individual o consultar sobre los talleres, no dudes en contactarme.</p>
                 <div class="bg-purple-50 p-8 rounded-lg max-w-lg mx-auto shadow-md">
-                     <a href="mailto:psic.hectorholguin@gmail.com" class="block text-lg font-semibold text-purple-800 hover:text-purple-900 transition-colors">
-                        <i class="fas fa-envelope mr-2"></i> psic.hectorholguin@gmail.com </a>
-                    <<a href="https://wa.me/message/WMXPODFNZLDXE1" target="_blank" rel="noopener noreferrer" class="block mt-4 text-lg font-semibold text-purple-800 hover:text-purple-900 transition-colors">
-                        <i class="fab fa-whatsapp mr-2"></i> +593 963220403
+                <a href="mailto:psic.hectorholguin@gmail.com" class="block text-lg font-semibold text-purple-800 hover:text-purple-900 transition-colors">
+                <i class="fas fa-envelope mr-2"></i> psic.hectorholguin@gmail.com </a>
+                <a href="https://wa.me/message/WMXPODFNZLDXE1" target="_blank" rel="noopener noreferrer" class="block mt-4 text-lg font-semibold text-purple-800 hover:text-purple-900 transition-colors">
+                <i class="fab fa-whatsapp mr-2"></i> +593 963220403
                 </div>
             </div>
         </section>
@@ -278,8 +286,6 @@
                 </a>
                 <a href="https://www.tiktok.com/@psic.hectorholguin" target="_blank" aria-label="TikTok" class="text-gray-400 hover:text-white transition-colors">
                     <i class="fab fa-tiktok text-3xl"></i>
-                <a href="https://wa.me/message/WMXPODFNZLDXE1" target="_blank" aria-label="whatsApp" class="text-gray-400 hover:text-white transition-colors">
-                    <i class="fab fa-whatsapp text-3xl"></i>
                 </a>
             </div>
         </div>
@@ -289,9 +295,10 @@
     <div id="chat-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
         <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform scale-95">
             
-            <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
-                <h3 class="text-xl font-bold text-gray-800">Chat de Primeros Auxilios</h3>
-                <button id="close-chat-btn" class="text-2xl text-gray-500 hover:text-gray-800">&times;</button>
+             <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
+                <div class="w-8"></div> <!-- Espaciador para mantener el título centrado -->
+                <h3 class="text-xl font-bold text-gray-800 flex-1 text-center">Chat de Primeros Auxilios</h3>
+                <button id="close-chat-btn" class="text-2xl text-gray-500 hover:text-gray-800 w-8 h-8 flex items-center justify-center">&times;</button>
             </div>
 
             <div id="pre-chat-view" class="p-6 flex flex-col justify-center text-center h-full">
@@ -387,7 +394,7 @@
         const USER_EMAIL_KEY = 'userEmail';
 
         function getInitials(name) {
-            if (!name) return '';
+           if (!name || name === 'Psicólogo de Apoyo') return 'PA';
             const parts = name.split(' ');
             let initials = '';
             if (parts.length > 0 && parts[0].length > 0) {
@@ -605,7 +612,7 @@
                 }
                 const chatData = docSnap.data();
                 if (chatData.psicologoDisplayName) {
-                    currentPsicologoDisplayName = chatData.psicologoDisplayName;
+                    currentPsicologoDisplayName = 'Psicólogo de Apoyo';
                 }
                 const isClosed = chatData.status === 'closed' || chatData.status === 'deleted';
                 messageInput.disabled = isClosed;
@@ -635,15 +642,9 @@
             }
         };
 
-        const updateMessageTicks = (ticksElement, msg) => {
-            if (!ticksElement || msg.senderRole !== 'user') return;
-            ticksElement.innerHTML = msg.readByPsicologo ? '<i class="fas fa-check-double"></i>' : '<i class="fas fa-check"></i>';
-            ticksElement.classList.toggle('read', msg.readByPsicologo);
-        };
-
         const appendMessageToDOM = (msg) => {
             const isUser = msg.senderId === currentUserId;
-            const displayName = isUser ? (msg.senderName || 'Tú') : (msg.senderName || 'Psicólogo');
+          const displayName = isUser ? (msg.senderName || 'Tú') : 'Psicólogo de Apoyo';
             const initials = getInitials(displayName);
             const avatarColor = isUser ? stringToColor(displayName) : '#8b5cf6';
 
@@ -658,19 +659,15 @@
                 </div>
                 <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
                     <span class="text-xs font-semibold mb-1 px-1">${displayName}</span>
-                    <div class="px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}" style="word-wrap: break-word;">
+                    <div class="message-bubble px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
                         <p>${msg.text}</p>
                         <div class="flex justify-end items-center text-xs mt-1 opacity-75">
-                            <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
-                            ${isUser ? `<span class="message-ticks ml-2"></span>` : ''}
-                        </div>
+                        <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
+                    </div>
                     </div>
                 </div>
             `;
             messagesContainer.appendChild(messageWrapper);
-            if (isUser) {
-                updateMessageTicks(messageWrapper.querySelector('.message-ticks'), msg);
-            }
         };
 
         messageForm.addEventListener('submit', async (e) => {
@@ -714,4 +711,3 @@
     </script>
 </body>
 </html>
-
