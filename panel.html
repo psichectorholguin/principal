@@ -305,7 +305,7 @@
                     </button>
                     <input type="text" id="psicologo-message-input" placeholder="Escribe tu respuesta..." class="flex-1 p-3 border rounded-full focus:ring-2 focus:ring-purple-500 focus:outline-none" autocomplete="off" disabled>
                     <button type="submit" id="send-psicologo-message-btn" class="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl hover:bg-purple-700 transition-colors" disabled>
-                        <i class="fas fa-paper-plane"></i>
+                        <i class="fas fa-er-plane"></i>
                     </button>
                 </form>
             </div>
@@ -407,22 +407,7 @@
 
 
     <script type="module">
-        // Importaciones de Firebase
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, orderBy, onSnapshot, doc, updateDoc, setDoc, where, getDoc, getDocs, arrayUnion, arrayRemove, writeBatch, deleteDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js"; 
-
-        // --- Configuración de Firebase ---
-        // ¡¡¡CRÍTICO!!! ESTOS SON TUS VALORES REALES DE TU PROYECTO FIREBASE
-        const firebaseConfig = {
-            apiKey: "AIzaSyBywa32iITp5tp6pNSiVgePibZ3CjizsTk",
-            authDomain: "pap-chat-14552.firebaseapp.com",
-            projectId: "pap-chat-14552",
-            storageBucket: "pap-chat-14552.firebasestorage.app",
-            messagingSenderId: "939187274099",
-            appId: "1:939187274099:web:b021f995b9771122db0506",
-            measurementId: "G-PDH53KMFR3"
-        };
+   
 
         const app = initializeApp(firebaseConfig);
         const auth = getAuth(app);
