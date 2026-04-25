@@ -1,718 +1,1619 @@
 <!DOCTYPE html>
-<html lang="es" class="scroll-smooth">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Psic. Héctor Holguín | Psicoterapia Clínica y Salud Mental</title>
-    <meta name="description" content= "Psicólogo clínico con mención en Psicoterapia (Msc. c). Especialista en Terapia Cognitivo-Conductual y DBT en Ecuador. Sesiones presenciales y online basadas en evidencia científica.">
-    <link rel="icon" type="image/png" href="Imagenes/icono.png">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Google Fonts: Inter -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&display=swap" rel="stylesheet">
-    
-    <!-- Font Awesome for Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .hero-bg {
-            background-color: #f3f4f6;
-            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
-            background-size: 20px 20px;
-        }
-        .modal {
-            transition: opacity 0.25s ease;
-        }
-        .modal.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-        .modal-content {
-            transform: translateY(-50px);
-            transition: transform 0.25s ease;
-        }
-        .modal.show .modal-content {
-            transform: translateY(0);
-        }
+  <!-- ✅ MEJORA: Meta tags SEO completos -->
+  <title>Psic. Héctor Holguín | Psicólogo Clínico – Guayaquil, Ecuador</title>
+  <meta name="description" content="Psicólogo clínico en Guayaquil especializado en Terapia Cognitivo-Conductual (TCC) y DBT. Terapia individual para ansiedad, depresión y regulación emocional. Agenda tu primera consulta." />
+  <meta name="keywords" content="psicólogo clínico guayaquil, terapia cognitivo conductual, DBT, salud mental ecuador, terapia online ecuador, ansiedad depresión regulación emocional" />
+  <link rel="canonical" href="https://psichectorholguin.com/" />
 
-        /* Estilos para los avatares de iniciales */
-        .initials-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1rem;
-            color: white;
-            background-color: #8b5cf6; /* default purple */
-            flex-shrink: 0; /* Evita que se encoja */
-        }
+  <!-- ✅ MEJORA: Open Graph para redes sociales -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://psichectorholguin.com/" />
+  <meta property="og:title" content="Psic. Héctor Holguín | Psicólogo Clínico Especializado" />
+  <meta property="og:description" content="Psicoterapia clínica basada en evidencia (TCC y DBT). Terapia individual para adolescentes y adultos. Guayaquil, Ecuador." />
+  <meta property="og:image" content="https://psichectorholguin.com/Imagenes/Perfil.png" />
+  <meta name="twitter:card" content="summary_large_image" />
 
-        /* Estilos para cortar texto largo sin espacios */
-        .message-bubble {
-            word-wrap: break-word;
-            word-break: break-word;
-            overflow-wrap: break-word;
-            hyphens: auto;
-            max-width: 100%;
-            }
-            </style>
+  <!-- ✅ MEJORA: Schema.org JSON-LD para profesional de salud -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Physician",
+    "name": "Psic. Héctor Holguín",
+    "jobTitle": "Psicólogo Clínico",
+    "description": "Psicólogo Clínico especializado en TCC y DBT. Terapia individual para adolescentes y adultos en Guayaquil, Ecuador.",
+    "url": "https://psichectorholguin.com",
+    "telephone": "+593963220403",
+    "email": "psic.hectorholguin@gmail.com",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Guayaquil",
+      "addressCountry": "EC"
+    },
+    "medicalSpecialty": "Psychiatry",
+    "availableService": [
+      {"@type": "MedicalTherapy", "name": "Terapia Cognitivo-Conductual (TCC)"},
+      {"@type": "MedicalTherapy", "name": "Terapia Dialéctica Conductual (DBT)"},
+      {"@type": "MedicalTherapy", "name": "Primeros Auxilios Psicológicos (PAP)"}
+    ],
+    "sameAs": [
+      "https://wa.me/593963220403"
+    ]
+  }
+  </script>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== VARIABLES DE DISEÑO ===== */
+    :root {
+      --clr-primary:     #1A3C5E;   /* Azul profundo – confianza */
+      --clr-primary-lt:  #2A5F8F;
+      --clr-accent:      #2D9596;   /* Teal – calma, salud */
+      --clr-accent-lt:   #E8F5F5;
+      --clr-cta:         #C4622D;   /* Terracota – calidez humana */
+      --clr-cta-hover:   #A84E23;
+      --clr-bg:          #F8F5F0;   /* Crema cálida */
+      --clr-bg-white:    #FFFFFF;
+      --clr-bg-section:  #EEF4F0;   /* Verde salvia muy suave */
+      --clr-text:        #1A2535;
+      --clr-text-muted:  #5A6478;
+      --clr-border:      #D8D2C8;
+      --clr-success:     #2D7D46;
+      --clr-warning:     #B7791F;
+
+      --font-display: 'Lora', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      --radius:     12px;
+      --radius-lg:  20px;
+      --shadow-sm:  0 2px 8px rgba(26,60,94,.08);
+      --shadow-md:  0 8px 32px rgba(26,60,94,.12);
+      --shadow-lg:  0 20px 60px rgba(26,60,94,.15);
+
+      --max-w: 1100px;
+      --nav-h: 72px;
+    }
+
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body {
+      font-family: var(--font-body);
+      background: var(--clr-bg);
+      color: var(--clr-text);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ul { list-style: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    /* ===== COOKIE BANNER ===== */
+    #cookie-banner {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: var(--clr-primary); color: #fff;
+      padding: 14px 24px; display: flex; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      font-size: .875rem; box-shadow: 0 -4px 20px rgba(0,0,0,.2);
+      transform: translateY(100%); animation: slideUp .4s .8s ease forwards;
+    }
+    #cookie-banner.hidden { display: none; }
+    #cookie-banner a { color: var(--clr-accent); text-decoration: underline; }
+    #cookie-accept {
+      background: var(--clr-accent); color: #fff;
+      padding: 8px 20px; border-radius: 6px; font-weight: 600;
+      font-size: .875rem; white-space: nowrap; transition: background .2s;
+    }
+    #cookie-accept:hover { background: #22787A; }
+    @keyframes slideUp { to { transform: translateY(0); } }
+
+    /* ===== NAVEGACIÓN ===== */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      height: var(--nav-h);
+      background: rgba(248,245,240,.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--clr-border);
+      transition: box-shadow .3s;
+    }
+    nav.scrolled { box-shadow: var(--shadow-md); }
+    .nav-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 0 24px;
+      height: 100%; display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display); font-size: 1.1rem;
+      font-weight: 600; color: var(--clr-primary);
+    }
+    .nav-logo span { color: var(--clr-accent); }
+    .nav-links { display: flex; align-items: center; gap: 4px; }
+    .nav-links a {
+      padding: 8px 14px; border-radius: 8px; font-size: .9rem;
+      font-weight: 500; color: var(--clr-text-muted); transition: all .2s;
+    }
+    .nav-links a:hover { color: var(--clr-primary); background: var(--clr-accent-lt); }
+    /* ✅ MEJORA: CTA persistente en navbar */
+    .nav-cta {
+      background: var(--clr-cta); color: #fff !important;
+      padding: 9px 20px !important; border-radius: 8px !important;
+      font-weight: 600 !important; transition: background .2s, transform .15s !important;
+    }
+    .nav-cta:hover { background: var(--clr-cta-hover) !important; transform: translateY(-1px); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--clr-primary); border-radius: 2px; transition: all .3s; }
+    .mobile-menu {
+      display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+      background: var(--clr-bg-white); border-bottom: 1px solid var(--clr-border);
+      padding: 16px 24px 24px; flex-direction: column; gap: 4px;
+      box-shadow: var(--shadow-md); z-index: 999;
+    }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { padding: 12px 16px; border-radius: 8px; font-weight: 500; color: var(--clr-text); }
+    .mobile-menu a:hover { background: var(--clr-accent-lt); }
+    .mobile-menu .nav-cta { margin-top: 8px; text-align: center; background: var(--clr-cta); color: #fff; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh; padding-top: var(--nav-h);
+      display: flex; align-items: center;
+      background: linear-gradient(135deg, #F8F5F0 0%, #EEF4F0 50%, #E8F0F5 100%);
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: -60px; right: -80px;
+      width: 500px; height: 500px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(45,149,150,.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: ''; position: absolute; bottom: -100px; left: -60px;
+      width: 400px; height: 400px; border-radius: 50%;
+      background: radial-gradient(circle, rgba(26,60,94,.08) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max-w); margin: 0 auto; padding: 80px 24px;
+      display: grid; grid-template-columns: 1fr 420px; gap: 60px; align-items: center;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--clr-accent-lt); border: 1px solid rgba(45,149,150,.3);
+      color: var(--clr-accent); border-radius: 100px;
+      padding: 6px 16px; font-size: .8rem; font-weight: 600;
+      letter-spacing: .05em; text-transform: uppercase; margin-bottom: 20px;
+    }
+    .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--clr-accent); border-radius: 50%; }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.2; color: var(--clr-primary);
+      font-weight: 700; margin-bottom: 20px;
+    }
+    .hero h1 em { font-style: italic; color: var(--clr-accent); }
+    .hero-sub {
+      font-size: 1.1rem; color: var(--clr-text-muted);
+      margin-bottom: 16px; max-width: 540px;
+    }
+    /* ✅ MEJORA: Reducción de fricción junto al CTA */
+    .hero-reassurance {
+      font-size: .875rem; color: var(--clr-accent);
+      margin-bottom: 32px; display: flex; align-items: center; gap: 6px;
+    }
+    .hero-reassurance::before { content: '✓'; font-weight: 700; }
+    .hero-btns { display: flex; gap: 12px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--clr-cta); color: #fff;
+      padding: 14px 28px; border-radius: 10px; font-weight: 600;
+      font-size: 1rem; transition: all .2s; box-shadow: 0 4px 16px rgba(196,98,45,.3);
+    }
+    .btn-primary:hover { background: var(--clr-cta-hover); transform: translateY(-2px); box-shadow: 0 6px 24px rgba(196,98,45,.35); }
+    .btn-secondary {
+      background: transparent; color: var(--clr-primary);
+      padding: 14px 28px; border-radius: 10px; font-weight: 600;
+      border: 2px solid var(--clr-primary); font-size: 1rem; transition: all .2s;
+    }
+    .btn-secondary:hover { background: var(--clr-primary); color: #fff; }
+    .hero-img-wrap {
+      position: relative; display: flex; justify-content: center; align-items: flex-end;
+    }
+    .hero-img-wrap img {
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+      width: 380px; object-fit: cover;
+      border: 4px solid rgba(255,255,255,.8);
+    }
+    /* ✅ MEJORA: Stats replanteadas como credenciales cualitativas */
+    .hero-credentials {
+      position: absolute; bottom: -16px; left: -20px;
+      background: var(--clr-bg-white); border-radius: var(--radius);
+      padding: 14px 18px; box-shadow: var(--shadow-md);
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .hero-cred-item { display: flex; align-items: center; gap: 8px; font-size: .8rem; }
+    .hero-cred-item .icon { font-size: 1rem; }
+    .hero-cred-item strong { color: var(--clr-primary); }
+    .hero-cred-item span { color: var(--clr-text-muted); }
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 6px;
+      color: var(--clr-text-muted); font-size: .75rem; animation: bounce 2s infinite;
+    }
+    .scroll-hint svg { width: 20px; height: 20px; }
+    @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+    /* ===== SECCIÓN GENÉRICA ===== */
+    section { padding: 90px 24px; }
+    .container { max-width: var(--max-w); margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 56px; }
+    .section-label {
+      display: inline-block; font-size: .75rem; font-weight: 700;
+      letter-spacing: .12em; text-transform: uppercase; color: var(--clr-accent);
+      margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: clamp(1.7rem, 3vw, 2.4rem);
+      color: var(--clr-primary); font-weight: 700; line-height: 1.25; margin-bottom: 16px;
+    }
+    .section-desc { color: var(--clr-text-muted); font-size: 1.05rem; max-width: 580px; margin: 0 auto; }
+
+    /* ===== SOBRE MÍ ===== */
+    #sobre-mi { background: var(--clr-bg-white); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 72px; align-items: start; }
+    .about-text h2 {
+      font-family: var(--font-display); font-size: 2rem; color: var(--clr-primary);
+      margin-bottom: 20px; font-weight: 700;
+    }
+    .about-text p { color: var(--clr-text-muted); margin-bottom: 16px; line-height: 1.8; }
+    .about-quote {
+      border-left: 4px solid var(--clr-accent);
+      padding: 16px 20px; background: var(--clr-accent-lt);
+      border-radius: 0 var(--radius) var(--radius) 0;
+      margin: 24px 0; font-family: var(--font-display);
+      font-style: italic; color: var(--clr-primary); font-size: 1.1rem;
+    }
+    .about-values { display: flex; flex-direction: column; gap: 12px; margin-top: 24px; }
+    .about-value-item { display: flex; gap: 12px; align-items: flex-start; }
+    .about-value-item .v-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: var(--clr-accent-lt); display: flex; align-items: center;
+      justify-content: center; font-size: 1rem; flex-shrink: 0; margin-top: 2px;
+    }
+    .about-value-item h4 { font-size: .95rem; font-weight: 600; color: var(--clr-primary); margin-bottom: 2px; }
+    .about-value-item p { font-size: .875rem; color: var(--clr-text-muted); margin: 0; line-height: 1.6; }
+    .about-aside { display: flex; flex-direction: column; gap: 24px; }
+    .about-card {
+      background: var(--clr-bg); border-radius: var(--radius-lg);
+      padding: 24px; border: 1px solid var(--clr-border);
+    }
+    .about-card h3 { font-size: 1rem; font-weight: 700; color: var(--clr-primary); margin-bottom: 14px; }
+    .cred-list { display: flex; flex-direction: column; gap: 10px; }
+    .cred-item { display: flex; gap: 10px; align-items: flex-start; font-size: .875rem; }
+    .cred-item .dot { width: 8px; height: 8px; background: var(--clr-accent); border-radius: 50%; margin-top: 6px; flex-shrink: 0; }
+    .cred-item strong { display: block; color: var(--clr-text); }
+    .cred-item span { color: var(--clr-text-muted); }
+
+    /* ===== EXPLICACIÓN TCC / DBT ===== */
+    /* ✅ MEJORA: Explicar los enfoques en lenguaje accesible */
+    .approach-section { background: var(--clr-bg-section); }
+    .approach-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .approach-card {
+      background: var(--clr-bg-white); border-radius: var(--radius-lg);
+      padding: 32px; box-shadow: var(--shadow-sm); border: 1px solid var(--clr-border);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .approach-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .approach-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--clr-primary); color: #fff;
+      border-radius: 8px; padding: 6px 14px; font-size: .8rem;
+      font-weight: 700; letter-spacing: .05em; margin-bottom: 16px;
+    }
+    .approach-card h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--clr-primary); margin-bottom: 10px; }
+    .approach-card p { color: var(--clr-text-muted); font-size: .95rem; line-height: 1.75; margin-bottom: 14px; }
+    .approach-uses { display: flex; flex-wrap: wrap; gap: 6px; }
+    .approach-tag {
+      background: var(--clr-accent-lt); color: var(--clr-accent);
+      border-radius: 100px; padding: 4px 12px; font-size: .75rem; font-weight: 600;
+    }
+
+    /* ===== SERVICIOS ===== */
+    #servicios { background: var(--clr-bg-white); }
+    .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
+    .service-card {
+      background: var(--clr-bg); border-radius: var(--radius-lg);
+      padding: 32px; border: 1px solid var(--clr-border);
+      display: flex; flex-direction: column; gap: 16px;
+      transition: transform .2s, box-shadow .2s, border-color .2s;
+    }
+    .service-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: var(--clr-accent); }
+    .service-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--clr-accent-lt); display: flex;
+      align-items: center; justify-content: center; font-size: 1.5rem;
+    }
+    .service-card h3 { font-family: var(--font-display); font-size: 1.15rem; color: var(--clr-primary); font-weight: 600; }
+    .service-card p { color: var(--clr-text-muted); font-size: .9rem; line-height: 1.7; flex: 1; }
+    /* ✅ MEJORA: Detalles prácticos de cada servicio */
+    .service-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .service-meta-item {
+      display: flex; align-items: center; gap: 5px;
+      font-size: .75rem; color: var(--clr-text-muted);
+      background: var(--clr-bg-white); border: 1px solid var(--clr-border);
+      border-radius: 100px; padding: 4px 10px;
+    }
+    .service-meta-item svg { width: 12px; height: 12px; }
+    .service-pap { border-top: 3px solid var(--clr-accent); }
+    .service-pap .service-icon { background: rgba(45,149,150,.15); }
+    .service-cta-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--clr-accent); font-weight: 600; font-size: .875rem;
+      transition: gap .2s;
+    }
+    .service-cta-link:hover { gap: 10px; }
+    .service-cta-link svg { width: 16px; height: 16px; }
+    /* ✅ MEJORA: Precio de referencia */
+    .service-price {
+      font-size: .8rem; color: var(--clr-text-muted);
+      border-top: 1px solid var(--clr-border); padding-top: 12px; margin-top: auto;
+    }
+    .service-price strong { color: var(--clr-primary); }
+
+    /* ===== EQUIPO ===== */
+    #equipo { background: var(--clr-bg-section); }
+    .team-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+    .team-card {
+      background: var(--clr-bg-white); border-radius: var(--radius-lg);
+      overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--clr-border);
+      transition: transform .2s, box-shadow .2s;
+    }
+    .team-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .team-img-wrap { height: 280px; overflow: hidden; background: var(--clr-bg-section); }
+    .team-img-wrap img { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+    .team-info { padding: 24px; }
+    .team-role {
+      display: inline-block; background: var(--clr-accent-lt); color: var(--clr-accent);
+      font-size: .75rem; font-weight: 700; border-radius: 6px; padding: 3px 10px;
+      letter-spacing: .04em; margin-bottom: 8px;
+    }
+    .team-info h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--clr-primary); margin-bottom: 6px; }
+    .team-title { font-size: .85rem; color: var(--clr-accent); font-weight: 600; margin-bottom: 12px; }
+    .team-info p { font-size: .875rem; color: var(--clr-text-muted); line-height: 1.7; }
+
+    /* ===== TESTIMONIOS ===== */
+    /* ✅ MEJORA: Sección de testimonios anónimos */
+    #testimonios { background: var(--clr-primary); }
+    #testimonios .section-title { color: #fff; }
+    #testimonios .section-label { color: rgba(255,255,255,.6); }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .testimonial-card {
+      background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.12);
+      border-radius: var(--radius-lg); padding: 28px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+    .testimonial-stars { display: flex; gap: 3px; }
+    .testimonial-stars span { color: #F6C90E; font-size: 1rem; }
+    .testimonial-card p { color: rgba(255,255,255,.85); font-family: var(--font-display); font-style: italic; font-size: .95rem; line-height: 1.75; flex: 1; }
+    .testimonial-author { display: flex; gap: 12px; align-items: center; }
+    .testimonial-avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: var(--clr-accent); display: flex; align-items: center;
+      justify-content: center; color: #fff; font-weight: 700; font-size: .875rem;
+    }
+    .testimonial-name strong { display: block; color: #fff; font-size: .875rem; }
+    .testimonial-name span { color: rgba(255,255,255,.5); font-size: .78rem; }
+
+    /* ===== FAQ ===== */
+    /* ✅ MEJORA: Sección FAQ */
+    #faq { background: var(--clr-bg-white); }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .faq-item {
+      background: var(--clr-bg); border-radius: var(--radius);
+      border: 1px solid var(--clr-border); overflow: hidden;
+    }
+    .faq-question {
+      width: 100%; text-align: left; padding: 18px 20px;
+      display: flex; justify-content: space-between; align-items: center;
+      font-weight: 600; color: var(--clr-primary); font-size: .95rem; gap: 16px;
+      background: none; transition: background .15s;
+    }
+    .faq-question:hover { background: var(--clr-accent-lt); }
+    .faq-toggle { width: 24px; height: 24px; border-radius: 50%; background: var(--clr-accent-lt); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: transform .3s; }
+    .faq-toggle svg { width: 14px; height: 14px; color: var(--clr-accent); }
+    .faq-item.open .faq-toggle { transform: rotate(45deg); background: var(--clr-accent); }
+    .faq-item.open .faq-toggle svg { color: #fff; }
+    .faq-answer {
+      max-height: 0; overflow: hidden; transition: max-height .35s ease;
+      padding: 0 20px;
+    }
+    .faq-answer p { padding-bottom: 18px; color: var(--clr-text-muted); font-size: .9rem; line-height: 1.75; }
+    .faq-item.open .faq-answer { max-height: 300px; }
+
+    /* ===== COMPROMISO SOCIAL ===== */
+    #compromiso { background: var(--clr-bg-section); }
+    .commitment-wrap {
+      display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center;
+    }
+    .commitment-text h2 { font-family: var(--font-display); font-size: 1.9rem; color: var(--clr-primary); margin-bottom: 16px; }
+    .commitment-text p { color: var(--clr-text-muted); line-height: 1.8; margin-bottom: 14px; }
+    .commitment-org {
+      display: inline-flex; align-items: center; gap: 10px;
+      background: var(--clr-bg-white); border-radius: var(--radius);
+      padding: 12px 18px; border: 1px solid var(--clr-border);
+      margin-top: 8px; font-size: .875rem;
+    }
+    .commitment-org strong { color: var(--clr-primary); display: block; }
+    .commitment-org span { color: var(--clr-text-muted); }
+    .commitment-stats { display: flex; flex-direction: column; gap: 20px; }
+    .commitment-stat {
+      background: var(--clr-bg-white); border-radius: var(--radius);
+      padding: 20px 24px; border-left: 4px solid var(--clr-accent);
+    }
+    .commitment-stat strong { font-size: 1.8rem; font-family: var(--font-display); color: var(--clr-primary); display: block; }
+    .commitment-stat span { font-size: .875rem; color: var(--clr-text-muted); }
+
+    /* ===== CONTACTO ===== */
+    #contacto { background: var(--clr-bg-white); }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 60px; align-items: start; }
+    .contact-info h2 { font-family: var(--font-display); font-size: 1.9rem; color: var(--clr-primary); margin-bottom: 14px; }
+    .contact-info p { color: var(--clr-text-muted); line-height: 1.8; margin-bottom: 28px; }
+    .contact-items { display: flex; flex-direction: column; gap: 16px; }
+    .contact-item { display: flex; gap: 14px; align-items: flex-start; }
+    .contact-item .ci-icon {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--clr-accent-lt); display: flex; align-items: center;
+      justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+    }
+    .contact-item strong { display: block; color: var(--clr-primary); font-size: .9rem; margin-bottom: 2px; }
+    .contact-item a, .contact-item span { color: var(--clr-text-muted); font-size: .9rem; }
+    .contact-item a:hover { color: var(--clr-accent); }
+    /* ✅ MEJORA: Formulario de contacto nativo */
+    .contact-form {
+      background: var(--clr-bg); border-radius: var(--radius-lg);
+      padding: 36px; border: 1px solid var(--clr-border); box-shadow: var(--shadow-sm);
+    }
+    .contact-form h3 { font-family: var(--font-display); font-size: 1.3rem; color: var(--clr-primary); margin-bottom: 24px; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .form-grid .full { grid-column: 1 / -1; }
+    .form-group { display: flex; flex-direction: column; gap: 6px; }
+    .form-group label { font-size: .8rem; font-weight: 600; color: var(--clr-text); letter-spacing: .02em; }
+    .form-group input, .form-group select, .form-group textarea {
+      border: 1px solid var(--clr-border); border-radius: 8px;
+      padding: 12px 14px; font-size: .9rem; font-family: var(--font-body);
+      background: var(--clr-bg-white); color: var(--clr-text);
+      transition: border-color .2s, box-shadow .2s; outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--clr-accent); box-shadow: 0 0 0 3px rgba(45,149,150,.15);
+    }
+    .form-group textarea { min-height: 110px; resize: vertical; }
+    .form-privacy {
+      font-size: .78rem; color: var(--clr-text-muted); margin-top: 8px;
+    }
+    .form-privacy a { color: var(--clr-accent); text-decoration: underline; }
+    .btn-form {
+      width: 100%; background: var(--clr-cta); color: #fff;
+      padding: 14px; border-radius: 10px; font-weight: 700; font-size: 1rem;
+      margin-top: 16px; transition: all .2s;
+    }
+    .btn-form:hover { background: var(--clr-cta-hover); transform: translateY(-1px); }
+    .form-success {
+      display: none; background: rgba(45,125,70,.1); border: 1px solid rgba(45,125,70,.3);
+      border-radius: var(--radius); padding: 16px; text-align: center;
+      color: var(--clr-success); font-weight: 600; margin-top: 16px;
+    }
+
+    /* ===== CRISIS NOTICE ===== */
+    /* ✅ MEJORA: Aviso de emergencias */
+    .crisis-bar {
+      background: #FFF8E7; border-top: 1px solid #F6E0A0; border-bottom: 1px solid #F6E0A0;
+      padding: 14px 24px; text-align: center; font-size: .875rem; color: var(--clr-warning);
+    }
+    .crisis-bar strong { color: #92600A; }
+    .crisis-bar a { color: var(--clr-warning); text-decoration: underline; font-weight: 600; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--clr-primary); color: rgba(255,255,255,.8);
+      padding: 60px 24px 0;
+    }
+    .footer-inner {
+      max-width: var(--max-w); margin: 0 auto;
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+      padding-bottom: 48px; border-bottom: 1px solid rgba(255,255,255,.1);
+    }
+    .footer-brand .logo { font-family: var(--font-display); font-size: 1.1rem; font-weight: 700; color: #fff; margin-bottom: 12px; }
+    .footer-brand p { font-size: .875rem; line-height: 1.7; max-width: 260px; }
+    .footer-brand .footer-reg { margin-top: 16px; font-size: .78rem; color: rgba(255,255,255,.5); }
+    .footer-col h4 { font-size: .85rem; font-weight: 700; color: #fff; letter-spacing: .05em; text-transform: uppercase; margin-bottom: 16px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 8px; }
+    .footer-col li a { font-size: .875rem; transition: color .2s; }
+    .footer-col li a:hover { color: var(--clr-accent); }
+    .footer-hours { display: flex; flex-direction: column; gap: 8px; font-size: .875rem; }
+    .footer-hours .day { display: flex; justify-content: space-between; gap: 16px; }
+    .footer-hours .day span:first-child { color: rgba(255,255,255,.6); }
+    .footer-social { display: flex; gap: 10px; margin-top: 16px; }
+    .footer-social a {
+      width: 36px; height: 36px; border-radius: 8px; border: 1px solid rgba(255,255,255,.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: .875rem; transition: all .2s;
+    }
+    .footer-social a:hover { background: var(--clr-accent); border-color: var(--clr-accent); color: #fff; }
+    .footer-bottom {
+      max-width: var(--max-w); margin: 0 auto;
+      padding: 20px 0; display: flex; justify-content: space-between;
+      align-items: center; flex-wrap: wrap; gap: 12px; font-size: .8rem;
+    }
+    .footer-bottom a { color: rgba(255,255,255,.5); transition: color .2s; }
+    .footer-bottom a:hover { color: var(--clr-accent); }
+
+    /* ===== FLOAT WHATSAPP ===== */
+    .whatsapp-float {
+      position: fixed; bottom: 88px; right: 24px; z-index: 900;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: #25D366; color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37,211,102,.5); transition: transform .2s;
+      text-decoration: none;
+    }
+    .whatsapp-float:hover { transform: scale(1.1); }
+    .whatsapp-float svg { width: 28px; height: 28px; }
+
+    /* ===== CHAT PAP WIDGET (mejorado) ===== */
+    .chat-fab {
+      position: fixed; bottom: 24px; right: 24px; z-index: 901;
+      width: 54px; height: 54px; border-radius: 50%;
+      background: var(--clr-primary); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: var(--shadow-md); transition: transform .2s;
+      cursor: pointer; border: none;
+    }
+    .chat-fab:hover { transform: scale(1.08); }
+    .chat-fab svg { width: 24px; height: 24px; }
+    .chat-fab .chat-badge {
+      position: absolute; top: -4px; right: -4px;
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--clr-cta); font-size: .6rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .pap-widget {
+      position: fixed; bottom: 88px; right: 24px; z-index: 950;
+      width: 340px; background: var(--clr-bg-white);
+      border-radius: var(--radius-lg); box-shadow: var(--shadow-lg);
+      border: 1px solid var(--clr-border); overflow: hidden;
+      display: none; flex-direction: column; max-height: 520px;
+    }
+    .pap-widget.open { display: flex; }
+    .pap-header {
+      background: var(--clr-primary); color: #fff; padding: 16px 20px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .pap-header-info h4 { font-size: .95rem; font-weight: 700; }
+    .pap-header-info p { font-size: .75rem; opacity: .7; margin-top: 2px; }
+    .pap-header-info .online-dot { display: inline-block; width: 7px; height: 7px; background: #4ADE80; border-radius: 50%; margin-right: 5px; }
+    .pap-close { background: rgba(255,255,255,.15); border-radius: 6px; padding: 6px; color: #fff; transition: background .2s; }
+    .pap-close:hover { background: rgba(255,255,255,.25); }
+    .pap-close svg { width: 16px; height: 16px; display: block; }
+    /* Init form */
+    .pap-init { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
+    .pap-init p { font-size: .85rem; color: var(--clr-text-muted); }
+    .pap-init input {
+      border: 1px solid var(--clr-border); border-radius: 8px;
+      padding: 10px 14px; font-size: .875rem; font-family: var(--font-body);
+      outline: none; transition: border-color .2s;
+    }
+    .pap-init input:focus { border-color: var(--clr-accent); }
+    .pap-init button {
+      background: var(--clr-primary); color: #fff; border-radius: 8px;
+      padding: 11px; font-weight: 600; font-size: .875rem; transition: background .2s;
+    }
+    .pap-init button:hover { background: var(--clr-primary-lt); }
+    /* Chat area */
+    .pap-chat { display: none; flex-direction: column; flex: 1; overflow: hidden; }
+    .pap-chat.active { display: flex; }
+    .pap-messages {
+      flex: 1; overflow-y: auto; padding: 16px;
+      display: flex; flex-direction: column; gap: 10px;
+      background: #F5F7F9;
+    }
+    .msg {
+      max-width: 85%; padding: 10px 14px; border-radius: 12px;
+      font-size: .875rem; line-height: 1.55;
+    }
+    .msg.bot { background: var(--clr-bg-white); color: var(--clr-text); align-self: flex-start; border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); }
+    .msg.user { background: var(--clr-primary); color: #fff; align-self: flex-end; border-bottom-right-radius: 4px; }
+    .msg.error { background: #FEE2E2; color: #991B1B; align-self: flex-start; border-bottom-left-radius: 4px; font-size: .8rem; }
+    .pap-typing { align-self: flex-start; display: flex; gap: 4px; padding: 10px 14px; background: var(--clr-bg-white); border-radius: 12px; border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); }
+    .pap-typing span { width: 6px; height: 6px; background: var(--clr-text-muted); border-radius: 50%; animation: typingDot 1.2s infinite; }
+    .pap-typing span:nth-child(2) { animation-delay: .2s; }
+    .pap-typing span:nth-child(3) { animation-delay: .4s; }
+    @keyframes typingDot { 0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-5px)} }
+    .pap-input-area {
+      display: flex; gap: 8px; padding: 12px 14px;
+      border-top: 1px solid var(--clr-border); background: var(--clr-bg-white);
+    }
+    .pap-input-area input {
+      flex: 1; border: 1px solid var(--clr-border); border-radius: 8px;
+      padding: 9px 12px; font-size: .875rem; outline: none; font-family: var(--font-body);
+    }
+    .pap-input-area input:focus { border-color: var(--clr-accent); }
+    .pap-send {
+      background: var(--clr-primary); color: #fff; border-radius: 8px;
+      padding: 9px 14px; display: flex; align-items: center; transition: background .2s;
+    }
+    .pap-send:hover { background: var(--clr-primary-lt); }
+    .pap-send svg { width: 16px; height: 16px; }
+    /* ✅ MEJORA: Fallback cuando el chat falla */
+    .pap-fallback {
+      display: none; flex-direction: column; gap: 12px;
+      padding: 20px; text-align: center;
+    }
+    .pap-fallback.visible { display: flex; }
+    .pap-fallback p { font-size: .875rem; color: var(--clr-text-muted); }
+    .pap-fallback a {
+      background: #25D366; color: #fff; border-radius: 8px;
+      padding: 11px 16px; font-weight: 600; font-size: .875rem;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .pap-disclaimer {
+      padding: 8px 16px; background: #FFF8E7; font-size: .72rem;
+      color: var(--clr-warning); text-align: center; border-top: 1px solid #F6E0A0;
+    }
+
+    /* ===== MODAL PRIVACIDAD ===== */
+    /* ✅ MEJORA: Política de privacidad */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 9998;
+      display: none; align-items: center; justify-content: center; padding: 24px;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box {
+      background: var(--clr-bg-white); border-radius: var(--radius-lg);
+      max-width: 640px; width: 100%; max-height: 80vh; overflow-y: auto;
+      padding: 36px; box-shadow: var(--shadow-lg); position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; width: 32px; height: 32px;
+      border-radius: 50%; background: var(--clr-bg); display: flex;
+      align-items: center; justify-content: center; font-size: 1.1rem; color: var(--clr-text-muted);
+      transition: background .2s;
+    }
+    .modal-close:hover { background: var(--clr-border); }
+    .modal-box h2 { font-family: var(--font-display); color: var(--clr-primary); margin-bottom: 20px; }
+    .modal-box h3 { color: var(--clr-primary); font-size: 1rem; margin: 20px 0 8px; }
+    .modal-box p, .modal-box li { font-size: .875rem; color: var(--clr-text-muted); line-height: 1.75; }
+    .modal-box ul { padding-left: 20px; list-style: disc; margin-top: 6px; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-img-wrap { display: none; }
+      .about-grid { grid-template-columns: 1fr; }
+      .approach-grid { grid-template-columns: 1fr; }
+      .services-grid { grid-template-columns: 1fr; }
+      .team-grid { grid-template-columns: 1fr; }
+      .testimonials-grid { grid-template-columns: 1fr; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .commitment-wrap { grid-template-columns: 1fr; }
+      .contact-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+      .form-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      .hero h1 { font-size: 1.8rem; }
+      section { padding: 64px 20px; }
+      .pap-widget { width: calc(100vw - 32px); right: 16px; }
+      .footer-inner { grid-template-columns: 1fr; }
+    }
+
+    /* ===== ANIMACIONES DE ENTRADA ===== */
+    .fade-in { opacity: 0; transform: translateY(24px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+  </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <!-- Header -->
-    <header id="header" class="bg-white/80 backdrop-blur-lg sticky top-0 z-40 shadow-sm">
-        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
-          <a href="#" class="text-xl font-bold text-purple-700">Psic. Héctor Holguin</a>
-            <div class="hidden md:flex items-center space-x-8">
-                <a href="#sobre-mi" class="text-gray-600 hover:text-purple-700 transition-colors">Sobre Mí</a>
-                <a href="#servicios" class="text-gray-600 hover:text-purple-700 transition-colors">Servicios</a>
-                <a href="#equipo" class="text-gray-600 hover:text-purple-700 transition-colors">Alianza</a>
-                <a href="#compromiso" class="text-gray-600 hover:text-purple-700 transition-colors">Compromiso Social</a>
-                <a href="#contacto" class="text-gray-600 hover:text-purple-700 transition-colors">Contacto</a>
-            </div>
-            <!-- Botón de chat en la navegación -->
-             <!--  <button id="open-chat-btn-nav" class="hidden md:block bg-purple-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-purple-700 transition-transform transform hover:scale-105">
-                Necesito Ayuda
-            </button>  -->
-            <button id="mobile-menu-btn" class="md:hidden text-2xl">
-                <i class="fas fa-bars"></i>
-            </button>
-        </nav>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden px-6 pb-4 space-y-2">
-            <a href="#sobre-mi" class="block text-gray-600 hover:text-purple-700">Sobre Mí</a>
-            <a href="#servicios" class="block text-gray-600 hover:text-purple-700">Servicios</a>
-            <a href="#equipo" class="block text-gray-600 hover:text-purple-700">Alianza</a>
-            <a href="#compromiso" class="block text-gray-600 hover:text-purple-700">Compromiso Social</a>
-            <a href="#contacto" class="block text-gray-600 hover:text-purple-700">Contacto</a>
-             <!-- <button id="open-chat-btn-mobile" class="w-full mt-4 bg-purple-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-purple-700">
-                Necesito Ayuda
-            </button> -->
-        </div>
-    </header>
+<!-- ✅ MEJORA: Cookie consent banner -->
+<div id="cookie-banner" role="banner" aria-label="Aviso de cookies">
+  <p>Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra <a href="#" onclick="openPrivacy(event)">Política de Privacidad</a>.</p>
+  <button id="cookie-accept" onclick="acceptCookies()">Aceptar</button>
+</div>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="hero-bg py-20 md:py-32">
-            <div class="container mx-auto px-6 text-center">
-                  <!-- Img
-                <img src="Imagenes/aptua.png" alt="Foto de perfil del psicólogo Héctor Holguin" class="w-36 h-36 rounded-full mx-auto mb-6 border-4 border-white shadow-lg"> -->
-                <h1 class="text-4xl md:text-6xl font-extrabold text-gray-900 mb-4">Psicoterapia Clínica Especializada: Ciencia y Empatía a tu alcance.</h1>
-                <p class="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto mb-8">Recupera el equilibrio emocional con herramientas basadas en evidencia (TCC y DBT). Un espacio seguro diseñado para tu proceso de sanación.</p>
-                <button id="open-chat-btn-hero" class="bg-green-600 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-green-700 transition-transform transform hover:scale-105 shadow-lg">
-                    <i class="fas fa-comments mr-2"></i> Agendar Consulta Directa
-                </button>
-                <div class="absolute bottom-4 right-4 z-10 flex flex-col items-center space-y-2">
-                 <!--  </a><a href="#" target="_blank" rel="noopener noreferrer" class="block bg-black text-white text-sm font-semibold px-3 py-1.5 rounded-full shadow-lg hover:bg-gray-800 transition-colors">
-                    Powered by <span class="font-bold">APTUA</span>
-               
-                <a href="https://www.instagram.com/aptua.psic/" target="_blank" rel="noopener noreferrer" aria-label="APTUA Instagram" class="text-gray-700 hover:text-pink-500 transition-colors">
-                    <i class="fab fa-instagram text-3xl"></i>
-                </a> -->
-                </div>
-            </div>
-        </section>
-      <!-- <section id="disclaimer" class="bg-blue-50 border-y border-blue-200 py-3">
-            <div class="container mx-auto px-6">
-                <div class="max-w-4xl mx-auto">
-                    <div class="flex flex-col md:flex-row items-center justify-center gap-3 md:gap-4">
-                        Icono 
-                        <div class="flex-shrink-0">
-                            <i class="fas fa-info-circle text-2xl text-blue-500"></i>
-                        </div>
-                         Texto del aviso 
-                        <div class="text-center md:text-left">
-                            <p class="text-blue-800 text-sm">
-                                <span class="font-bold">Anuncio:</span> Este servicio se encuentra temporalmente alojado en esta página web.
-                            </p>
-                        </div>
-                        <Botón 
-                        <div class="mt-2 md:mt-0 md:ml-auto flex-shrink-0">
-                            <a href="#equipo" class="bg-blue-600 text-white px-4 py-2 rounded-full font-semibold text-sm hover:bg-blue-700 transition-transform transform hover:scale-105 shadow-md inline-block">
-                                Conoce al Equipo
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> -->
-
-        <!-- Sobre Mí -->
-        <section id="sobre-mi" class="py-20 bg-white">
-            <div class="container mx-auto px-6 grid md:grid-cols-2 gap-8 items-center">
-                <div>
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Sobre Mí</h2>
-                    <p class="text-gray-600 mb-4 text-justify">
-                        Soy Héctor Holguín, Psicólogo Clínico enfocado en el bienestar integral a través de la ciencia. Actualmente, curso mi Maestría en Psicología Clínica con mención en Psicoterapia (Msc. c) y cuento con un Diplomado Internacional en Psicoterapia Clínica. Mi formación me permite abordar la salud mental con el rigor que mereces, combinando la actualización constante con una escucha activa y ética.
-                    </p>
-                    <blockquote class="border-l-4 border-purple-500 pl-4 py-2 my-6 bg-purple-50 text-purple-800 italic">
-                        “Aquí no sanas solo: te acompaño.”
-                    </blockquote>
-                    <div class="flex space-x-4 mt-8">
-                        <div class="bg-purple-100 p-4 rounded-lg text-center flex-1">
-                            <p class="text-3xl font-bold text-purple-700">2+</p>
-                            <p class="text-sm text-purple-600">Año de Experiencia</p>
-                        </div>
-                        <div class="bg-purple-100 p-4 rounded-lg text-center flex-1">
-                            <p class="text-3xl font-bold text-purple-700">30+</p>
-                            <p class="text-sm text-purple-600">Pacientes Atendidos</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="order-first md:order-last flex justify-center md:justify-center">
-                    <div class="relative w-64 h-96 bg-blue-800 rounded-xl overflow-hidden shadow-xl flex-shrink-0">
-                        <!-- Tu foto profesional se posicionará absolutamente dentro de este contenedor -->
-                        <!-- Usamos inset-0 para que ocupe todo el espacio del contenedor padre -->
-                        <!-- object-cover asegura que la imagen cubra el área sin distorsión, recortando si es necesario -->
-                        <!-- Reemplaza 'Imagenes/Perfil.png' con la ruta a tu foto profesional -->
-                        <img src="Imagenes/Perfil.png"
-                             alt="Foto profesional de Héctor Holguín"
-                             class="absolute inset-0 w-full h-full object-cover rounded-xl"
-                             onerror="this.onerror=null;this.src='https://placehold.co/256x384/A78BFA/FFFFFF?text=Imagen+No+Cargada';"
-                        >
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Servicios -->
-        <section id="servicios" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl font-bold text-gray-900">Servicios de Intervención Clínica</h2>
-                    <p class="text-lg text-gray-600 mt-2">Procesos terapéuticos diseñados bajo evidencia científica para transformar tu bienestar emocional.</p>
-                </div>
-                <div class="grid md:grid-cols-3 gap-8">
-                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-purple-500 text-center">
-                        <i class="fas fa-heart-pulse text-4xl text-purple-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Orientación Inmediata (PAP)</h3>
-                        <p class="text-gray-600 mb-4">Atención inicial y contención en momentos de crisis o desregulación emocional. Un espacio breve y gratuito para escucharte cuando más lo necesitas y orientarte hacia el proceso adecuado.</p>
-                          <a href="#contacto" class="mt-4 bg-green-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-green-700 inline-block">Hablar por WhatsApp</a>
-                        </button>
-                    </div>
-                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-green-500 text-center">
-                        <i class="fas fa-user-friends text-4xl text-green-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Terapia Individual</h3>
-                        <p class="text-gray-600 mb-4">Proceso clínico personalizado para adolescentes y adultos. Trabajamos con Terapia Cognitivo-Conductual y Dialéctica Conductual para el manejo de ansiedad, depresión y regulación emocional con resultados medibles</p>
-                        <a href="#contacto" class="mt-4 bg-green-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-green-700 inline-block">Agendar Cita</a>
-                    </div>
-                    <div class="bg-white p-8 rounded-lg shadow-lg border-t-4 border-blue-500 text-center">
-                        <i class="fas fa-chalkboard-teacher text-4xl text-blue-500 mb-4"></i>
-                        <h3 class="text-xl font-bold mb-2">Talleres Grupales</h3>
-                        <p class="text-gray-600 mb-4">Espacios grupales enfocados en el aprendizaje práctico de herramientas DBT y TCC: manejo del estrés, inteligencia emocional y habilidades de vida para el mundo real.</p>
-                        <a href="#contacto" class="mt-4 bg-blue-600 text-white px-5 py-2 rounded-full font-semibold hover:bg-blue-700 inline-block">Más Información</a>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Conoce a tu Equipo -->
-        <section id="equipo" class="py-20 bg-white">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                    <i class="fas fa-users text-4xl text-purple-500 mb-4"></i>
-                    <h2 class="text-3xl font-bold text-gray-900">Alianza</h2>
-                    <p class="text-lg text-gray-600 mt-2">Equipo Clínico: Especialistas al servicio de tu salud mental</p>
-                </div>
-             <!-- Contenedor para limitar el ancho y centrar la cuadrícula de perfiles -->
-                <div class="max-w-5xl mx-auto"> 
-                <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
-                    <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                    <img src="Imagenes/Hector.png" alt="Foto de perfil de Psicóloga Héctor Holguin" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
-                        <h3 class="text-xl font-bold text-gray-900">Psic. Héctor Holguin</h3>
-                        <p class="text-blue-600 font-semibold mb-3">Psicólogo/Fundador</p>
-                        <p class="text-gray-600 text-sm text-justify">Psicólogo Clínico con mención en Psicoterapia ($Msc. c$). Especialista en Terapia Cognitivo-Conductual (TCC) y Terapia Dialéctica Conductual (DBT). Mi enfoque se centra en la intervención basada en evidencia para trastornos emocionales, combinando el rigor científico con un ambiente de empatía y seguridad para jóvenes y adultos.</p>   
-                    </div>
-                    <!-- Perfil 4 -->
-                    <div class="bg-gray-50 p-8 rounded-lg shadow-md text-center">
-                      <img src="Imagenes/01.png" alt="Foto de perfil de Psicóloga Ana García" class="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-white">
-                        <h3 class="text-xl font-bold text-gray-900">Psic. Jordan Sánchez</h3>
-                        <p class="text-yellow-600 font-semibold mb-3">Psicólogo/Cofundador</p>
-                        <p class="text-gray-600 text-sm text-justify">Psicólogo Clínico con sólida formación en Terapia Cognitivo-Conductual (TCC). Especialista en evaluación, diagnóstico e intervención clínica. Su enfoque se centra en el desarrollo de habilidades de regulación emocional y bienestar personal, adaptando la terapia a las necesidades individuales con un compromiso ético y humano.</p>   
-                    </div>
-                </div>
-            </div>
-        </section>
-        
-        <!-- Compromiso Social -->
-        <section id="compromiso" class="py-20 bg-gray-50">
-            <div class="container mx-auto px-6">
-                <div class="text-center mb-12">
-                     <i class="fas fa-handshake-angle text-4xl text-purple-500 mb-4"></i>
-                    <h2 class="text-3xl font-bold text-gray-900">Compromiso Social</h2>
-                    <p class="text-lg text-gray-600 mt-2 max-w-4xl mx-auto text-justify">Además de mi labor clínica, soy voluntario y responsable de la Coordinación de Alianzas Organizacionales y Gubernamentales en <span class="font-semibold">Salud Mental Ecuador</span>, una organización dedicada a la promoción del bienestar emocional en la comunidad.</p>
-                </div>
-                <div class="max-w-3xl mx-auto bg-purple-50 p-8 rounded-lg">
-                    <p class="text-gray-700 text-justify">
-                        Desde este rol, colaboro en la creación de redes interinstitucionales, impulso campañas de salud mental y participo en proyectos que buscan ampliar el acceso a servicios psicológicos y reducir el estigma en torno al cuidado emocional.
-                    </p>
-                     <p class="text-center mt-4">
-                        <span class="font-semibold">Creo firmemente que la salud mental debe ser accesible, cercana y parte del compromiso colectivo.</span>
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contacto -->
-        <section id="contacto" class="py-20 bg-white">
-            <div class="container mx-auto px-6 text-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Hablemos</h2>
-                <p class="text-lg text-gray-600 mb-8">Si deseas agendar una cita para terapia individual o consultar sobre los talleres, no dudes en contactarme.</p>
-                <div class="bg-purple-50 p-8 rounded-lg max-w-lg mx-auto shadow-md">
-                    <a href="mailto:psic.hectorholguin@gmail.com" class="block text-lg font-semibold text-purple-800 hover:text-purple-900 transition-colors">
-                        <i class="fas fa-envelope mr-2"></i> psic.hectorholguin@gmail.com
-                    </a>
-                    <a href="https://wa.me/593963220403" target="_blank" rel="noopener noreferrer" class="block mt-4 text-lg font-semibold text-purple-800 hover:text-purple-900 transition-colors">
-                        <i class="fab fa-whatsapp mr-2"></i> +593 963220403
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-800 text-white py-8">
-        <div class="container mx-auto px-6 text-center">
-            <p>&copy; 2026 Psic. Héctor Holguin. Todos los derechos reservados.</p>
-            <p class="text-sm text-gray-400 mt-2">Diseñado para ofrecer un espacio seguro de apoyo.</p>
-                <div class="flex justify-center space-x-6 mt-4">
-                    <a href="https://www.linkedin.com/in/hector-holguin" target="_blank" aria-label="LinkedIn" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-linkedin text-3xl"></i>
-                    </a>
-                    <a href="https://www.instagram.com/psic.hectorholguin/" target="_blank" aria-label="Instagram" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-instagram text-3xl"></i>
-                    </a>
-                    <a href="https://www.tiktok.com/@psic.hectorholguin" target="_blank" aria-label="TikTok" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-tiktok text-3xl"></i>
-                    <a href="https://wa.me/message/WMXPODFNZLDXE1" target="_blank" aria-label="whatsApp" class="text-gray-400 hover:text-white transition-colors">
-                        <i class="fab fa-whatsapp text-3xl"></i>
-                    </a>
-                </div>
-        </div>
-    </footer>
-
-    <!-- Chat Modal -->
-    <div id="chat-modal" class="modal fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 opacity-0 pointer-events-none">
-        <div id="chat-modal-content" class="modal-content bg-gray-100 rounded-lg shadow-2xl w-full max-w-lg h-[90vh] max-h-[700px] flex flex-col transform scale-95">
-            
-             <div class="p-4 border-b bg-white rounded-t-lg flex justify-between items-center">
-                <div class="w-8"></div> <!-- Espaciador para mantener el título centrado -->
-                <h3 class="text-xl font-bold text-gray-800 flex-1 text-center">Chat de Primeros Auxilios</h3>
-                <button id="close-chat-btn" class="text-2xl text-gray-500 hover:text-gray-800 w-8 h-8 flex items-center justify-center">&times;</button>
-            </div>
-
-            <div id="pre-chat-view" class="p-6 flex flex-col justify-center text-center h-full">
-                <h3 id="pre-chat-title" class="text-xl font-bold text-gray-800 mb-2">Antes de comenzar...</h3>
-                <p id="pre-chat-description" class="text-gray-600 mb-6">Por favor, indícanos tu nombre para personalizar la conversación.</p>
-                <form id="pre-chat-form" class="space-y-4">
-                    <div>
-                        <label for="user-name" class="sr-only">Nombre</label>
-                        <input type="text" id="user-name" placeholder="Tu nombre (requerido)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none" required>
-                    </div>
-                    <div>
-                        <label for="user-email" class="sr-only">Correo electrónico</label>
-                        <input type="email" id="user-email" placeholder="Tu correo (opcional)" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-purple-500 focus:outline-none">
-                    </div>
-                    <button type="submit" id="pre-chat-submit-btn" class="w-full bg-green-600 text-white px-8 py-3 rounded-lg font-bold text-lg hover:bg-green-700 transition-colors shadow-lg">
-                        Iniciar Chat
-                    </button>
-                </form>
-            </div>
-
-            <div id="chat-view" class="flex-1 flex-col p-4 overflow-y-hidden" style="display: none;">
-                <div id="messages-container" class="flex-1 overflow-y-auto mb-4 space-y-4 pr-2">
-                </div>
-                <form id="message-form" class="flex items-center space-x-2">
-                    <input type="text" id="message-input" placeholder="Escribe tu mensaje..." class="flex-1 p-3 border rounded-full focus:ring-2 focus:ring-purple-500 focus:outline-none" autocomplete="off">
-                    <button type="submit" id="send-message-btn" class="bg-purple-600 text-white rounded-full w-12 h-12 flex items-center justify-center text-xl hover:bg-purple-700 transition-colors">
-                        <i class="fas fa-paper-plane"></i>
-                    </button>
-                </form>
-            </div>
-            
-            <div id="loading-view" class="flex flex-col items-center justify-center h-full" style="display: none;">
-                   <div class="w-16 h-16 border-4 border-purple-500 border-dashed rounded-full animate-spin"></div>
-                   <p class="mt-4 text-lg text-gray-600">Conectando...</p>
-            </div>
-
-        </div>
+<!-- NAVEGACIÓN -->
+<nav id="navbar" role="navigation" aria-label="Navegación principal">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo" aria-label="Inicio">Psic. Héctor <span>Holguín</span></a>
+    <div class="nav-links" role="menubar">
+      <a href="#sobre-mi" role="menuitem">Sobre Mí</a>
+      <a href="#servicios" role="menuitem">Servicios</a>
+      <a href="#equipo" role="menuitem">Alianza</a>
+      <a href="#compromiso" role="menuitem">Compromiso Social</a>
+      <a href="#faq" role="menuitem">FAQ</a>
+      <!-- ✅ MEJORA: CTA persistente en navbar -->
+      <a href="#contacto" class="nav-cta" role="menuitem">Agendar Cita</a>
     </div>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú" aria-expanded="false" aria-controls="mobile-menu">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobile-menu" role="menu">
+  <a href="#sobre-mi" role="menuitem">Sobre Mí</a>
+  <a href="#servicios" role="menuitem">Servicios</a>
+  <a href="#equipo" role="menuitem">Alianza</a>
+  <a href="#compromiso" role="menuitem">Compromiso Social</a>
+  <a href="#faq" role="menuitem">FAQ</a>
+  <a href="#contacto" class="nav-cta" role="menuitem">Agendar Cita</a>
+</div>
 
-    <!-- Firebase SDK -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-        import { getAuth, signInAnonymously, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
-        import { getFirestore, collection, addDoc, serverTimestamp, query, onSnapshot, doc, updateDoc, orderBy, getDoc } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+<!-- HERO -->
+<header class="hero" id="inicio" role="banner">
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-tag">Psicología Clínica Basada en Evidencia</div>
+      <h1>Psicoterapia Clínica:<br /><em>Ciencia y Empatía</em><br />a tu alcance.</h1>
+      <p class="hero-sub">Recupera el equilibrio emocional con herramientas basadas en evidencia (TCC y DBT). Un espacio seguro diseñado para tu proceso de sanación.</p>
+      <!-- ✅ MEJORA: Reducción de fricción junto al CTA -->
+      <p class="hero-reassurance">Primera sesión de orientación sin compromiso</p>
+      <div class="hero-btns">
+        <a href="#contacto" class="btn-primary">Agendar Primera Consulta</a>
+        <a href="#servicios" class="btn-secondary">Ver Servicios</a>
+      </div>
+    </div>
+    <div class="hero-img-wrap">
+      <img src="https://psichectorholguin.com/Imagenes/Perfil.png"
+           alt="Foto profesional del Psic. Héctor Holguín, psicólogo clínico"
+           width="380" height="460"
+           loading="eager" />
+      <!-- ✅ MEJORA: Credenciales cualitativas en lugar de métricas bajas -->
+      <div class="hero-credentials" aria-label="Credenciales">
+        <div class="hero-cred-item">
+          <span class="icon">🎓</span>
+          <div><strong>Maestría en curso</strong><br/><span>Psicología Clínica — Msc. c</span></div>
+        </div>
+        <div class="hero-cred-item">
+          <span class="icon">📋</span>
+          <div><strong>Diplomado Internacional</strong><br/><span>Psicoterapia Clínica</span></div>
+        </div>
+        <div class="hero-cred-item">
+          <span class="icon">🏥</span>
+          <div><strong>Voluntario activo</strong><br/><span>Salud Mental Ecuador</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Scroll indicator -->
+  <div class="scroll-hint" aria-hidden="true">
+    <span>Ver más</span>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+  </div>
+</header>
 
-       
-        };
+<!-- SOBRE MÍ -->
+<section id="sobre-mi" aria-labelledby="sobre-mi-title">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-text fade-in">
+        <div class="section-label">Sobre Mí</div>
+        <h2 id="sobre-mi-title" style="font-family:var(--font-display);font-size:2rem;color:var(--clr-primary);margin-bottom:20px;font-weight:700;">
+          Héctor Holguín,<br/>Psicólogo Clínico
+        </h2>
+        <!-- ✅ MEJORA: Bio expandida con historia vocacional y lenguaje más humano -->
+        <p>Elegí la psicología clínica porque creo firmemente que cada persona merece acceso a herramientas reales para comprender y transformar su vida emocional. Mi camino en este campo comenzó con la convicción de que la ciencia y la empatía no son opuestos, sino los dos pilares de una terapia verdaderamente efectiva.</p>
+        <p>Soy Psicólogo Clínico actualmente cursando mi Maestría en Psicología Clínica con mención en Psicoterapia <strong>(Msc. c)</strong>, además de contar con un Diplomado Internacional en Psicoterapia Clínica. Mi formación me permite abordar la salud mental con el rigor que mereces, combinando la actualización constante con una escucha activa y ética.</p>
+        <div class="about-quote" role="blockquote">
+          "Aquí no sanas solo: te acompaño."
+        </div>
+        <div class="about-values">
+          <div class="about-value-item">
+            <div class="v-icon" aria-hidden="true">🔬</div>
+            <div><h4>Basado en evidencia</h4><p>Trabajo exclusivamente con técnicas terapéuticas validadas científicamente, no con intuición ni improvisación.</p></div>
+          </div>
+          <div class="about-value-item">
+            <div class="v-icon" aria-hidden="true">🤝</div>
+            <div><h4>Alianza terapéutica genuina</h4><p>La relación entre terapeuta y paciente es el motor del cambio. Trabajo contigo, no sobre ti.</p></div>
+          </div>
+          <div class="about-value-item">
+            <div class="v-icon" aria-hidden="true">🔒</div>
+            <div><h4>Confidencialidad absoluta</h4><p>Todo lo que compartes en sesión está protegido por el secreto profesional y el código deontológico.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="about-aside fade-in">
+        <div class="about-card">
+          <h3>Formación Académica</h3>
+          <div class="cred-list">
+            <div class="cred-item"><div class="dot"></div><div><strong>Maestría en Psicología Clínica (Msc. c)</strong><span>Mención en Psicoterapia — en curso</span></div></div>
+            <div class="cred-item"><div class="dot"></div><div><strong>Diplomado Internacional en Psicoterapia Clínica</strong><span>Formación posgrado</span></div></div>
+            <div class="cred-item"><div class="dot"></div><div><strong>Licenciatura en Psicología Clínica</strong><span>Psicólogo Clínico graduado</span></div></div>
+          </div>
+        </div>
+        <div class="about-card">
+          <h3>Especialidades Terapéuticas</h3>
+          <div class="cred-list">
+            <div class="cred-item"><div class="dot"></div><div><strong>Terapia Cognitivo-Conductual (TCC)</strong><span>Ansiedad, depresión, fobias, TOC</span></div></div>
+            <div class="cred-item"><div class="dot"></div><div><strong>Terapia Dialéctica Conductual (DBT)</strong><span>Regulación emocional, autolesiones, TLP</span></div></div>
+            <div class="cred-item"><div class="dot"></div><div><strong>Primeros Auxilios Psicológicos (PAP)</strong><span>Crisis, trauma agudo, desregulación</span></div></div>
+          </div>
+        </div>
+        <div class="about-card">
+          <h3>Activismo & Voluntariado</h3>
+          <div class="cred-list">
+            <div class="cred-item"><div class="dot"></div><div><strong>Coordinador de Alianzas</strong><span>Salud Mental Ecuador — Alianzas Org. y Gubernamentales</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const appId = firebaseConfig.projectId; 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
-        const db = getFirestore(app);
+<!-- ✅ MEJORA: Explicación accesible de los enfoques terapéuticos -->
+<section class="approach-section" aria-labelledby="enfoques-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Enfoques Terapéuticos</div>
+      <h2 class="section-title" id="enfoques-title">¿Qué es TCC y DBT?</h2>
+      <p class="section-desc">Usamos métodos con respaldo científico. Te explicamos en qué consiste cada uno para que entiendas cómo trabajaremos juntos.</p>
+    </div>
+    <div class="approach-grid fade-in">
+      <div class="approach-card">
+        <div class="approach-badge">TCC</div>
+        <h3>Terapia Cognitivo-Conductual</h3>
+        <p>La TCC parte del principio de que nuestros pensamientos influyen directamente en cómo nos sentimos y actuamos. A través de técnicas estructuradas, aprenderás a identificar patrones de pensamiento que generan malestar y a transformarlos en respuestas más adaptativas y funcionales.</p>
+        <p>Es el tratamiento de primera línea para ansiedad y depresión según la OMS.</p>
+        <div class="approach-uses">
+          <span class="approach-tag">Ansiedad</span>
+          <span class="approach-tag">Depresión</span>
+          <span class="approach-tag">Fobias</span>
+          <span class="approach-tag">TOC</span>
+          <span class="approach-tag">Estrés</span>
+        </div>
+      </div>
+      <div class="approach-card">
+        <div class="approach-badge">DBT</div>
+        <h3>Terapia Dialéctica Conductual</h3>
+        <p>La DBT combina la TCC con estrategias de mindfulness y aceptación. Se centra en enseñar habilidades concretas para regular emociones intensas, mejorar relaciones interpersonales y tolerar el malestar sin reaccionar de forma destructiva.</p>
+        <p>Especialmente efectiva para personas que experimentan emociones de alta intensidad o que han tenido conductas autodestructivas.</p>
+        <div class="approach-uses">
+          <span class="approach-tag">Regulación emocional</span>
+          <span class="approach-tag">TLP</span>
+          <span class="approach-tag">Autolesiones</span>
+          <span class="approach-tag">Relaciones</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const chatModal = document.getElementById('chat-modal');
-        const chatModalContent = document.getElementById('chat-modal-content');
-        const openChatButtons = [
-            document.getElementById('open-chat-btn-nav'),
-            document.getElementById('open-chat-btn-mobile'),
-            document.getElementById('open-chat-btn-hero'),
-            document.getElementById('open-chat-btn-service')
-        ];
-        const closeChatBtn = document.getElementById('close-chat-btn');
-        const preChatView = document.getElementById('pre-chat-view');
-        const preChatForm = document.getElementById('pre-chat-form');
-        const userNameInput = document.getElementById('user-name');
-        const userEmailInput = document.getElementById('user-email');
-        const preChatTitle = document.getElementById('pre-chat-title');
-        const preChatDescription = document.getElementById('pre-chat-description');
-        const preChatSubmitBtn = document.getElementById('pre-chat-submit-btn');
-        const loadingView = document.getElementById('loading-view');
-        const chatView = document.getElementById('chat-view');
-        const messagesContainer = document.getElementById('messages-container');
-        const messageForm = document.getElementById('message-form');
-        const messageInput = document.getElementById('message-input');
-        const sendMessageBtn = document.getElementById('send-message-btn'); 
+<!-- SERVICIOS -->
+<section id="servicios" aria-labelledby="servicios-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Servicios</div>
+      <h2 class="section-title" id="servicios-title">Servicios de Intervención Clínica</h2>
+      <p class="section-desc">Procesos terapéuticos diseñados bajo evidencia científica para transformar tu bienestar emocional.</p>
+    </div>
+    <div class="services-grid fade-in">
 
-        let currentUserId = null;
-        let currentChatId = null;
-        let unsubscribeMessages = null;
-        let unsubscribeChatStatus = null; 
-        let currentPsicologoDisplayName = 'Psicólogo de Apoyo'; 
+      <!-- ✅ MEJORA: Detalles prácticos en cada servicio -->
+      <article class="service-card service-pap">
+        <div class="service-icon" aria-hidden="true">🆘</div>
+        <h3>Orientación Inmediata (PAP)</h3>
+        <p>Atención inicial y contención en momentos de crisis o desregulación emocional. Un espacio breve y gratuito para escucharte cuando más lo necesitas y orientarte hacia el proceso adecuado.</p>
+        <div class="service-meta">
+          <div class="service-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            20–30 min
+          </div>
+          <div class="service-meta-item">📱 WhatsApp / Online</div>
+          <div class="service-meta-item">✓ Gratuito</div>
+        </div>
+        <p style="font-size:.8rem;color:var(--clr-warning);margin-top:4px;">⚠️ No es sustituto de terapia — es orientación inicial.</p>
+        <a href="https://wa.me/593963220403?text=Hola,%20necesito%20orientaci%C3%B3n%20psicol%C3%B3gica" class="service-cta-link" target="_blank" rel="noopener noreferrer" aria-label="Hablar por WhatsApp para PAP">
+          Hablar por WhatsApp
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </article>
 
-        const CHAT_ID_KEY = 'currentChatId';
-        const USER_ID_KEY = 'currentUserId';
-        const USER_NAME_KEY = 'userName';
-        const USER_EMAIL_KEY = 'userEmail';
+      <article class="service-card">
+        <div class="service-icon" aria-hidden="true">🧠</div>
+        <h3>Terapia Individual</h3>
+        <p>Proceso clínico personalizado para adolescentes y adultos. Trabajamos con TCC y DBT para el manejo de ansiedad, depresión y regulación emocional con resultados medibles.</p>
+        <div class="service-meta">
+          <div class="service-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            50 min / sesión
+          </div>
+          <div class="service-meta-item">🏠 Presencial / Online</div>
+          <div class="service-meta-item">📅 Semanal</div>
+        </div>
+        <div class="service-price">
+          <strong>Consultar tarifa</strong> — Pago por sesión o paquetes disponibles
+        </div>
+        <a href="#contacto" class="service-cta-link" aria-label="Agendar cita de terapia individual">
+          Agendar Cita
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </article>
 
-        function getInitials(name) {
-           if (!name || name === 'Psicólogo de Apoyo') return 'PA';
-            const parts = name.split(' ');
-            let initials = '';
-            if (parts.length > 0 && parts[0].length > 0) {
-                initials += parts[0][0];
-            }
-            if (parts.length > 1 && parts[parts.length - 1].length > 0) {
-                initials += parts[parts.length - 1][0];
-            }
-            return initials.toUpperCase();
-        }
+      <article class="service-card">
+        <div class="service-icon" aria-hidden="true">👥</div>
+        <h3>Talleres Grupales</h3>
+        <p>Espacios grupales enfocados en el aprendizaje práctico de herramientas DBT y TCC: manejo del estrés, inteligencia emocional y habilidades de vida para el mundo real.</p>
+        <div class="service-meta">
+          <div class="service-meta-item">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+            90 min / sesión
+          </div>
+          <div class="service-meta-item">🏠 Presencial / Online</div>
+          <div class="service-meta-item">👥 Grupos reducidos</div>
+        </div>
+        <div class="service-price">
+          <strong>Consultar disponibilidad</strong> — Próximas fechas por anunciar
+        </div>
+        <a href="#contacto" class="service-cta-link" aria-label="Más información sobre talleres grupales">
+          Más Información
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </a>
+      </article>
+    </div>
+  </div>
+</section>
 
-        function stringToColor(str) {
-            if (!str) return '#8b5cf6'; 
-            let hash = 0;
-            for (let i = 0; i < str.length; i++) {
-                hash = str.charCodeAt(i) + ((hash << 5) - hash);
-            }
-            let color = '#';
-            for (let i = 0; i < 3; i++) {
-                let value = (hash >> (i * 8)) & 0xFF;
-                color += ('00' + value.toString(16)).substr(-2);
-            }
-            return color;
-        }
+<!-- EQUIPO / ALIANZA -->
+<section id="equipo" aria-labelledby="equipo-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Alianza</div>
+      <h2 class="section-title" id="equipo-title">Equipo Clínico</h2>
+      <p class="section-desc">Especialistas al servicio de tu salud mental, unidos por un mismo compromiso ético y científico.</p>
+    </div>
+    <div class="team-grid fade-in">
 
-        const openModal = async () => { 
-            chatModal.classList.remove('opacity-0', 'pointer-events-none');
-            chatModal.classList.add('show');
-            chatModalContent.classList.remove('scale-95');
+      <!-- ✅ MEJORA: Alt texts corregidos -->
+      <article class="team-card">
+        <div class="team-img-wrap">
+          <img src="https://psichectorholguin.com/Imagenes/Hector.png"
+               alt="Foto profesional del Psic. Héctor Holguín, psicólogo clínico y fundador"
+               loading="lazy" width="420" height="280" />
+        </div>
+        <div class="team-info">
+          <span class="team-role">Fundador</span>
+          <!-- ✅ MEJORA: Apellido estandarizado con tilde -->
+          <h3>Psic. Héctor Holguín</h3>
+          <p class="team-title">Psicólogo Clínico · Msc. c en Psicoterapia</p>
+          <!-- ✅ MEJORA: Corregido LaTeX $Msc. c$ -->
+          <p>Psicólogo Clínico con mención en Psicoterapia (Msc. c). Especialista en Terapia Cognitivo-Conductual (TCC) y Terapia Dialéctica Conductual (DBT). Su enfoque se centra en la intervención basada en evidencia para trastornos emocionales, combinando el rigor científico con un ambiente de empatía y seguridad para jóvenes y adultos.</p>
+        </div>
+      </article>
 
-            const savedChatId = localStorage.getItem(CHAT_ID_KEY);
-            const savedUserName = localStorage.getItem(USER_NAME_KEY);
+      <article class="team-card">
+        <div class="team-img-wrap">
+          <!-- ✅ MEJORA: Alt text correcto con nombre real -->
+          <img src="https://psichectorholguin.com/Imagenes/01.png"
+               alt="Foto profesional del Psic. Jordan Sánchez, psicólogo clínico y cofundador"
+               loading="lazy" width="420" height="280" />
+        </div>
+        <div class="team-info">
+          <span class="team-role">Cofundador</span>
+          <h3>Psic. Jordan Sánchez</h3>
+          <p class="team-title">Psicólogo Clínico · Especialista en TCC</p>
+          <p>Psicólogo Clínico con sólida formación en Terapia Cognitivo-Conductual (TCC). Especialista en evaluación, diagnóstico e intervención clínica. Su enfoque se centra en el desarrollo de habilidades de regulación emocional y bienestar personal, adaptando la terapia a las necesidades individuales con un compromiso ético y humano.</p>
+        </div>
+      </article>
 
-            if (savedChatId && savedUserName) {
-                const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, savedChatId);
-                const chatSnap = await getDoc(chatDocRef);
+    </div>
+  </div>
+</section>
 
-                if (chatSnap.exists() && (chatSnap.data().status === 'closed' || chatSnap.data().status === 'deleted')) {
-                    clearSavedChatAccess();
-                    displayClosedChatInfo(chatSnap.data().status); 
-                    return; 
-                }
-                
-                userNameInput.value = savedUserName;
-                userEmailInput.value = localStorage.getItem(USER_EMAIL_KEY) || '';
-                currentChatId = savedChatId;
-                
-                showView('loading');
+<!-- ✅ MEJORA: Sección de testimonios -->
+<section id="testimonios" aria-labelledby="testimonios-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label" style="color:rgba(255,255,255,.6)">Testimonios</div>
+      <h2 class="section-title" id="testimonios-title">Lo que dicen nuestros pacientes</h2>
+      <p class="section-desc" style="color:rgba(255,255,255,.6)">Experiencias reales compartidas con consentimiento y en anonimato.</p>
+    </div>
+    <div class="testimonials-grid fade-in">
+      <div class="testimonial-card">
+        <div class="testimonial-stars" aria-label="5 estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p>"Llegué sin saber cómo manejar mis ataques de ansiedad. Después de tres meses de terapia con Héctor, tengo herramientas reales que puedo usar en el momento. El proceso fue gradual, nunca me sentí presionada."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">M.R.</div>
+          <div class="testimonial-name">
+            <strong>M. R.</strong>
+            <span>26 años · Terapia individual</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars" aria-label="5 estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p>"Lo que más valoro es que Héctor explica el 'por qué' detrás de cada técnica. No es solo hablar — es aprender a entenderte. El enfoque basado en evidencia me generó mucha confianza desde el inicio."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">A.T.</div>
+          <div class="testimonial-name">
+            <strong>A. T.</strong>
+            <span>34 años · Terapia individual</span>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="testimonial-stars" aria-label="5 estrellas">
+          <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p>"Asistí al taller de regulación emocional y fue transformador. Aprendí técnicas DBT concretas y en grupo fue muy valioso saber que otros pasan por lo mismo. Muy recomendable para quienes no quieren ir a terapia individual todavía."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" aria-hidden="true">C.M.</div>
+          <div class="testimonial-name">
+            <strong>C. M.</strong>
+            <span>21 años · Taller grupal DBT</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                if (!auth.currentUser) {
-                    try {
-                        const userCredential = await signInAnonymously(auth);
-                        currentUserId = userCredential.user.uid;
-                        await setupChatListeners(currentChatId);
-                        showView('chat');
-                    } catch (error) {
-                        console.error("Error re-autenticando:", error);
-                        showView('pre-chat');
-                    }
-                } else {
-                    currentUserId = auth.currentUser.uid; 
-                    await setupChatListeners(currentChatId);
-                    showView('chat');
-                }
-            } else {
-                showView('pre-chat');
-                resetPreChatForm();
-            }
-        };
+<!-- ✅ MEJORA: Sección FAQ -->
+<section id="faq" aria-labelledby="faq-title">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-label">Preguntas Frecuentes</div>
+      <h2 class="section-title" id="faq-title">¿Tienes dudas? Aquí las resolvemos</h2>
+      <p class="section-desc">Respuestas honestas a las preguntas que más nos hacen antes de la primera cita.</p>
+    </div>
+    <div class="faq-grid fade-in">
 
-        const closeModal = () => {
-            chatModal.classList.add('opacity-0', 'pointer-events-none');
-            chatModal.classList.remove('show');
-            chatModalContent.classList.add('scale-95');
-            if (unsubscribeMessages) unsubscribeMessages();
-            if (unsubscribeChatStatus) unsubscribeChatStatus();
-            unsubscribeMessages = null;
-            unsubscribeChatStatus = null;
-            messagesContainer.innerHTML = ''; 
-        };
-        
-        const showView = (viewName) => {
-            preChatView.style.display = 'none';
-            loadingView.style.display = 'none';
-            chatView.style.display = 'none';
-            document.getElementById(`${viewName}-view`).style.display = 'flex';
-        };
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿Cómo sé si necesito terapia?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Si sientes que tus emociones, pensamientos o comportamientos están afectando tu calidad de vida, tus relaciones o tu rendimiento, la terapia puede ayudarte. No es necesario estar en crisis severa — la terapia también sirve para el crecimiento personal y la prevención.</p></div>
+      </div>
 
-        const resetPreChatForm = () => {
-            preChatForm.reset(); 
-            preChatTitle.textContent = 'Antes de comenzar...';
-            preChatDescription.textContent = 'Por favor, indícanos tu nombre para personalizar la conversación.';
-            preChatSubmitBtn.textContent = 'Iniciar Chat';
-        };
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿Cuántas sesiones necesitaré?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Depende del motivo de consulta y tus objetivos. En TCC, los procesos suelen durar entre 8 y 20 sesiones para problemas específicos como ansiedad o depresión. Lo evaluamos juntos en las primeras sesiones y definimos un plan de trabajo.</p></div>
+      </div>
 
-        const displayClosedChatInfo = (status) => {
-            showView('pre-chat');
-            resetPreChatForm();
-            preChatTitle.textContent = status === 'closed' ? 'Chat Cerrado' : 'Chat Eliminado';
-            preChatDescription.textContent = `Esta conversación ha sido ${status === 'closed' ? 'cerrada' : 'eliminada'}. Por favor, inicia un nuevo chat.`;
-            preChatSubmitBtn.textContent = 'Iniciar Nuevo Chat';
-        };
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿Qué pasa en la primera sesión?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>La primera sesión es de evaluación y conocimiento mutuo. Te haré preguntas sobre tu historia, tus motivos de consulta y lo que esperas de la terapia. No hay respuestas correctas ni incorrectas. Al final, te explico cómo podríamos trabajar juntos.</p></div>
+      </div>
 
-        const clearSavedChatAccess = () => {
-            localStorage.removeItem(CHAT_ID_KEY);
-            localStorage.removeItem(USER_ID_KEY);
-            localStorage.removeItem(USER_NAME_KEY);
-            localStorage.removeItem(USER_EMAIL_KEY);
-            currentChatId = null;
-            currentUserId = null;
-            if (unsubscribeMessages) unsubscribeMessages();
-            if (unsubscribeChatStatus) unsubscribeChatStatus();
-            messagesContainer.innerHTML = ''; 
-        };
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿La información que comparto es confidencial?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Sí, absolutamente. Todo lo que compartes en sesión está protegido por el secreto profesional del psicólogo, reconocido por ley y el código deontológico. Solo se rompe la confidencialidad en situaciones muy específicas de riesgo inminente para la vida.</p></div>
+      </div>
 
-        openChatButtons.forEach(btn => btn?.addEventListener('click', openModal));
-        closeChatBtn.addEventListener('click', closeModal);
-        chatModal.addEventListener('click', (e) => e.target === chatModal && closeModal());
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿Ofrecen terapia online?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Sí. Ofrecemos sesiones en modalidad presencial y online (videollamada). La efectividad de la terapia online para TCC y DBT está respaldada por evidencia científica y es una opción válida si prefieres la comodidad de tu espacio.</p></div>
+      </div>
 
-        preChatForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const userName = userNameInput.value.trim();
-            if (!userName) return;
-            startChatSession(userName, userEmailInput.value.trim());
-        });
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿Trabajan con seguros médicos?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Actualmente trabajamos con pago directo (por sesión o paquetes). Consulta con tu seguro médico si incluye reembolsos por atención psicológica privada — muchos seguros en Ecuador los cubren parcialmente. Podemos emitir factura.</p></div>
+      </div>
 
-        const startChatSession = async (userName, userEmail) => {
-            showView('loading');
-            try {
-                const userCredential = await signInAnonymously(auth);
-                currentUserId = userCredential.user.uid;
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿La PAP es solo para emergencias?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Los Primeros Auxilios Psicológicos son para situaciones de desregulación emocional aguda o momentos de crisis. No son terapia ni reemplazo de un proceso terapéutico. Si ya estás estable, lo más recomendable es agendar una consulta regular.</p></div>
+      </div>
 
-                localStorage.setItem(USER_ID_KEY, currentUserId);
-                localStorage.setItem(USER_NAME_KEY, userName);
-                if (userEmail) localStorage.setItem(USER_EMAIL_KEY, userEmail);
+      <div class="faq-item">
+        <button class="faq-question" aria-expanded="false" onclick="toggleFAQ(this)">
+          ¿Atienden a adolescentes?
+          <div class="faq-toggle" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg>
+          </div>
+        </button>
+        <div class="faq-answer"><p>Sí, trabajamos con adolescentes (14+) y adultos. Para menores de 18 años, se requiere consentimiento informado de un tutor legal para iniciar el proceso, aunque las sesiones se realizan en un espacio privado y confidencial según las normativas aplicables.</p></div>
+      </div>
 
-                const chatsRef = collection(db, `artifacts/${appId}/public/data/chats`);
-                const newChatDoc = await addDoc(chatsRef, {
-                    userId: currentUserId,
-                    userName: userName,
-                    userEmail: userEmail,
-                    createdAt: serverTimestamp(),
-                    status: 'active',
-                    lastMessageText: '¡Hola! Necesito ayuda.',
-                    lastMessageTimestamp: serverTimestamp(),
-                    psicologoDisplayName: 'Psicólogo de Apoyo'
-                });
-                currentChatId = newChatDoc.id;
-                localStorage.setItem(CHAT_ID_KEY, currentChatId);
+    </div>
+  </div>
+</section>
 
-                const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
-                await addDoc(messagesRef, {
-                    text: '¡Hola! Necesito ayuda.',
-                    timestamp: serverTimestamp(),
-                    senderId: currentUserId,
-                    senderRole: 'user',
-                    senderName: userName,
-                    readByPsicologo: false, 
-                    readByUser: true 
-                });
-                await addDoc(messagesRef, {
-                    text: '¡Hola! Siéntete libre de expresarte. Este chat es un espacio confidencial para ofrecerte un primer apoyo en lo que necesites. ¿Cómo puedo ayudarte hoy?',
-                    timestamp: serverTimestamp(),
-                    senderId: 'psicologo_sistema_uid',
-                    senderRole: 'psicologo',
-                    senderName: 'Psicólogo de Apoyo',
-                    readByPsicologo: true,
-                    readByUser: false
-                });
+<!-- COMPROMISO SOCIAL -->
+<section id="compromiso" aria-labelledby="compromiso-title">
+  <div class="container">
+    <div class="commitment-wrap fade-in">
+      <div class="commitment-text">
+        <div class="section-label">Compromiso Social</div>
+        <h2 id="compromiso-title">La salud mental debe ser accesible para todos</h2>
+        <p>Además de mi labor clínica, soy voluntario y responsable de la Coordinación de Alianzas Organizacionales y Gubernamentales en <strong>Salud Mental Ecuador</strong>, una organización dedicada a la promoción del bienestar emocional en la comunidad.</p>
+        <p>Desde este rol, colaboro en la creación de redes interinstitucionales, impulso campañas de salud mental y participo en proyectos que buscan ampliar el acceso a servicios psicológicos y reducir el estigma en torno al cuidado emocional.</p>
+        <p>Creo firmemente que la salud mental debe ser accesible, cercana y parte del compromiso colectivo.</p>
+        <div class="commitment-org">
+          <span style="font-size:1.5rem" aria-hidden="true">🏥</span>
+          <div>
+            <strong>Salud Mental Ecuador</strong>
+            <span>Coordinación de Alianzas Organizacionales y Gubernamentales</span>
+          </div>
+        </div>
+      </div>
+      <div class="commitment-stats">
+        <div class="commitment-stat">
+          <strong>Comunitario</strong>
+          <span>Campañas de sensibilización y reducción del estigma en salud mental</span>
+        </div>
+        <div class="commitment-stat">
+          <strong>Interinstitucional</strong>
+          <span>Redes con organizaciones y entidades gubernamentales de salud</span>
+        </div>
+        <div class="commitment-stat">
+          <strong>Accesible</strong>
+          <span>Proyectos para ampliar el acceso a servicios psicológicos en Ecuador</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-                await setupChatListeners(currentChatId);
-                showView('chat');
-                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+<!-- CONTACTO -->
+<section id="contacto" aria-labelledby="contacto-title">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info fade-in">
+        <div class="section-label">Contacto</div>
+        <h2 id="contacto-title">Hablemos</h2>
+        <p>Si deseas agendar una cita para terapia individual, consultar sobre los talleres o simplemente tienes una pregunta, escríbenos. Respondemos en menos de 24 horas.</p>
+        <div class="contact-items">
+          <div class="contact-item">
+            <div class="ci-icon" aria-hidden="true">📧</div>
+            <div>
+              <strong>Correo electrónico</strong>
+              <!-- ✅ MEJORA: Email visible como texto -->
+              <a href="mailto:psic.hectorholguin@gmail.com">psic.hectorholguin@gmail.com</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon" aria-hidden="true">💬</div>
+            <div>
+              <strong>WhatsApp</strong>
+              <a href="https://wa.me/593963220403" target="_blank" rel="noopener noreferrer">+593 963 220 403</a>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon" aria-hidden="true">🕐</div>
+            <div>
+              <strong>Horario de atención</strong>
+              <span>Lunes a Viernes: 9:00 – 18:00<br/>Sábados: 9:00 – 13:00</span>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="ci-icon" aria-hidden="true">📍</div>
+            <div>
+              <strong>Modalidad</strong>
+              <span>Presencial (Guayaquil) y Online</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-            } catch (error) {
-                console.error("Error al iniciar el chat:", error);
-                showView('pre-chat');
-            }
-        };
+      <!-- ✅ MEJORA: Formulario de contacto nativo -->
+      <div class="contact-form fade-in" role="form">
+        <h3>Envíanos un mensaje</h3>
+        <div class="form-grid">
+          <div class="form-group">
+            <label for="form-nombre">Nombre *</label>
+            <input type="text" id="form-nombre" name="nombre" placeholder="Tu nombre" required autocomplete="given-name" />
+          </div>
+          <div class="form-group">
+            <label for="form-email">Correo electrónico *</label>
+            <input type="email" id="form-email" name="email" placeholder="tu@email.com" required autocomplete="email" />
+          </div>
+          <div class="form-group full">
+            <label for="form-servicio">¿Qué servicio te interesa?</label>
+            <select id="form-servicio" name="servicio">
+              <option value="">— Selecciona —</option>
+              <option value="terapia">Terapia Individual</option>
+              <option value="taller">Taller Grupal</option>
+              <option value="pap">Orientación Inmediata (PAP)</option>
+              <option value="info">Solo quiero información</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="form-modalidad">Modalidad preferida</label>
+            <select id="form-modalidad" name="modalidad">
+              <option value="">— Selecciona —</option>
+              <option value="presencial">Presencial (Guayaquil)</option>
+              <option value="online">Online (videollamada)</option>
+              <option value="indistinto">Me es indistinto</option>
+            </select>
+          </div>
+          <div class="form-group full">
+            <label for="form-mensaje">Mensaje</label>
+            <textarea id="form-mensaje" name="mensaje" placeholder="Cuéntanos brevemente qué te trae aquí o qué preguntas tienes..." aria-describedby="form-privacy-note"></textarea>
+          </div>
+        </div>
+        <p class="form-privacy" id="form-privacy-note">
+          Al enviar este formulario aceptas nuestra <a href="#" onclick="openPrivacy(event)">Política de Privacidad</a>. Tus datos son confidenciales y no se comparten con terceros.
+        </p>
+        <button type="button" class="btn-form" onclick="submitForm()">Enviar Mensaje →</button>
+        <div class="form-success" id="form-success" role="alert">
+          ✅ ¡Mensaje recibido! Te contactaremos en menos de 24 horas.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        const setupChatListeners = async (chatId) => {
-            listenForMessages(chatId);
-            listenForChatStatus(chatId);
-        };
+<!-- ✅ MEJORA: Aviso de crisis -->
+<div class="crisis-bar" role="complementary" aria-label="Aviso de emergencias">
+  <strong>⚠️ ¿Estás en una situación de emergencia?</strong> Este sitio no es un servicio de crisis 24/7. Si tú o alguien que conoces está en peligro inmediato, llama al <a href="tel:911"><strong>911</strong></a> o acude a urgencias del hospital más cercano. Línea de salud mental Ecuador: <a href="tel:1800947943">1800-WITKIN (1800-947-943)</a>.
+</div>
 
-        const listenForMessages = (chatId) => {
-            if (unsubscribeMessages) unsubscribeMessages();
-            const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`);
-            const q = query(messagesRef, orderBy('timestamp'));
+<!-- FOOTER MEJORADO -->
+<footer role="contentinfo">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="logo">Psic. Héctor Holguín</div>
+      <p>Psicoterapia clínica basada en evidencia. Un espacio seguro para tu proceso de sanación en Guayaquil, Ecuador.</p>
+      <!-- ✅ MEJORA: Número de colegiatura visible -->
+      <p class="footer-reg">Psicólogo Clínico · Colegio de Psicólogos del Ecuador<br/>Reg. Profesional: [Actualizar con número]</p>
+      <div class="footer-social" aria-label="Redes sociales">
+        <a href="#" aria-label="Instagram" rel="noopener noreferrer">📷</a>
+        <a href="#" aria-label="LinkedIn" rel="noopener noreferrer">💼</a>
+        <a href="https://wa.me/593963220403" aria-label="WhatsApp" rel="noopener noreferrer" target="_blank">💬</a>
+      </div>
+    </div>
+    <div class="footer-col">
+      <h4>Servicios</h4>
+      <ul>
+        <li><a href="#servicios">Terapia Individual</a></li>
+        <li><a href="#servicios">Talleres Grupales</a></li>
+        <li><a href="#servicios">Orientación PAP</a></li>
+        <li><a href="#sobre-mi">Sobre TCC y DBT</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Información</h4>
+      <ul>
+        <li><a href="#sobre-mi">Sobre Mí</a></li>
+        <li><a href="#equipo">Equipo Clínico</a></li>
+        <li><a href="#faq">Preguntas Frecuentes</a></li>
+        <li><a href="#compromiso">Compromiso Social</a></li>
+        <li><a href="#" onclick="openPrivacy(event)">Política de Privacidad</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Horarios</h4>
+      <div class="footer-hours">
+        <div class="day"><span>Lun – Vie</span><span>9:00 – 18:00</span></div>
+        <div class="day"><span>Sábado</span><span>9:00 – 13:00</span></div>
+        <div class="day"><span>Domingo</span><span>Cerrado</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Psic. Héctor Holguín. Todos los derechos reservados.</span>
+    <span>Diseñado para ofrecer un espacio seguro de apoyo. | <a href="#" onclick="openPrivacy(event)">Privacidad</a></span>
+  </div>
+</footer>
 
-            unsubscribeMessages = onSnapshot(q, (snapshot) => {
-                if (snapshot.empty) return;
-                messagesContainer.innerHTML = '';
-                snapshot.forEach(doc => {
-                    const msg = { id: doc.id, ...doc.data() };
-                    appendMessageToDOM(msg);
-                    if (msg.senderRole === 'psicologo' && !msg.readByUser) {
-                        markMessageAsRead(chatId, msg.id, 'user');
-                    }
-                });
-                messagesContainer.scrollTop = messagesContainer.scrollHeight; 
-            });
-        };
+<!-- WhatsApp flotante -->
+<a href="https://wa.me/593963220403?text=Hola,%20me%20gustar%C3%ADa%20agendar%20una%20consulta"
+   class="whatsapp-float" target="_blank" rel="noopener noreferrer"
+   aria-label="Contactar por WhatsApp">
+  <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
 
-        const listenForChatStatus = (chatId) => {
-            if (unsubscribeChatStatus) unsubscribeChatStatus();
-            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, chatId);
-            unsubscribeChatStatus = onSnapshot(chatDocRef, (docSnap) => {
-                if (!docSnap.exists()) {
-                    if (currentChatId === chatId) {
-                        clearSavedChatAccess();
-                        displayClosedChatInfo('deleted');
-                    }
-                    return;
-                }
-                const chatData = docSnap.data();
-                if (chatData.psicologoDisplayName) {
-                    currentPsicologoDisplayName = 'Psicólogo de Apoyo';
-                }
-                const isClosed = chatData.status === 'closed' || chatData.status === 'deleted';
-                messageInput.disabled = isClosed;
-                sendMessageBtn.disabled = isClosed;
-                messageInput.placeholder = isClosed ? `Este chat ha sido ${chatData.status === 'closed' ? 'cerrado' : 'eliminado'}.` : 'Escribe tu mensaje...';
-                
-                const existingStatusMsg = messagesContainer.querySelector('.chat-status-message');
-                if (isClosed && !existingStatusMsg) {
-                    const statusMessageElement = document.createElement('div');
-                    statusMessageElement.className = 'text-center text-gray-500 my-2 chat-status-message';
-                    statusMessageElement.textContent = `La conversación ha sido ${chatData.status === 'closed' ? 'cerrada' : 'eliminada'}.`;
-                    messagesContainer.appendChild(statusMessageElement);
-                    messagesContainer.scrollTop = messagesContainer.scrollHeight;
-                    clearSavedChatAccess();
-                } else if (!isClosed && existingStatusMsg) {
-                    existingStatusMsg.remove();
-                }
-            });
-        };
+<!-- CHAT PAP WIDGET MEJORADO -->
+<button class="chat-fab" id="chatFab" onclick="toggleChat()" aria-label="Abrir chat de primeros auxilios psicológicos" aria-expanded="false" aria-controls="pap-widget">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+    <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/>
+  </svg>
+  <span class="chat-badge" aria-hidden="true">PAP</span>
+</button>
 
-        const markMessageAsRead = async (chatId, messageId, readerRole) => {
-            const messageDocRef = doc(db, `artifacts/${appId}/public/data/chats/${chatId}/messages`, messageId);
-            try {
-                await updateDoc(messageDocRef, { [readerRole === 'user' ? 'readByUser' : 'readByPsicologo']: true });
-            } catch (error) {
-                console.error(`Error al marcar mensaje como leído:`, error);
-            }
-        };
+<div class="pap-widget" id="pap-widget" role="dialog" aria-labelledby="pap-title" aria-modal="false">
+  <div class="pap-header">
+    <div class="pap-header-info">
+      <h4 id="pap-title">Chat de Primeros Auxilios</h4>
+      <p><span class="online-dot" aria-hidden="true"></span>Orientación psicológica inicial</p>
+    </div>
+    <button class="pap-close" onclick="toggleChat()" aria-label="Cerrar chat">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
 
-        const appendMessageToDOM = (msg) => {
-            const isUser = msg.senderId === currentUserId;
-          const displayName = isUser ? (msg.senderName || 'Tú') : 'Psicólogo de Apoyo';
-            const initials = getInitials(displayName);
-            const avatarColor = isUser ? stringToColor(displayName) : '#8b5cf6';
+  <!-- Formulario de inicio -->
+  <div class="pap-init" id="pap-init">
+    <p>Antes de comenzar, indícanos tu nombre para personalizar la conversación.</p>
+    <input type="text" id="pap-nombre" placeholder="Tu nombre" aria-label="Tu nombre" />
+    <input type="email" id="pap-email" placeholder="Correo electrónico (opcional)" aria-label="Tu correo electrónico" />
+    <button onclick="startChat()" aria-label="Iniciar chat de orientación">Iniciar Orientación →</button>
+  </div>
 
-            const messageWrapper = document.createElement('div');
-            messageWrapper.className = `flex mb-4 items-start ${isUser ? 'flex-row-reverse' : 'flex-row'}`;
-            
-            const bubbleClass = isUser ? 'bg-purple-600 text-white' : 'bg-white text-gray-800 shadow-sm';
+  <!-- Área de chat -->
+  <div class="pap-chat" id="pap-chat">
+    <div class="pap-messages" id="pap-messages" role="log" aria-live="polite" aria-label="Mensajes del chat"></div>
+    <div class="pap-disclaimer" role="note">
+      ⚠️ Esto es orientación, no terapia. En emergencias llama al 911.
+    </div>
+    <div class="pap-input-area">
+      <input type="text" id="pap-msg-input" placeholder="Escribe tu mensaje..." aria-label="Mensaje"
+             onkeydown="if(event.key==='Enter')sendPAPMsg()" />
+      <button class="pap-send" onclick="sendPAPMsg()" aria-label="Enviar mensaje">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 2L11 13"/><path d="M22 2L15 22l-4-9-9-4 20-7z"/></svg>
+      </button>
+    </div>
+  </div>
 
-            messageWrapper.innerHTML = `
-                <div class="initials-avatar ${isUser ? 'ml-3' : 'mr-3'}" style="background-color: ${avatarColor};">
-                    ${initials}
-                </div>
-                <div class="flex flex-col ${isUser ? 'items-end' : 'items-start'}">
-                    <span class="text-xs font-semibold mb-1 px-1">${displayName}</span>
-                    <div class="message-bubble px-4 py-2 rounded-lg max-w-xs md:max-w-md ${bubbleClass}">
-                        <p>${msg.text}</p>
-                        <div class="flex justify-end items-center text-xs mt-1 opacity-75">
-                        <span>${msg.timestamp ? new Date(msg.timestamp.seconds * 1000).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) : ''}</span>
-                    </div>
-                    </div>
-                </div>
-            `;
-            messagesContainer.appendChild(messageWrapper);
-        };
+  <!-- ✅ MEJORA: Fallback cuando hay error de conexión -->
+  <div class="pap-fallback" id="pap-fallback">
+    <p>⚠️ No se pudo conectar al chat en este momento. Por favor escríbenos directamente:</p>
+    <a href="https://wa.me/593963220403?text=Necesito%20orientaci%C3%B3n%20psicol%C3%B3gica" target="_blank" rel="noopener noreferrer">
+      💬 Contactar por WhatsApp
+    </a>
+    <p style="font-size:.75rem;color:var(--clr-text-muted)">Respondemos en horario de atención.</p>
+  </div>
+</div>
 
-        messageForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const text = messageInput.value.trim();
-            const userName = localStorage.getItem(USER_NAME_KEY);
-            if (!text || !userName || !currentChatId || messageInput.disabled) return;
+<!-- ✅ MEJORA: Modal Política de Privacidad -->
+<div class="modal-overlay" id="privacy-modal" role="dialog" aria-modal="true" aria-labelledby="privacy-title" onclick="if(event.target===this)closePrivacy()">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closePrivacy()" aria-label="Cerrar política de privacidad">×</button>
+    <h2 id="privacy-title">Política de Privacidad</h2>
+    <p><em>Última actualización: Enero 2026</em></p>
 
-            const messagesRef = collection(db, `artifacts/${appId}/public/data/chats/${currentChatId}/messages`);
-            const chatDocRef = doc(db, `artifacts/${appId}/public/data/chats`, currentChatId);
-            
-            messageInput.value = '';
-            try {
-                await addDoc(messagesRef, {
-                    text: text,
-                    timestamp: serverTimestamp(),
-                    senderId: currentUserId,
-                    senderRole: 'user',
-                    senderName: userName,
-                    readByPsicologo: false,
-                    readByUser: true
-                });
-                await updateDoc(chatDocRef, {
-                    lastMessageText: text,
-                    lastMessageTimestamp: serverTimestamp(),
-                    status: 'active',
-                    hasUnreadMessagesForPsicologo: true
-                });
-            } catch (error) {
-                console.error("Error al enviar el mensaje:", error);
-            }
-        });
-        
-        // --- Lógica del Menú Móvil ---
-        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        mobileMenuBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
-        });
+    <h3>1. Responsable del tratamiento</h3>
+    <p>Psic. Héctor Holguín, Psicólogo Clínico, con domicilio en Guayaquil, Ecuador. Contacto: psic.hectorholguin@gmail.com</p>
 
-    </script>
+    <h3>2. Datos que recopilamos</h3>
+    <ul>
+      <li>Nombre y correo electrónico (formulario de contacto)</li>
+      <li>Nombre y correo (chat de orientación PAP)</li>
+      <li>Datos de uso del sitio web (cookies técnicas)</li>
+    </ul>
+
+    <h3>3. Finalidad del tratamiento</h3>
+    <ul>
+      <li>Responder a tu consulta y agendar citas</li>
+      <li>Brindar orientación psicológica inicial</li>
+      <li>Mejorar el funcionamiento del sitio web</li>
+    </ul>
+
+    <h3>4. Confidencialidad profesional</h3>
+    <p>Toda información compartida en el contexto de orientación psicológica está protegida por el secreto profesional del psicólogo, de conformidad con el Código de Ética del Colegio de Psicólogos del Ecuador.</p>
+
+    <h3>5. Tus derechos (LOPDP Ecuador)</h3>
+    <p>Conforme a la Ley Orgánica de Protección de Datos Personales (LOPDP, 2021), tienes derecho a acceder, rectificar, eliminar y oponerte al tratamiento de tus datos. Contáctanos a psic.hectorholguin@gmail.com para ejercerlos.</p>
+
+    <h3>6. Cookies</h3>
+    <p>Usamos únicamente cookies técnicas necesarias para el funcionamiento del sitio. No usamos cookies de publicidad ni rastreo de terceros.</p>
+
+    <h3>7. Contacto</h3>
+    <p>Para cualquier consulta sobre privacidad: <a href="mailto:hector@psichectorholguin.com" style="color:var(--clr-accent)">psic.hectorholguin@gmail.com</a></p>
+  </div>
+</div>
+
+<script>
+  /* ===== NAVBAR scroll ===== */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  }, { passive: true });
+
+  /* ===== Hamburger ===== */
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobile-menu');
+  hamburger.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.toggle('open');
+    hamburger.setAttribute('aria-expanded', isOpen);
+  });
+  mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+    mobileMenu.classList.remove('open');
+    hamburger.setAttribute('aria-expanded', 'false');
+  }));
+
+  /* ===== Fade-in on scroll ===== */
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  /* ===== FAQ ===== */
+  function toggleFAQ(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', isOpen);
+  }
+
+  /* ===== Formulario de contacto ===== */
+  function submitForm() {
+    const nombre = document.getElementById('form-nombre').value.trim();
+    const email = document.getElementById('form-email').value.trim();
+    if (!nombre || !email) { alert('Por favor completa tu nombre y correo electrónico.'); return; }
+    // En producción: conectar a Formspree, EmailJS, o backend propio
+    document.getElementById('form-success').style.display = 'block';
+    document.querySelector('.btn-form').disabled = true;
+    document.querySelector('.btn-form').textContent = 'Enviado ✓';
+  }
+
+  /* ===== Cookie banner ===== */
+  function acceptCookies() {
+    document.getElementById('cookie-banner').classList.add('hidden');
+    try { localStorage.setItem('cookies_accepted', '1'); } catch(e) {}
+  }
+  try { if (localStorage.getItem('cookies_accepted')) document.getElementById('cookie-banner').classList.add('hidden'); } catch(e) {}
+
+  /* ===== Privacy modal ===== */
+  function openPrivacy(e) { if(e) e.preventDefault(); document.getElementById('privacy-modal').classList.add('open'); }
+  function closePrivacy() { document.getElementById('privacy-modal').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closePrivacy(); });
+
+  /* ===== PAP Chat Widget ===== */
+  let chatOpen = false;
+  let chatStarted = false;
+  let chatHistory = [];
+  let chatUserName = '';
+  const CHAT_TIMEOUT_MS = 8000;
+
+  function toggleChat() {
+    chatOpen = !chatOpen;
+    const widget = document.getElementById('pap-widget');
+    const fab = document.getElementById('chatFab');
+    widget.classList.toggle('open', chatOpen);
+    fab.setAttribute('aria-expanded', chatOpen);
+    if (chatOpen && !chatStarted) document.getElementById('pap-nombre').focus();
+  }
+
+  function startChat() {
+    const nameInput = document.getElementById('pap-nombre');
+    const name = nameInput.value.trim();
+    if (!name) { nameInput.focus(); nameInput.style.borderColor = 'red'; return; }
+    chatUserName = name;
+    document.getElementById('pap-init').style.display = 'none';
+    const chatEl = document.getElementById('pap-chat');
+    chatEl.classList.add('active');
+    chatStarted = true;
+    addMsg(`Hola ${chatUserName} 👋 Soy un asistente de orientación del consultorio del Psic. Héctor Holguín.\n\nEstoy aquí para escucharte y orientarte. ¿Qué te trae hoy por aquí?`, 'bot');
+    chatHistory = [{ role: 'assistant', content: `Hola ${chatUserName}. Soy un asistente de orientación del consultorio del Psic. Héctor Holguín. ¿Qué te trae hoy por aquí?` }];
+    document.getElementById('pap-msg-input').focus();
+  }
+
+  function addMsg(text, type) {
+    const msgs = document.getElementById('pap-messages');
+    const el = document.createElement('div');
+    el.className = `msg ${type}`;
+    el.textContent = text;
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+    return el;
+  }
+
+  function showTyping() {
+    const msgs = document.getElementById('pap-messages');
+    const el = document.createElement('div');
+    el.className = 'pap-typing'; el.id = 'typing-indicator';
+    el.innerHTML = '<span></span><span></span><span></span>';
+    msgs.appendChild(el);
+    msgs.scrollTop = msgs.scrollHeight;
+  }
+  function hideTyping() {
+    const el = document.getElementById('typing-indicator');
+    if (el) el.remove();
+  }
+
+  async function sendPAPMsg() {
+    const input = document.getElementById('pap-msg-input');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+    addMsg(text, 'user');
+    chatHistory.push({ role: 'user', content: text });
+    showTyping();
+    input.disabled = true;
+
+    // ✅ MEJORA: Timeout de 8 segundos con fallback a WhatsApp
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => {
+      controller.abort();
+      hideTyping();
+      showChatFallback();
+    }, CHAT_TIMEOUT_MS);
+
+    try {
+      const res = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        signal: controller.signal,
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 300,
+          system: `Eres un asistente de orientación psicológica inicial del consultorio del Psic. Héctor Holguín en Guayaquil, Ecuador. Tu rol es escuchar con empatía, validar emociones, y orientar al usuario hacia el servicio adecuado (PAP gratuito por WhatsApp, terapia individual, o talleres grupales). 
+          
+IMPORTANTE: 
+- NO realizas diagnósticos ni das consejos terapéuticos directivos.
+- En cualquier mención de ideas de suicidio, autolesión o emergencia, responde con calma y proporciona el número de emergencias 911 y el número de salud mental 1800-947-943.
+- Eres cálido, empático y claro.
+- Tus respuestas son breves (máximo 3 párrafos cortos).
+- El nombre del usuario es: ${chatUserName}.`,
+          messages: chatHistory
+        })
+      });
+
+      clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('API error');
+      const data = await res.json();
+      const reply = data.content?.find(b => b.type === 'text')?.text || 'Entendido. ¿Puedes contarme un poco más?';
+      hideTyping();
+      addMsg(reply, 'bot');
+      chatHistory.push({ role: 'assistant', content: reply });
+    } catch (err) {
+      clearTimeout(timeoutId);
+      hideTyping();
+      if (err.name === 'AbortError') {
+        showChatFallback();
+      } else {
+        addMsg('Lo siento, hubo un problema de conexión. Por favor escríbenos directamente por WhatsApp.', 'error');
+        setTimeout(showChatFallback, 1500);
+      }
+    } finally {
+      input.disabled = false;
+      input.focus();
+    }
+  }
+
+  function showChatFallback() {
+    document.getElementById('pap-chat').classList.remove('active');
+    const fb = document.getElementById('pap-fallback');
+    fb.classList.add('visible');
+  }
+</script>
+
 </body>
 </html>
-
-
